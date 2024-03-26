@@ -1,8 +1,8 @@
-// import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'session_token_model.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class SessionToken {
   String accesToken;
   String tokenType;

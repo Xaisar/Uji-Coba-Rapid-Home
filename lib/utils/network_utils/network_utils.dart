@@ -1,6 +1,7 @@
 import "dart:async";
 import "dart:convert";
 
+import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
 
 class NetworkUtils{
@@ -10,8 +11,8 @@ class NetworkUtils{
       final String bodyResponse = response.body;
       final int statusResponse = response.statusCode;
 
-      print(bodyResponse);
-      print(statusResponse.toString());
+      debugPrint(bodyResponse);
+      debugPrint(statusResponse.toString());
 
       if(statusResponse == 200 ||
          statusResponse == 201 ||
@@ -23,7 +24,7 @@ class NetworkUtils{
       ) {
         return bodyResponse;
       } else {
-        throw Exception(bodyResponse);
+        throw bodyResponse;
       }
     }).catchError((dynamic error){
       throw Exception(error);
@@ -35,8 +36,8 @@ class NetworkUtils{
       final String bodyResponse = response.body;
       final int statusResponse = response.statusCode;
 
-      print(bodyResponse);
-      print(statusResponse.toString());
+      debugPrint(bodyResponse);
+      debugPrint(statusResponse.toString());
 
       if(statusResponse == 200 ||
          statusResponse == 201 ||
@@ -44,11 +45,12 @@ class NetworkUtils{
          statusResponse == 206 ||
          statusResponse == 401 ||
          statusResponse == 403 ||
-         statusResponse == 400 
+         statusResponse == 400 ||
+         statusResponse == 422
       ) {
         return json.decode(bodyResponse);
       } else {
-        throw Exception(bodyResponse);
+        throw bodyResponse;
       }
     }).catchError((dynamic error){
       throw Exception(error);
@@ -60,8 +62,8 @@ class NetworkUtils{
       final String bodyResponse = response.body;
       final int statusResponse = response.statusCode;
 
-      print(bodyResponse);
-      print(statusResponse.toString());
+      debugPrint(bodyResponse);
+      debugPrint(statusResponse.toString());
 
       if(statusResponse == 200 ||
          statusResponse == 201 ||
@@ -69,11 +71,12 @@ class NetworkUtils{
          statusResponse == 206 ||
          statusResponse == 401 ||
          statusResponse == 403 ||
-         statusResponse == 400 
+         statusResponse == 400 ||
+         statusResponse == 422
       ) {
         return bodyResponse;
       } else {
-        throw Exception(bodyResponse);
+        throw bodyResponse;
       }
     }).catchError((dynamic error){
       throw Exception(error);
@@ -85,8 +88,8 @@ class NetworkUtils{
       final String bodyResponse = response.body;
       final int statusResponse = response.statusCode;
 
-      print(bodyResponse);
-      print(statusResponse.toString());
+      debugPrint(bodyResponse);
+      debugPrint(statusResponse.toString());
 
       if(statusResponse == 200 ||
          statusResponse == 201 ||
@@ -98,7 +101,7 @@ class NetworkUtils{
       ) {
         return bodyResponse;
       } else {
-        throw Exception(bodyResponse);
+        throw bodyResponse;
       }
     }).catchError((dynamic error){
       throw Exception(error);

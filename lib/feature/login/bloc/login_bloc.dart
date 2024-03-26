@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 
 import '../model/login_response_model.dart';
 import '../../authentication/model/session_token_model.dart';
@@ -21,7 +20,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<InitialLoginEvent>(initialLogin);
 
     on<OnChangeEmailEvent>((event, emit) {
-      debugPrint(event.email);
       if(event.email ==""){
         emit(NullErrorEmailState());
       } else {
@@ -30,7 +28,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
 
     on<OnChangePasswordEvent>((event, emit) {
-      debugPrint(event.password);
       if(event.password ==""){
         emit(NullErrorPasswordState());
       } else {
@@ -65,15 +62,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       try{
         LoginResponse loginResponse = await LoginApi().loginService(loginModel);
 
+        //cek status respon
         if(loginResponse.statusResponse != null){
+          // cek respon berhasil
           if(loginResponse.statusResponse!.code == 200){
+            //cek apakah ingin menyimpan data
             if(event.rememberAccount == true){
               final String stored = json.encode(loginModel);
               SharedPrefUtils().storedAccount(stored);
 	          }
             emit(LoginSuccessState(loginResponse.data!.sessionToken!));
           } else {
-            emit(LoginFailureState(loginResponse.statusResponse!.message));
+            //cek apakah ada pesan error dari server
+            if(loginResponse.errors != null){
+              if(loginResponse.errors!.email != null){
+                emit(LoginFailureState(loginResponse.errors!.email!));
+              } else {
+                if(loginResponse.errors!.password != null ){
+                  emit(LoginFailureState(loginResponse.errors!.password!));
+                }
+              } 
+            } else {
+              emit(LoginFailureState(loginResponse.statusResponse!.message));
+            }
           }
         } else {
           emit(const LoginFailureState("can't get data from server"));

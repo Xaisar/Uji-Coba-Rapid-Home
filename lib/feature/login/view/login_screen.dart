@@ -110,7 +110,7 @@ class _LoginFormState extends State<LoginForm> {
                               color: C7,
                               fontSize: 14),
                             errorText: state is NullErrorEmailState ? 
-                            "Email Tidak Boleh Kosong":
+                            "Email cannot be empty":
                             null,
                             filled: true,
                             fillColor: C3,
@@ -140,7 +140,7 @@ class _LoginFormState extends State<LoginForm> {
                             hintText: "Password",
                             hintStyle: TextStyle(color: C7, fontSize: 14),
                             errorText: state is NullErrorPasswordState ?
-                              "Password Tidak Boleh Kosong" : 
+                              "Password cannot be empty" : 
                               null,
                             filled: true,
                             fillColor: C3,

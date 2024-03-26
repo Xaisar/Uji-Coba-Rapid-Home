@@ -52,7 +52,7 @@ class SharedPrefUtils {
     await prefs.remove(SESSIONTOKEN);
   }
 
-  //for stored session(Token & Expired date)
+  //for stored User
   Future<void> storedUser(String sessionUser) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(USER, sessionUser);

@@ -1,8 +1,8 @@
-// import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'response_status_model.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class StatusResponse{
   final String status;
   final int code;

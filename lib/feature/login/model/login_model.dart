@@ -1,14 +1,13 @@
 import 'package:equatable/equatable.dart';
-// import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'login_model.g.dart';
 
-// @JsonSerializable()
+@JsonSerializable()
 class LoginModel extends Equatable{
   final String email;
   final String password;
 
-  @override
   const LoginModel({
     this.email = "" ,
     this.password = "" 
