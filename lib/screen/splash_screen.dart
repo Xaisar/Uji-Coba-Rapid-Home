@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../route/routes_name.dart';
 
@@ -18,7 +19,8 @@ class _SplashScreenViewState extends State<SplashScreenView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3)).then((value) 
+    FlutterNativeSplash.remove();
+    Future.delayed(const Duration(seconds: 4)).then((value) 
       => context.read<AuthenticationBloc>().add(InitialApplicationEvent())
     );
   }

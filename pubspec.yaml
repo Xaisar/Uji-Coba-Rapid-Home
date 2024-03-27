@@ -36,11 +36,14 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.4
+  flutter_native_splash: ^2.4.0
   google_fonts: ^6.2.1
   http: ^1.2.1
+  icons_launcher: ^2.1.7
   intl: ^0.18.1
   json_annotation: ^4.8.1
   page_transition: ^2.1.0
+  rename: ^3.0.2
   shared_preferences: ^2.2.2
   top_snackbar_flutter: ^3.1.0
 
@@ -50,6 +53,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   json_serializable: ^6.7.1
+
+icons_launcher:
+  image_path: "assets/logos/Icon_Logo.png"
+  platforms:
+    android:
+      enable: true
+      adaptive_background_color: "#FFFFFF"
+      adaptive_foreground_image: "assets/logos/Icon_Logo.png"
+    ios:
+      enable: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
