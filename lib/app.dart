@@ -29,7 +29,7 @@ class BuildApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ISP Managament',
+      title: 'ISP Managament' ,
       debugShowCheckedModeBanner: false,
       theme: theme,
       home: const AddCustomerScreen(),
