@@ -15,5 +15,5 @@ void main() {
     ]
   );
 
-  runApp(const MyApp());
+  runApp(const BuildApp());
 }
