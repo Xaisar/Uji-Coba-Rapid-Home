@@ -5,6 +5,8 @@ import "package:top_snackbar_flutter/top_snack_bar.dart";
 
 import "../../../route/routes_name.dart";
 
+import "../bloc/cubit/email_cubit/email_cubit.dart";
+import "../bloc/cubit/password_cubit/password_cubit.dart";
 import "../../authentication/bloc/authentication_bloc.dart";
 import "../bloc/login_bloc.dart";
 import "../../../theme/pallet_color.dart";
@@ -17,18 +19,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => LoginBloc()),
+        BlocProvider(create: (context) => EmailCubit()),
+        BlocProvider(create: (context) => PasswordCubit()),
+      ],
       child: Scaffold(
         backgroundColor: C13,
-        body: const SingleChildScrollView(
-          child: SafeArea(
-            child: LoginForm()
-          )
-        ),
+        body: const SingleChildScrollView(child: SafeArea(child: LoginForm())),
       ),
     );
   }
@@ -59,12 +60,14 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     final loginbloc = BlocProvider.of<LoginBloc>(context);
+    final emailCubit = BlocProvider.of<EmailCubit>(context);
+    final passwordCubit = BlocProvider.of<PasswordCubit>(context);
 
     return Container(
       height: MediaQuery.of(context).size.height,
       padding: EdgeInsets.only(
-        top: MediaQuery.of(context).size.height * 0.14,
-        bottom: MediaQuery.of(context).size.height * 0.1),
+          top: MediaQuery.of(context).size.height * 0.14,
+          bottom: MediaQuery.of(context).size.height * 0.1),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
@@ -78,106 +81,110 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           //Form Login
-          BlocConsumer<LoginBloc, LoginState>(
-            listener: (context, state) {
-              if(state is StoredAccountExistState){
-               emailController = TextEditingController(text: state.loginModel.email);
-               passwordController = TextEditingController(text: state.loginModel.password);
-               checkBoxStatus = true;
-              }
-            },
-            builder: (context, state) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal:MediaQuery.of(context).size.width * 0.14),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        //email
-                        TextField(
-                          onChanged: (value) {
-                            loginbloc.add(OnChangeEmailEvent(value));
-                          },
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(color: C7, fontSize: 14),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            hintStyle: TextStyle(
-                              color: C7,
-                              fontSize: 14),
-                            errorText: state is NullErrorEmailState ? 
-                            "Email cannot be empty":
-                            null,
-                            filled: true,
-                            fillColor: C3,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: C3),
-                              borderRadius:BorderRadius.circular(10)
-                            ),
-                            prefixIcon: Icon(
-                              Icons.email_outlined,
-                              color: C6,
+          BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
+            if (state is StoredAccountExistState) {
+              emailController =
+                  TextEditingController(text: state.loginModel.email);
+              passwordController =
+                  TextEditingController(text: state.loginModel.password);
+              checkBoxStatus = true;
+            }
+          }, builder: (context, state) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.14),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      //email
+                      BlocBuilder<EmailCubit, EmailState>(
+                        builder: (context, state) {
+                          return TextField(
+                            onChanged: (value) {
+                              emailCubit.onChangeEmail(value);
+                            },
+                            controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(color: C7, fontSize: 14),
+                            decoration: InputDecoration(
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: C7, fontSize: 14),
+                              errorText: state is NullErrorEmailState
+                                ? "Email cannot be empty"
+                                : null,
+                              filled: true,
+                              fillColor: C3,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: C3),
+                                borderRadius: BorderRadius.circular(10)),
+                              prefixIcon: Icon(
+                                Icons.email_outlined,
+                                color: C6,
+                              )
                             )
-                          )
-                        ),
-                        const SizedBox(height: 26),
-                        //password
-                        TextField(
-                          onChanged: (value) {
-                            loginbloc.add(OnChangePasswordEvent(value));
-                          },
-                          controller: passwordController,
-                          keyboardType: TextInputType.visiblePassword,
-                          obscureText: visibilityPassword,
-                          style: TextStyle(color: C7, fontSize: 14),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            hintStyle: TextStyle(color: C7, fontSize: 14),
-                            errorText: state is NullErrorPasswordState ?
-                              "Password cannot be empty" : 
-                              null,
-                            filled: true,
-                            fillColor: C3,
-                            border: OutlineInputBorder(
-                              borderRadius:BorderRadius.circular(10)),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: C3),
-                              borderRadius:BorderRadius.circular(10)),
-                            prefixIcon: Icon(
-                              Icons.lock,
-                              color: C6,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                visibilityPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                                color: C7
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 26),
+                      //password
+                      BlocBuilder<PasswordCubit, PasswordState>(
+                        builder: (context, state) {
+                          return TextField(
+                            onChanged: (value) {
+                              passwordCubit.onChangePassword(value);
+                            },
+                            controller: passwordController,
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: visibilityPassword,
+                            style: TextStyle(color: C7, fontSize: 14),
+                            decoration: InputDecoration(
+                              hintText: "Password",
+                              hintStyle: TextStyle(color: C7, fontSize: 14),
+                              errorText: state is NullErrorPasswordState
+                                ? "Password cannot be empty"
+                                : null,
+                              filled: true,
+                              fillColor: C3,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: C3),
+                                borderRadius: BorderRadius.circular(10)),
+                              prefixIcon: Icon(
+                                Icons.lock,
+                                color: C6,
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  visibilityPassword =
-                                  !visibilityPassword;
-                                });
-                              } 
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  visibilityPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                                  color: C7),
+                                onPressed: () {
+                                  setState(() {
+                                    visibilityPassword =
+                                    !visibilityPassword;
+                                  });
+                                }
+                              )
                             )
-                          )
-                        ),
-                      ],
-                    ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 5),
-                  // remember & forgot password
-                  Padding(
+                ),
+                const SizedBox(height: 5),
+                // remember & forgot password
+                Padding(
                     padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.14 - 12,
-                      right: MediaQuery.of(context).size.width * 0.14),
+                        left: MediaQuery.of(context).size.width * 0.14 - 12,
+                        right: MediaQuery.of(context).size.width * 0.14),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
@@ -198,40 +205,34 @@ class _LoginFormState extends State<LoginForm> {
                               activeColor: C3,
                               checkColor: C13,
                             ),
-                            Text(
-                              "Remember me",
-                              style: TextStyle(
-                                color: C3,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500
-                              )
-                            )
+                            Text("Remember me",
+                                style: TextStyle(
+                                    color: C3,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500))
                           ],
                         ),
                         //forgot password
                         TextButton(
-                          onPressed: (){},
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.all(0)),
-                          child: Text(
-                            "Forgot Password ?",
-                            style: TextStyle(
-                              color: C3,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                          )
-                        )
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.all(0)),
+                            child: Text(
+                              "Forgot Password ?",
+                              style: TextStyle(
+                                  color: C3,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            ))
                       ],
-                    )
-                  )
-                ],
-              );
-            }
-          ),
+                    ))
+              ],
+            );
+          }),
           // button login dan register section
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.1),
+                horizontal: MediaQuery.of(context).size.width * 0.1),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -239,73 +240,62 @@ class _LoginFormState extends State<LoginForm> {
                   width: MediaQuery.of(context).size.width,
                   child: BlocConsumer<LoginBloc, LoginState>(
                     listener: (context, state) {
-                      if(state is NullErrorSubmittedState){
+                      if (state is NullErrorSubmittedState) {
                         showTopSnackBar(
-                          Overlay.of(context),
-                          const CustomSnackBar.info(
-                            message: "Email and Password cannot be empty")
-                        );
+                            Overlay.of(context),
+                            const CustomSnackBar.info(
+                                message: "Email and Password cannot be empty"));
                       }
-                      if(state is LoginSuccessState){
+                      if (state is LoginSuccessState) {
                         loginbloc.add(OnValidateTokenEvent(state.sessionToken));
                       }
-                      if(state is LoginFailureState){
-                       showTopSnackBar(
-                          Overlay.of(context),
-                          CustomSnackBar.error(
-                            message: state.error)
-                        );
+                      if (state is LoginFailureState) {
+                        showTopSnackBar(Overlay.of(context),
+                            CustomSnackBar.error(message: state.error));
                       }
-                      if(state is ValidateTokenSuccessState){
-                        context.read<AuthenticationBloc>().add(IsAuthenticationEvent());
+                      if (state is ValidateTokenSuccessState) {
+                        context
+                            .read<AuthenticationBloc>()
+                            .add(IsAuthenticationEvent());
                         Navigator.pushReplacementNamed(context, HOME);
-                        
                       }
-                      if(state is ValidateTokenFailureState){
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          CustomSnackBar.error(
-                            message: state.error)
-                        );
+                      if (state is ValidateTokenFailureState) {
+                        showTopSnackBar(Overlay.of(context),
+                            CustomSnackBar.error(message: state.error));
                       }
                     },
                     builder: (context, state) {
-                      if(state is OnSubmittedState || state is OnValidateTokenState){
+                      if (state is OnSubmittedState ||
+                          state is OnValidateTokenState) {
                         return ElevatedButton(
-                          onPressed: null,
+                            onPressed: null,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsetsDirectional.symmetric(
+                                  vertical: 7),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                            ),
+                            child: const CircularProgressIndicator());
+                      }
+                      return ElevatedButton(
+                          onPressed: () {
+                            loginbloc.add(OnSubmittedEvent(emailController.text,
+                                passwordController.text, checkBoxStatus));
+                          },
                           style: ElevatedButton.styleFrom(
-                            padding:const EdgeInsetsDirectional.symmetric(vertical: 7),
+                            backgroundColor: C9,
+                            padding: const EdgeInsetsDirectional.symmetric(
+                                vertical: 13),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),
                           ),
-                          child: const CircularProgressIndicator()
-                        );
-                      }
-                      return ElevatedButton(
-                        onPressed: () {
-                          loginbloc.add(OnSubmittedEvent(
-                            emailController.text,
-                            passwordController.text,
-                            checkBoxStatus
-                          ));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: C9,
-                          padding:const EdgeInsetsDirectional.symmetric(vertical: 13),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        ),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            color: C3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold
-                          )
-                        )
-                      );
+                          child: Text("Login",
+                              style: TextStyle(
+                                  color: C3,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold)));
                     },
                   ),
                 ),
@@ -318,27 +308,23 @@ class _LoginFormState extends State<LoginForm> {
                     Text(
                       "Belum punya akun? ",
                       style: TextStyle(
-                        color: C3,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500
-                      ),
+                          color: C3, fontSize: 12, fontWeight: FontWeight.w500),
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, REGISTERFROMLOGIN);
-                      },
-                      style: TextButton.styleFrom(
-                        alignment: Alignment.centerLeft,
-                        padding: const EdgeInsets.all(0)),
-                      child: Text(
-                        " Register",
-                        style: TextStyle(
-                          color: C3,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold
-                        ),
-                      )
-                    )
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, REGISTERFROMLOGIN);
+                        },
+                        style: TextButton.styleFrom(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.all(0)),
+                        child: Text(
+                          " Register",
+                          style: TextStyle(
+                              color: C3,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ))
                   ],
                 )
               ],

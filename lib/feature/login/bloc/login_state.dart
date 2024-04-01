@@ -17,14 +17,6 @@ final class StoredAccountExistState extends LoginState {
 
 final class StoredAccountNotExistState extends LoginState {}
 
-final class OnChangeEmailState extends LoginState{}
-
-final class NullErrorEmailState extends LoginState{}
-
-final class OnChangePasswordState extends LoginState{}
-
-final class NullErrorPasswordState extends LoginState{}
-
 final class OnSubmittedState extends LoginState{}
 
 final class NullErrorSubmittedState extends LoginState{}

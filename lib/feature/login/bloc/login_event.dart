@@ -9,18 +9,6 @@ sealed class LoginEvent extends Equatable {
 
 final class InitialLoginEvent extends LoginEvent{}
 
-final class OnChangeEmailEvent extends LoginEvent{
-  final String email;
-
-  const OnChangeEmailEvent(this.email);
-}
-
-final class OnChangePasswordEvent extends LoginEvent{
-  final String password;
-
-  const OnChangePasswordEvent(this.password);
-}
-
 final class OnSubmittedEvent extends LoginEvent{
   final String email;
   final String password;

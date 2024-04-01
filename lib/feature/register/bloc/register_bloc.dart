@@ -12,38 +12,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   RegisterBloc() : super(RegisterInitial()) {
     on<RegisterEvent>((event, emit) {});
     
-    on<OnChangeEmailEvent>((event, emit) {
-      if(event.email == ""){
-        emit(NullErrorEmailState());
-      } else {
-        emit(OnChangeEmailState());
-      }
-    });
-
-    on<OnChangeNameEvent>((event, emit) {
-      if(event.name == ""){
-        emit(NullErrorNameState());
-      } else {
-        emit(OnChangeNameState());
-      }
-    });
-
-    on<OnChangePasswordEvent>((event, emit) {
-      if(event.password == ""){
-        emit(NullErrorPasswordState());
-      } else {
-        emit(OnChangePasswordState());
-      }
-    });
-
-    on<OnChangeConfirmPasswordEvent>((event, emit) {
-      if(event.confirmPassword == ""){
-        emit(NullErrorConfirmPasswordState());
-      } else {
-        emit(OnChangeConfirmPasswordState());
-      }
-    });
-
     on<OnSubmittedEvent>(onSubmitted);
   }
 

@@ -19,22 +19,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     on<InitialLoginEvent>(initialLogin);
 
-    on<OnChangeEmailEvent>((event, emit) {
-      if(event.email ==""){
-        emit(NullErrorEmailState());
-      } else {
-        emit(OnChangeEmailState());
-      }
-    });
-
-    on<OnChangePasswordEvent>((event, emit) {
-      if(event.password ==""){
-        emit(NullErrorPasswordState());
-      } else {
-        emit(OnChangePasswordState());
-      }
-    });
-
     on<OnSubmittedEvent>(onSubmitted);
 
     on<OnValidateTokenEvent>(onValidate);
