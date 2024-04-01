@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:isp_management_app/feature/addCustomer/view/add_customer_screen.dart';
 
 import './feature/authentication/bloc/authentication_bloc.dart';
 
@@ -32,9 +31,9 @@ class BuildApp extends StatelessWidget {
       title: 'ISP Managament' ,
       debugShowCheckedModeBanner: false,
       theme: theme,
-      home: const AddCustomerScreen(),
-      // onGenerateRoute: MyRoute.generateRoute,
-      // initialRoute: SPLASHSCREEN,
+      // home: const AddCustomerScreen(),
+      onGenerateRoute: MyRoute.generateRoute,
+      initialRoute: SPLASHSCREEN,
     );
   }
 }
