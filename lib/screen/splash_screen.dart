@@ -33,7 +33,11 @@ class _SplashScreenViewState extends State<SplashScreenView> {
           Navigator.of(context).pushReplacementNamed(ONBOARDING);
         } else if (state is AuthenticationUnAuthenticationState){
           Navigator.of(context).pushReplacementNamed(LOGIN);
-        } else if (state is AuthenticationAuthenticationState){
+        } else if (state is UserFoundWithNoCustomerState){
+          context.read<AuthenticationBloc>().add(IsAuthenticationEvent());
+          Navigator.of(context).pushReplacementNamed(ADDCUSTOMER);
+        } else if (state is UserFoundWithCustomerState){
+          context.read<AuthenticationBloc>().add(IsAuthenticationEvent());
           Navigator.of(context).pushReplacementNamed(HOME);
         }
       },

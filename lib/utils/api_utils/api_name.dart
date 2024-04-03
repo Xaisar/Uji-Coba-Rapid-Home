@@ -10,3 +10,5 @@ const String LOGINURL = "/login";
 const String REGISTERURL = "/register";
 const String VALIDATETOKENURL = "/validate-token";
 const String LOGOUTURL = "/logout";
+const String GETALLMERCHANTURL = "/merchant/get-option";
+const String ADDCUSTOMERURL = "/user/add-customer";

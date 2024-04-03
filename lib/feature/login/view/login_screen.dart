@@ -253,7 +253,13 @@ class _LoginFormState extends State<LoginForm> {
                         showTopSnackBar(Overlay.of(context),
                             CustomSnackBar.error(message: state.error));
                       }
-                      if (state is ValidateTokenSuccessState) {
+                      if (state is ValidateTokenSuccessWithNoCustomerState) {
+                        context
+                            .read<AuthenticationBloc>()
+                            .add(IsAuthenticationEvent());
+                        Navigator.pushReplacementNamed(context, ADDCUSTOMER);
+                      }
+                      if (state is ValidateTokenSuccessWithCustomerState) {
                         context
                             .read<AuthenticationBloc>()
                             .add(IsAuthenticationEvent());

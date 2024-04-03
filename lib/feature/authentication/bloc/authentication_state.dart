@@ -13,6 +13,10 @@ final class AuthenticationUnAuthenticationState extends AuthenticationState {}
 
 final class AuthenticationAuthenticationState extends AuthenticationState {}
 
+final class UserFoundWithCustomerState extends AuthenticationState {}
+
+final class UserFoundWithNoCustomerState extends AuthenticationState {}
+
 final class AuthenticationIsFirstState extends AuthenticationState {}
 
 final class LogoutSuccessState extends AuthenticationState{}

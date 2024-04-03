@@ -7,6 +7,7 @@ const String LOGIN = "/login";
 const String LOGINFROMREGISTER = "/loginfromregister";
 const String REGISTER = "/register";
 const String REGISTERFROMLOGIN = "/registerfromlogin";
+const String ADDCUSTOMER = "/addcustomer";
 const String HOME = "/home";
 
 const String ERROR = "/error";

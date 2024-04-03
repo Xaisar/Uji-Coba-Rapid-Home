@@ -6,3 +6,12 @@ sealed class AddCustomerEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class InitialAddCustomerEvent extends AddCustomerEvent{}
+
+final class OnSubmiteEvent extends AddCustomerEvent{
+  final String merchantId;
+  final String customerId;
+
+  const OnSubmiteEvent(this.merchantId, this.customerId);
+}

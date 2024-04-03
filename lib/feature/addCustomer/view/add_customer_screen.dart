@@ -1,64 +1,88 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../route/routes_name.dart';
+
+import '../model/merchant_model.dart';
+import '../bloc/add_customer_bloc.dart';
+import '../bloc/cubit/customer_id_cubit/customer_id_cubit.dart';
 import '../../../theme/pallet_color.dart';
+import '../../authentication/bloc/authentication_bloc.dart';
 
-class AddCustomerScreen extends StatefulWidget{
+class AddCustomerScreen extends StatelessWidget {
   const AddCustomerScreen({super.key});
 
   @override
-  State<AddCustomerScreen> createState() => _AddCustomerScreenState();
+  Widget build(BuildContext context) {
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if(state is AuthenticationUnAuthenticationState){
+          Navigator.pushReplacementNamed(context, LOGIN);
+        }
+      },
+      child: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => AddCustomerBloc()),
+            BlocProvider(create: (context) => CustomerIdCubit()),
+          ],
+          child: Scaffold(
+            backgroundColor: C13,
+            body: const SingleChildScrollView(
+                child: SafeArea(child: AddCustomerForm())),
+          )),
+    );
+  }
 }
 
-class Model{
-  final String name;
-  final String id;
+class AddCustomerForm extends StatefulWidget {
+  const AddCustomerForm({super.key});
 
-  const Model({
-    required this.name,
-    required this.id
-  });
+  @override
+  State<AddCustomerForm> createState() => _AddCustomerFormState();
 }
-class _AddCustomerScreenState extends State<AddCustomerScreen> {
- 
- final List<Model> myFriends = [
-  const Model(name: "clara", id: "1234567"),
-  const Model(name: "dungeon", id: "1222134"),
-  const Model(name: "domestik", id: "5465755"),
-  const Model(name: "senayan", id: "5465476"),
-  const Model(name: "kampoeng", id: "9873662"),
-  const Model(name: "admin", id: "1827336"),
-  const Model(name: "ankara", id: "1928336"),
- ];
 
-  Model? modelvalue;
-  
+class _AddCustomerFormState extends State<AddCustomerForm> {
+  List<Merchant> merchants = [];
+  Merchant? merchantValue;
+
+  TextEditingController customerIdController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    FlutterNativeSplash.remove();
+    context.read<AddCustomerBloc>().add(InitialAddCustomerEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: C13,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(
+    final addCustomerBloc = BlocProvider.of<AddCustomerBloc>(context);
+    final customerIdCubit = BlocProvider.of<CustomerIdCubit>(context);
+
+    return BlocConsumer<AddCustomerBloc, AddCustomerState>(
+      listener: (context, state) {
+        if (state is AddMerhantFailureState) {
+          showTopSnackBar(
+              Overlay.of(context), CustomSnackBar.error(message: state.error));
+        }
+        if (state is AddMerhantSuccessState) {
+          merchants.addAll(state.merchants);
+        }
+      },
+      builder: (context, state) {
+        return Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.13,
-              bottom: MediaQuery.of(context).size.height * 0.14
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //logo and title section
-                Align(
+              bottom: MediaQuery.of(context).size.height * 0.1),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //logo and title section
+              Align(
                   alignment: Alignment.topCenter,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -66,28 +90,23 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                       //logo
                       Image.asset(
                         "assets/logos/Front_Logo.png",
-                        height: MediaQuery.of(context).size.height *  0.12,
+                        height: MediaQuery.of(context).size.height * 0.18,
                       ),
-                      const SizedBox(
-                        height: 5,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
                       ),
                       //title
                       Text(
                         "Customer",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: C3
-                        ),
+                        style: TextStyle(fontSize: 20, color: C3),
                       )
                     ],
-                  )
-                ),
-                // input section
-                Container(
+                  )),
+              // input section
+              Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width *0.13
-                  ),
+                      horizontal: MediaQuery.of(context).size.width * 0.13),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -99,80 +118,66 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           Text(
                             "Branch ID",
                             style: TextStyle(
-                              color: C3,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
-                            ),
+                                color: C3,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(
                             height: 6,
                           ),
                           DropdownButtonFormField(
                             style: TextStyle(
-                              color: C19,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
-                            ),
-                            dropdownColor: C3,
-                            menuMaxHeight: MediaQuery.of(context).size.height * 0.21,
-                            decoration: InputDecoration(
-                              hintText: "Select Branch ID",
-                              hintStyle: TextStyle(
-                                color: C7,
+                                color: C19,
                                 fontSize: 14,
-                                fontWeight: FontWeight.w500
-                              ),
-                              // errorText: state is NullErrorEmailState ? 
-                              // "Email cannot be empty":
-                              // null,
-                              filled: true,
-                              fillColor: C3,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(0)),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: C3),
-                                borderRadius:BorderRadius.circular(0)
-                              ),
-                              suffixIcon: Icon(
-                                Icons.arrow_drop_down_rounded,
-                                color: C7,
-                                size: 21 * 2
-                              )
-                            ),
-                            items: myFriends.map((value){
-                              return DropdownMenuItem<Model>(
-                                // alignment: Alignment.topCenter,
+                                fontWeight: FontWeight.w500),
+                            dropdownColor: C3,
+                            menuMaxHeight:
+                                MediaQuery.of(context).size.height * 0.21,
+                            decoration: InputDecoration(
+                                hintText: "Select Branch ID",
+                                hintStyle: TextStyle(
+                                    color: C7,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500),
+                                // errorText: state is NullErrorEmailState ?
+                                // "Email cannot be empty":
+                                // null,
+                                filled: true,
+                                fillColor: C3,
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(0)),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: C3),
+                                    borderRadius: BorderRadius.circular(0)),
+                                suffixIcon: Icon(Icons.arrow_drop_down_rounded,
+                                    color: C7, size: 21 * 2)),
+                            items: merchants.map((value) {
+                              return DropdownMenuItem<Merchant>(
                                 value: value,
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Text(
-                                      value.name,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    // Text(
-                                    //   value.id,
-                                    //   maxLines: 1,
-                                    //   overflow: TextOverflow.ellipsis,
-                                    // )
-                                  ]
-                                ),
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        value.name,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ]),
                               );
                             }).toList(),
                             onChanged: (value) {
-                              modelvalue = value as Model;
-                              debugPrint(modelvalue!.name);
-                              debugPrint(modelvalue!.id);
+                              if (value != null) {
+                                merchantValue = value;
+                              }
                             },
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 10
-                      ),
+                      const SizedBox(height: 10),
                       //Customer ID Field
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,74 +186,165 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                           Text(
                             "Customer ID",
                             style: TextStyle(
-                              color: C3,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500
-                            ),
+                                color: C3,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(
                             height: 6,
                           ),
-                          TextField(
-                            onChanged: (value) {},
-                            // controller: emailController,
-                            keyboardType: TextInputType.visiblePassword,
-                            style: TextStyle(color: C7, fontSize: 14),
-                            decoration: InputDecoration(
-                              hintText: "Enter the Customer ID",
-                              hintStyle: TextStyle(
-                                color: C7,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500
-                              ),
-                              // errorText: state is NullErrorEmailState ? 
-                              // "Email cannot be empty":
-                              // null,
-                              filled: true,
-                              fillColor: C3,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(0)),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: C3),
-                                borderRadius:BorderRadius.circular(0)
-                              ),
-                            )
+                          BlocBuilder<CustomerIdCubit, CustomerIdState>(
+                            builder: (context, state) {
+                              return TextField(
+                                  onChanged: (value) {
+                                    customerIdCubit.onChangeCustomerId(value);
+                                  },
+                                  controller: customerIdController,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  style: TextStyle(color: C7, fontSize: 14),
+                                  decoration: InputDecoration(
+                                    hintText: "Enter the Customer ID",
+                                    hintStyle: TextStyle(
+                                        color: C7,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                    errorText: state is NullErrorCustomerIdState
+                                        ? "Customer Id cannot be empty"
+                                        : null,
+                                    filled: true,
+                                    fillColor: C3,
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(0)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: C3),
+                                        borderRadius: BorderRadius.circular(0)),
+                                  ));
+                            },
                           ),
                         ],
                       ),
                     ],
-                  )
-                ),
-                //button 
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: C9,
-                      padding:const EdgeInsetsDirectional.symmetric(vertical: 13),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                  )),
+              //button
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: BlocConsumer<AddCustomerBloc, AddCustomerState>(
+                        listener: (context, state) {
+                          if (state is NullErrorSubmittedState) {
+                            showTopSnackBar(
+                                Overlay.of(context),
+                                const CustomSnackBar.info(
+                                    message:
+                                        "Add customer form cannot be empty"));
+                          }
+                          if (state is AddCustomerFailureState) {
+                            showTopSnackBar(Overlay.of(context),
+                                CustomSnackBar.error(message: state.error));
+                          }
+                          if (state is AddCustomerSuccesState) {
+                            showTopSnackBar(Overlay.of(context),
+                                const CustomSnackBar.success(message: "Customer added successfully"));
+                            Navigator.pushReplacementNamed(context, HOME);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is OnSubmiteState) {
+                            return ElevatedButton(
+                                onPressed: null,
+                                style: ElevatedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          vertical: 7),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                ),
+                                child: const CircularProgressIndicator());
+                          }
+                          return ElevatedButton(
+                              onPressed: () {
+                                addCustomerBloc.add(OnSubmiteEvent(
+                                    merchantValue == null
+                                        ? ""
+                                        : merchantValue!.id,
+                                    customerIdController.text));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: C9,
+                                padding: const EdgeInsetsDirectional.symmetric(
+                                    vertical: 13),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                              ),
+                              child: Text("Tambah ",
+                                  style: TextStyle(
+                                      color: C3,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold)));
+                        },
                       ),
                     ),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        color: C3,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold
-                      )
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Ingin Keluar? ",
+                          style: TextStyle(
+                              color: C3,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                          listener: (context, state) {
+                            if (state is LogoutFailureState) {
+                              showTopSnackBar(Overlay.of(context),
+                                  CustomSnackBar.error(message: state.error));
+                            }
+                            if (state is LogoutSuccessState) {
+                              context
+                                .read<AuthenticationBloc>()
+                                .add(UnAuthenticationEvent());
+                            }
+                          },
+                          builder: (context, state) {
+                            return TextButton(
+                                onPressed: () {
+                                  context
+                                      .read<AuthenticationBloc>()
+                                      .add(IsLogoutEvent());
+                                },
+                                style: TextButton.styleFrom(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.all(0)),
+                                child: Text(
+                                  " Logout",
+                                  style: TextStyle(
+                                      color: C3,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold),
+                                ));
+                          },
+                        )
+                      ],
                     )
-                  ),
-                )
-              ],
-            ),
+                  ],
+                ),
+              )
+            ],
           ),
-        ),
-      )
+        );
+      },
     );
   }
 }

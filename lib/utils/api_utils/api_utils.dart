@@ -35,4 +35,13 @@ class ApiUtils{
     return Uri.parse(_baseUrl + _apiVersion + urlLogout);
   }
 
+  Uri urlGetAllMerchant(){
+    const String urlGetAllMerchant = GETALLMERCHANTURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlGetAllMerchant);
+  }
+
+  Uri urlAddCustomer(){
+    const String urlAddCustomer = ADDCUSTOMERURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlAddCustomer);
+  }
 }

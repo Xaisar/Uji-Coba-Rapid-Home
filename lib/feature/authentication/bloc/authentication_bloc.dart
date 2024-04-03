@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import '../model/logout_response_model.dart';
+import '../model/user_model.dart';
 import '../service/authentication_api.dart';
 import '../model/session_token_model.dart';
 import '../../../utils/shared_preferences_utils/shared_preferences_utils.dart';
@@ -44,10 +46,23 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         await SharedPrefUtils().getSession().then((value) async{
           if(value != null){
             SessionToken sessionToken = SessionToken.fromJson(json.decode(value));
-            if(sessionToken.expiredDate.isAfter(DateTime.now())) {
-              emit(AuthenticationAuthenticationState());
-            } else {
+            if(sessionToken.expiredDate.isBefore(DateTime.now())) {
               emit(AuthenticationUnAuthenticationState());
+            } else {
+              await SharedPrefUtils().getUser().then((value) {
+                if (value != null) {
+                  User user = User.fromJson(json.decode(value));
+                  debugPrint(user.customers.length.toString());
+
+                  if(user.customers.isEmpty){
+                    emit(UserFoundWithNoCustomerState());
+                  } else {
+                    emit(UserFoundWithCustomerState());
+                  }
+                } else {
+                  emit(AuthenticationUnAuthenticationState());
+                }
+            });
             }
           } else {
             emit(AuthenticationUnAuthenticationState());

@@ -35,7 +35,9 @@ final class LoginFailureState extends LoginState{
 
 final class OnValidateTokenState extends LoginState{}
 
-final class ValidateTokenSuccessState extends LoginState{}
+final class ValidateTokenSuccessWithNoCustomerState extends LoginState{}
+
+final class ValidateTokenSuccessWithCustomerState extends LoginState{}
 
 final class ValidateTokenFailureState extends LoginState{
   final String error;

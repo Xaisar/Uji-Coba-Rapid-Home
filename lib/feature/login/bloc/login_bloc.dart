@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import '../model/login_response_model.dart';
 import '../../authentication/model/session_token_model.dart';
@@ -92,7 +93,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
             SharedPrefUtils().storedSession(session);
             SharedPrefUtils().storedUser(user);
-            emit(ValidateTokenSuccessState());
+
+            if (validateTokenResponse.data!.user!.customers.isEmpty){
+              emit(ValidateTokenSuccessWithNoCustomerState());
+            } else {
+              debugPrint(validateTokenResponse.data!.user!.customers[0].name.toString());
+              debugPrint(validateTokenResponse.data!.user!.customers[0].code.toString());
+              emit(ValidateTokenSuccessWithCustomerState());
+            }
           } else {
             emit(ValidateTokenFailureState(validateTokenResponse.statusResponse!.message));
           }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:isp_management_app/feature/addCustomer/view/add_customer_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../feature/register/view/register_screen.dart';
@@ -18,7 +19,7 @@ class MyRoute {
       case SPLASHSCREEN :
       return PageTransition(
         type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         child: const SplashScreenView(),
         settings: settings
       );
@@ -26,8 +27,8 @@ class MyRoute {
       case ONBOARDING :
       return PageTransition(
         type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 1000),
-        reverseDuration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
+        reverseDuration: const Duration(milliseconds: 800),
         child: const OnBoarding1Screen(),
         settings: settings
       );
@@ -35,7 +36,7 @@ class MyRoute {
       case ONBOARDINGMENU :
       return PageTransition(
         type: PageTransitionType.leftToRightPop,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 1200),
         curve: Curves.easeInOut,
         child: const OnBoardingMenuScreen(),
         childCurrent: const OnBoarding1Screen(),
@@ -46,14 +47,14 @@ class MyRoute {
       return PageTransition(
         child: const LoginScreen(),
         type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         settings: settings
       );
       
       case LOGINFROMREGISTER :
       return PageTransition(
         type: PageTransitionType.leftToRightJoined,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         child: const LoginScreen(),
         childCurrent: const RegisterScreen(),
         settings: settings
@@ -62,7 +63,7 @@ class MyRoute {
       case REGISTER :
       return PageTransition(
         type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         child: const RegisterScreen(),
         settings: settings
       );
@@ -70,17 +71,25 @@ class MyRoute {
       case REGISTERFROMLOGIN :
       return PageTransition(
         type: PageTransitionType.rightToLeftJoined,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         child: const RegisterScreen(),
         childCurrent: const LoginScreen(),
         settings: settings
       );
       
+      case ADDCUSTOMER :
+      return PageTransition(
+        child: const AddCustomerScreen(),
+        type: PageTransitionType.fade,
+        duration: const Duration(milliseconds: 800),
+        settings: settings
+      );
+
       case HOME :
       return PageTransition(
         child: const HomeScreen(),
         type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         settings: settings
       );
 
@@ -88,7 +97,7 @@ class MyRoute {
       return PageTransition(
         child: const NotFoundScreen(),
         type: PageTransitionType.fade,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 800),
         settings: settings
       );
     } 

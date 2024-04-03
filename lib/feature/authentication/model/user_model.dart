@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import './customer_model.dart';
+
 // part 'user_model.g.dart';
 
 // @JsonSerializable()
@@ -10,13 +12,15 @@ class User {
   String name;
   String email;
   String? avatar;
+  List<Customer> customers;
 
   User({
     required this.id,
     required this.globalId,
     required this.name,
     required this.email,
-    this.avatar
+    this.avatar,
+    required this.customers
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -30,6 +34,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       name: json['name'] as String,
       email: json['email'] as String,
       avatar: json['avatar'] as String?,
+      customers: (json['customers'] as List<dynamic>)
+          .map((e) => Customer.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -38,4 +45,5 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'name': instance.name,
       'email': instance.email,
       'avatar': instance.avatar,
+      'customers': instance.customers,
     };

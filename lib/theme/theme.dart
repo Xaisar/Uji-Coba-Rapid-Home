@@ -8,5 +8,6 @@ ThemeData theme = ThemeData(
   useMaterial3: true,
   textTheme: GoogleFonts.poppinsTextTheme().apply(
     bodyColor: C3,
-    displayColor: C3)
-  );
+    displayColor: C3
+  )
+);

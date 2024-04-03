@@ -17,45 +17,46 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text('homePage', style: TextStyle(color: Colors.white)),
-          actions: [
-            BlocConsumer<AuthenticationBloc, AuthenticationState>(
-              listener: (context, state) {
-                if(state is LogoutFailureState){
-                  showTopSnackBar(
-                    Overlay.of(context),
-                    CustomSnackBar.error(
-                      message: state.error)
-                  );
-                }
-                if(state is LogoutSuccessState){
-                  showTopSnackBar(
-                    Overlay.of(context),
-                    const CustomSnackBar.success(
-                      message: "Logout Success")
-                  );
-                  context.read<AuthenticationBloc>().add(UnAuthenticationEvent());
-                  Navigator.pushReplacementNamed(context, LOGIN);
-                }
-              },
-              builder: (context, state) {
-                return IconButton(
-                    onPressed: () {
-                      context.read<AuthenticationBloc>().add(IsLogoutEvent());
-                    },
-                    icon: Icon(Icons.logout, color: C3));
-              },
-            )
-          ],
-        ),
-        body: Center(
-            child: Text(
-          "Ini adalah HomePage",
-          style: TextStyle(fontSize: 20, color: C10),
-        )));
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if(state is AuthenticationUnAuthenticationState){
+          Navigator.pushReplacementNamed(context, LOGIN);
+        }
+      },
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            title:
+                const Text('homePage', style: TextStyle(color: Colors.white)),
+            actions: [
+              BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                listener: (context, state) {
+                  if (state is LogoutFailureState) {
+                    showTopSnackBar(Overlay.of(context),
+                        CustomSnackBar.error(message: state.error));
+                  }
+                  if (state is LogoutSuccessState) {
+                    context
+                      .read<AuthenticationBloc>()
+                      .add(UnAuthenticationEvent());
+                  }
+                },
+                builder: (context, state) {
+                  return IconButton(
+                      onPressed: () {
+                        context.read<AuthenticationBloc>().add(IsLogoutEvent());
+                      },
+                      icon: Icon(Icons.logout, color: C3));
+                },
+              )
+            ],
+          ),
+          body: Center(
+              child: Text(
+            "Ini adalah HomePage",
+            style: TextStyle(fontSize: 20, color: C10),
+          ))),
+    );
   }
 }
