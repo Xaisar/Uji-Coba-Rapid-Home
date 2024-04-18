@@ -3,15 +3,13 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:isp_management_app/feature/addCustomer/model/add_customer_model.dart';
-import 'package:isp_management_app/feature/addCustomer/model/add_customer_response_model.dart';
-import 'package:isp_management_app/feature/addCustomer/model/get_merchant_response_model.dart';
-import 'package:isp_management_app/feature/addCustomer/service/add_customer_api.dart';
-import 'package:isp_management_app/feature/authentication/model/customer_model.dart';
-import 'package:isp_management_app/feature/authentication/model/session_token_model.dart';
-import 'package:isp_management_app/feature/authentication/model/user_model.dart';
-import 'package:isp_management_app/utils/shared_preferences_utils/shared_preferences_utils.dart';
 
+import '../model/add_customer_model.dart';
+import '../model/add_customer_response_model.dart';
+import '../model/get_merchant_response_model.dart';
+import '../service/add_customer_api.dart';
+import '../../authentication/model/session_token_model.dart';
+import '../../../utils/shared_preferences_utils/shared_preferences_utils.dart';
 import '../model/merchant_model.dart';
 
 part 'add_customer_event.dart';
@@ -52,7 +50,6 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
         }
       }
     } catch(error){
-      debugPrint(error.toString());
       emit(AddMerhantFailureState(error.toString()));
     }
   }

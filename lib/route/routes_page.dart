@@ -4,7 +4,7 @@ import 'package:page_transition/page_transition.dart';
 
 import '../feature/register/view/register_screen.dart';
 import '../screen/onboarding/onboardingmenu_screen.dart';
-import '../feature/home/view/home_screen.dart';
+import '../feature/homeIndex/view/home_index.dart';
 import '../feature/login/view/login_screen.dart';
 import '../screen/onboarding/onboarding1_screen.dart';
 import '../screen/not_found_screen.dart';
@@ -87,7 +87,7 @@ class MyRoute {
 
       case HOME :
       return PageTransition(
-        child: const HomeScreen(),
+        child: const HomeIndex(),
         type: PageTransitionType.fade,
         duration: const Duration(milliseconds: 800),
         settings: settings

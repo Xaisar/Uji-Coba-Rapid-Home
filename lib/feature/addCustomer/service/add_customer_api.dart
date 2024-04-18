@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 import '../../../utils/api_utils/api_utils.dart';
 import '../../../utils/network_utils/network_utils.dart';
 import '../model/add_customer_model.dart';

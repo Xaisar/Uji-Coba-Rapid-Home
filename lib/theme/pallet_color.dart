@@ -21,6 +21,7 @@ Color C16 = const Color(0xFF00FFA3);
 // Color C17 = const Color(0xFF023047);
 Color C18 = const Color(0xFFA7DFFF);
 Color C19 = const Color(0xFF565656);
+Color C20 = const Color(0xFFD4E7E9);
 
 //slide point Color(OnBoardingView)
 Color SlidePointOn = const Color(0xFF263238);

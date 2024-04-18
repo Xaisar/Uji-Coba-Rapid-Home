@@ -258,14 +258,13 @@ class _RegisterFormState extends State<RegisterForm> {
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Container(
-                                  height: 5,
-                                  width: 5,
-                                  decoration: BoxDecoration(
-                                      color: C3, shape: BoxShape.circle),
-                                ),
-                                const SizedBox(
-                                  width: 5,
+                                Text(
+                                  "\u2022 ",
+                                  style: TextStyle(
+                                    color: C3,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500
+                                  ),
                                 ),
                                 Text(
                                   "min 8 character",
@@ -282,14 +281,13 @@ class _RegisterFormState extends State<RegisterForm> {
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Container(
-                                  height: 5,
-                                  width: 5,
-                                  decoration: BoxDecoration(
-                                      color: C3, shape: BoxShape.circle),
-                                ),
-                                const SizedBox(
-                                  width: 5,
+                                Text(
+                                  "\u2022 ",
+                                  style: TextStyle(
+                                    color: C3,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500
+                                  ),
                                 ),
                                 Text(
                                   "max 16 character",
@@ -308,15 +306,13 @@ class _RegisterFormState extends State<RegisterForm> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Container(
-                                  margin: const EdgeInsets.only(top: 6),
-                                  height: 5,
-                                  width: 5,
-                                  decoration: BoxDecoration(
-                                      color: C3, shape: BoxShape.circle),
-                                ),
-                                const SizedBox(
-                                  width: 5,
+                                Text(
+                                  "\u2022 ",
+                                  style: TextStyle(
+                                    color: C3,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500
+                                  ),
                                 ),
                                 Expanded(
                                   child: Text(
