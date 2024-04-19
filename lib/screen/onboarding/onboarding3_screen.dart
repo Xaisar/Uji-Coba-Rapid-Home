@@ -96,8 +96,8 @@ class OnBoarding3Screen extends StatelessWidget{
                 onPressed: (){
                   carouselController.animateToPage(
                     2,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn
+                    duration: const Duration(milliseconds: 800),
+                    curve: Curves.fastEaseInToSlowEaseOut
                   );
                 },
                 child: Text(
@@ -111,8 +111,8 @@ class OnBoarding3Screen extends StatelessWidget{
               ElevatedButton(
                 onPressed: (){
                   carouselController.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeIn
+                    duration: const Duration(milliseconds: 800),
+                    curve: Curves.fastEaseInToSlowEaseOut
                   );
                 },
                 style: ElevatedButton.styleFrom(

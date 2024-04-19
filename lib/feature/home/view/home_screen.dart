@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/widgets.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../../theme/pallet_color.dart';
@@ -28,7 +31,12 @@ class HomeScreenView extends StatefulWidget{
 }
 
 class _HomeScreenViewState extends State<HomeScreenView> {
-double dataChart = 60.78;
+double dataChart = 92.38;
+  List<String> title =["Smart Home","Starter","Home","Professional"];
+  List<String> speed =["21 Mbps","11 Mbps","16 Mbps","31 Mbps",];
+  List<String> deskripsi =["Unlimeted tanpa Quota","Media Sosial","Streaming Film","Main Game","Content Creator","UMKM & Bisnis"];
+  List<String> harga =["205.000","165.000","185.000","250.000"];
+  int indexRecomendation = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +148,7 @@ double dataChart = 60.78;
                         begin: Alignment.bottomRight,
                         end: Alignment.topLeft,
                         colors: [
-                          const Color(0xFF0B3194).withOpacity(0.2),
+                          const Color(0xFF0B3194).withOpacity(0.0),
                           const Color(0xFF208CDA).withOpacity(0.94)
                         ]
                       ),
@@ -154,8 +162,8 @@ double dataChart = 60.78;
                       borderRadius: BorderRadius.circular(15),
                       child: BackdropFilter(
                         filter: ImageFilter.blur(
-                          sigmaX: 10,
-                          sigmaY: 10
+                          sigmaX: 10 * 4,
+                          sigmaY: 10 * 2
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(
@@ -183,13 +191,16 @@ double dataChart = 60.78;
                                 children: [
                                   //card bagian kiri
                                   Flexible(
+                                    fit: FlexFit.tight,
                                     flex: 1,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
+                                      // mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        SizedBox(
+                                        Container(
+                                          alignment: Alignment.topCenter,
+                                          // color: Colors.blue,
                                           height: 60,
                                           child: SfRadialGauge(
                                             enableLoadingAnimation: true,
@@ -258,13 +269,13 @@ double dataChart = 60.78;
                                               TextSpan(
                                                 text: "Mbps/",
                                                 style: TextStyle(
-                                                  fontSize: 10
+                                                  fontSize: 12
                                                 )
                                               ),
                                               TextSpan(
                                                 text: "sec",
                                                 style: TextStyle(
-                                                  fontSize: 8
+                                                  fontSize: 10
                                                 )
                                               ),
                                             ]
@@ -276,7 +287,7 @@ double dataChart = 60.78;
                                   Container(
                                     // margin: const EdgeInsets.symmetric(horizontal: 10),
                                     width: 1,
-                                    height: 100,
+                                    height: 105,
                                     color: const Color(0xFFACC5FB),
                                   ),
                                   //card bagian tengah
@@ -284,26 +295,34 @@ double dataChart = 60.78;
                                     flex: 2,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
                                           "Tagihan Internet",
                                           style: TextStyle(
                                             color: C3,
-                                            fontSize: 10
+                                            fontSize: 11
                                           ),
                                         ),
-                                        Text(
-                                          "Rp 205,000",
-                                          style: TextStyle(
-                                            color: C3,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500
-                                          )
+                                        const SizedBox(
+                                          height: 9,
+                                        ),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.255,
+                                          child: AutoSizeText(
+                                            "Rp 205,000",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: C3,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500
+                                            )
+                                          ),
                                         ),
                                         const SizedBox(
-                                          height: 10,
+                                          height: 16,
                                         ),
                                         RichText(
                                           overflow: TextOverflow.clip,
@@ -311,19 +330,19 @@ double dataChart = 60.78;
                                           text: TextSpan(
                                             style: TextStyle(
                                               color: C3,
-                                              fontSize: 9
+                                              fontSize: 10
                                             ),
                                             children: const [
                                               TextSpan(
                                                 text: "Masa aktif hingga*\n",
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.w400
+                                                  fontWeight: FontWeight.w300
                                                 )
                                               ),
                                               TextSpan(
-                                                text: "02 Juni 2024",
+                                                text: "02 September 2024",
                                                 style: TextStyle(
-                                                  fontWeight: FontWeight.w500
+                                                  fontWeight: FontWeight.w400
                                                 )
                                               )
                                             ]
@@ -335,7 +354,7 @@ double dataChart = 60.78;
                                   Container(
                                     // margin: const EdgeInsets.symmetric(horizontal: 10),
                                     width: 1,
-                                    height: 100,
+                                    height: 105,
                                     color: const Color(0xFFACC5FB),
                                   ),
                                   //card bagian kanan
@@ -350,29 +369,34 @@ double dataChart = 60.78;
                                           "Penggunaan Internet",
                                           style: TextStyle(
                                             color: C3,
-                                            fontSize: 10
+                                            fontSize: 11
                                           ),
                                         ),
                                         const SizedBox(
-                                          height: 20,
+                                          height: 12,
                                         ),
                                         Text(
-                                          "02 April 24 - 31 April 24",
+                                          "02 Desember 24 -\n31 Januari 25",
                                           style: TextStyle(
                                             color: C3,
-                                            fontSize: 6,
+                                            fontSize: 7.5,
                                             fontWeight: FontWeight.w500
                                           ),
                                         ),
                                          const SizedBox(
-                                          height: 10,
+                                          height: 8,
                                         ),
-                                        Text(
-                                          "80,79 GB",
-                                          style: TextStyle(
-                                            color: C3,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.255,
+                                          child: AutoSizeText(
+                                            "380,79 GB",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: C3,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500
+                                            ),
                                           ),
                                         ),
                                         
@@ -425,117 +449,155 @@ double dataChart = 60.78;
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
                             children: List.generate(
-                              4, (index1) {
+                              title.length, (index1) {
                                 return Row(
                                   children: [
                                     //card slide view
                                     Container(
-                                      width: 130,
-                                      height: 210,
+                                      width: MediaQuery.of(context).size.width * 0.4,
+                                      height: MediaQuery.of(context).size.height * 0.31,
                                       padding: const EdgeInsets.only(
-                                        top: 15,
-                                        bottom: 7.5 
+                                        top: 20,
+                                        bottom: 10 
                                       ),
                                       alignment: Alignment.topCenter,
                                       decoration: BoxDecoration(
                                         color: C3,
-                                        borderRadius: BorderRadius.circular(10) 
+                                        borderRadius: BorderRadius.circular(14) 
                                       ),
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           //title card view
-                                          Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Flexible(
-                                                child: Text(
-                                                  "Smart Home",
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    color: C6,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w500
-                                                 )
-                                                )
-                                              ),
-                                              const SizedBox(
-                                                height: 7
-                                              ),
-                                              Text(
-                                                "Kecepatan Upto 21 Mbps",
-                                                style: TextStyle(
-                                                  color: C6,
-                                                  fontSize: 7,
-                                                  fontWeight: FontWeight.w400
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 7
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.symmetric(
-                                                  vertical: 2,
-                                                  horizontal: 24 
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: const Color(0xFFBCD1FE),
-                                                  borderRadius: BorderRadius.circular(6)
-                                                ),
-                                                child: Text(
-                                                  "Cocok untuk :",
-                                                  style: TextStyle(
-                                                    color: C6,
-                                                    fontSize: 7,
-                                                    fontWeight: FontWeight.w400
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          //product explanation card view
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                                            padding: const EdgeInsets.symmetric(horizontal: 12),
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  mainAxisSize: MainAxisSize.max,
-                                                  children: [
-                                                    Image.asset(
-                                                      "assets/icons/discount_icon.png",
-                                                      width: 10,
-                                                      height: 10,
-                                                    ),
-                                                    Text(
-                                                      " Paket Terlaris",
-                                                      style: TextStyle(
-                                                        color: C6,
-                                                        fontSize: 7,
-                                                        fontWeight: FontWeight.w400 
-                                                      ),
-                                                    ),
-                                                  ],
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width,
+                                                  alignment: Alignment.topCenter,
+                                                  child: AutoSizeText(
+                                                    title[index1],
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color: C6,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w500
+                                                   )
+                                                  )
                                                 ),
-                                                Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: List.generate(
-                                                    index1 +3, (index2) {
-                                                      return Text(
-                                                        "\u2022 Unlimitied tanpa quota",
+                                                const SizedBox(
+                                                  height: 3
+                                                ),
+                                                Text(
+                                                  "Kecepatan Upto ${speed[index1]}",
+                                                  style: TextStyle(
+                                                    color: C6,
+                                                    fontSize: 9,
+                                                    fontWeight: FontWeight.w500
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 7
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context).size.width,
+                                                  alignment: Alignment.center,
+                                                  height: 18,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xFFBCD1FE),
+                                                    borderRadius: BorderRadius.circular(9)
+                                                  ),
+                                                  child: Text(
+                                                    "Cocok untuk :",
+                                                    style: TextStyle(
+                                                      color: C6,
+                                                      fontSize: 8,
+                                                      fontWeight: FontWeight.w500
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          //product explanation card view
+                                          Expanded(
+                                            child: Container(
+                                              height: MediaQuery.of(context).size.height,
+                                              // color: Colors.blue,
+                                              margin: const EdgeInsets.only(top: 8),
+                                              padding: const EdgeInsets.symmetric(horizontal: 17),
+                                              child: Column(
+                                                children: [
+                                                  index1 <= 1 ?
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/icons/discount_icon.png",
+                                                        width: 12.5,
+                                                        height: 13.5,
+                                                      ),
+                                                      Text(
+                                                        " Paket Terlaris",
                                                         style: TextStyle(
                                                           color: C6,
-                                                          fontSize: 7,
+                                                          fontSize: 10,
+                                                          fontWeight: FontWeight.w400 
                                                         ),
-                                                      );
-                                                    }),
-                                                )
-                                              ]
+                                                      ),
+                                                    ],
+                                                  ):
+                                                  const SizedBox(),
+                                                  const SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  Expanded(
+                                                    child: Container(
+                                                      // color: Colors.red,
+                                                      alignment: Alignment.centerLeft,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        children: List.generate(
+                                                          index1 +5, (index2) {
+                                                            if(index2 > 5){
+                                                              return const SizedBox();
+                                                            } else if (index2 > 4 && index1 <=1){
+                                                              return const SizedBox();
+                                                            } 
+                                                            else {
+                                                              return Column(
+                                                                children: [
+                                                                  Text(
+                                                                    " \u2022 ${deskripsi[index2]}",
+                                                                    maxLines: 1,
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                    style: TextStyle(
+                                                                      color: C6,
+                                                                      fontSize: 9,
+                                                                    ),
+                                                                  ),
+                                                                  index2 !=  index1 + 3 - 1 ?
+                                                                  const SizedBox(
+                                                                    height: 1.5,
+                                                                  ):
+                                                                  const SizedBox()
+                                                                ],
+                                                              );
+                                                            }
+                                                          }),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ]
+                                              ),
                                             ),
                                           ),
                                           //button and price card view
@@ -544,7 +606,7 @@ double dataChart = 60.78;
                                             children: [
                                               Container(
                                                 width: MediaQuery.of(context).size.width,
-                                                padding: const EdgeInsets.symmetric(horizontal: 17),
+                                                padding: const EdgeInsets.symmetric(horizontal: 20),
                                                 child: Column(
                                                   children: [
                                                     Align(
@@ -553,30 +615,34 @@ double dataChart = 60.78;
                                                         "Rp.",
                                                         style: TextStyle(
                                                           color: C1,
-                                                          fontSize: 5,
+                                                          fontSize: 9,
                                                           fontWeight: FontWeight.w700
                                                         ),
                                                       ),
                                                     ),
-                                                    Align(
+                                                    Container(
+                                                      width: MediaQuery.of(context).size.width,
                                                       alignment: Alignment.centerRight,
-                                                      child: RichText(
-                                                        text: TextSpan(
+                                                      child: AutoSizeText.rich(
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        minFontSize: 10,
+                                                        TextSpan(
                                                           style: TextStyle(
                                                             color: C1,
                                                           ),
-                                                          children: const [
+                                                          children: [
                                                             TextSpan(
-                                                              text: "205.00,",
-                                                              style: TextStyle(
-                                                                fontSize: 12,
+                                                              text: "${harga[index1]},",
+                                                              style: const TextStyle(
+                                                                fontSize: 15.5,
                                                                 fontWeight: FontWeight.w700
                                                               )
                                                             ),
-                                                            TextSpan(
+                                                            const TextSpan(
                                                               text: "-/bulan",
                                                               style: TextStyle(
-                                                                fontSize: 7,
+                                                                fontSize: 10,
                                                                 fontWeight: FontWeight.w700
                                                               )
                                                             )
@@ -591,9 +657,9 @@ double dataChart = 60.78;
                                                 height: 4
                                               ),
                                               Container(
-                                                height: 20,
+                                                height: 24,
                                                 width: MediaQuery.of(context).size.width,
-                                                margin: const EdgeInsets.symmetric(horizontal: 5),
+                                                margin: const EdgeInsets.symmetric(horizontal: 12),
                                                 child: ElevatedButton(
                                                   onPressed: (){},
                                                   style: ElevatedButton.styleFrom(
@@ -604,8 +670,8 @@ double dataChart = 60.78;
                                                     "Mulai Berlangganan",
                                                     style: TextStyle(
                                                       color: C3,
-                                                      fontSize: 7,
-                                                      fontWeight: FontWeight.w400
+                                                      fontSize: 9.5,
+                                                      fontWeight: FontWeight.w500
                                                     ),
                                                   )
                                                 ),
@@ -617,7 +683,7 @@ double dataChart = 60.78;
                                     ),
                                     index1 != 4 - 1 ?
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width * 0.033,
+                                      width: MediaQuery.of(context).size.width * 0.041,
                                     ) :
                                     const SizedBox()
                                   ],
@@ -670,8 +736,30 @@ double dataChart = 60.78;
                           reverse: false,
                           scrollDirection: Axis.horizontal,
                           initialPage: 0,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              indexRecomendation = index;
+                            });
+                          },
                         ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          4, (index) {
+                            return AnimatedContainer(
+                              duration: const Duration(milliseconds: 500),
+                              height: 10,
+                              width: 10,
+                              margin: EdgeInsets.only(left: index == 0 ? 0 : 7 ),
+                              decoration: BoxDecoration(
+                                color: index == indexRecomendation ? Colors.blue : Colors.grey,
+                                borderRadius: BorderRadius.circular(99)
+                              ),
+                            );
+                          })
                       )
+
                     ],
                   )
                 ],
