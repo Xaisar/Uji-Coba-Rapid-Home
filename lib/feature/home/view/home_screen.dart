@@ -448,12 +448,13 @@ double dataChart = 92.38;
                             mainAxisSize: MainAxisSize.max,
                             children: List.generate(
                               title.length, (index1) {
+                                debugPrint("${MediaQuery.of(context).size.height * 0.31}");
                                 return Row(
                                   children: [
                                     //card slide view
                                     Container(
                                       width: MediaQuery.of(context).size.width * 0.4,
-                                      height: MediaQuery.of(context).size.height * 0.31,
+                                      height: 255,
                                       padding: const EdgeInsets.only(
                                         top: 20,
                                         bottom: 10 
