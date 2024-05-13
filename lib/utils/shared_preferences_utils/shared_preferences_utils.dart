@@ -67,5 +67,20 @@ class SharedPrefUtils {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(USER);
   }
-  
+
+   //for stored Current Customer
+  Future<void> storedCurentCustomer(int currentCustomer) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(CURRENTCUSTOMER, currentCustomer);
+  }
+
+  Future<int?> getCurrentCustomer() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(CURRENTCUSTOMER);
+  }
+
+  Future<void> removeCurrentCustomer() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(CURRENTCUSTOMER);
+  }
 }

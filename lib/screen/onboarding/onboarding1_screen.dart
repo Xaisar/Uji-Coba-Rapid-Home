@@ -27,11 +27,21 @@ class OnBoarding1Screen extends StatelessWidget{
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   //Text Welcome
-                  Text(
-                    "Welcome",
-                    style: TextStyle(
-                      color: C3,
-                      fontSize: 50
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.65,
+                      child: AutoSizeText(
+                        "Welcome",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        minFontSize: 20,
+                        style: TextStyle(
+                          color: C3,
+                          fontSize: 50
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -70,25 +80,28 @@ class OnBoarding1Screen extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    AutoSizeText.rich(
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: C3
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.68,
+                      child: AutoSizeText.rich(
+                        maxLines: 2,
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: C3
+                        ),
+                         const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Layanan Internet\nuntuk",
+                            ),
+                            TextSpan(
+                              text: " semua",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600
+                              )
+                            ),
+                          ] 
+                        )
                       ),
-                       const TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Layanan Internet untuk",
-                          ),
-                          TextSpan(
-                            text: " semua",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600
-                            )
-                          ),
-                        ] 
-                      )
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 3),
@@ -96,12 +109,15 @@ class OnBoarding1Screen extends StatelessWidget{
                         color: C5,
                         borderRadius: const BorderRadius.all(Radius.circular(8))
                       ),
-                      child: AutoSizeText(
-                        "kebutuhanmu!",
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: C3,
-                          fontSize: 30
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.54,
+                        child: AutoSizeText(
+                          "kebutuhanmu!",
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: C3,
+                            fontSize: 30
+                          ),
                         ),
                       ),
                     )
@@ -116,13 +132,16 @@ class OnBoarding1Screen extends StatelessWidget{
                   textDirection: TextDirection.rtl,
                   child: ElevatedButton.icon(
                     onPressed: (){
-                       Navigator.of(context).pushReplacementNamed(ONBOARDINGMENU);
+                      Navigator.of(context).pushReplacementNamed(ONBOARDINGMENU);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: C9
                     ),
-                    label: Text(
+                    label: AutoSizeText(
                       "Started",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      minFontSize: 15,
                       style: TextStyle(
                         color: C3,
                         fontSize: 20

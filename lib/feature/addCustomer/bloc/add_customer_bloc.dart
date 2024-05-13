@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../login/model/validate_token_response_model.dart';
 import '../model/add_customer_model.dart';
 import '../model/add_customer_response_model.dart';
 import '../model/get_merchant_response_model.dart';
@@ -21,6 +22,8 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
     on<InitialAddCustomerEvent>(initialAddCustomer);
 
     on<OnSubmiteEvent>(onSubmitted);
+
+    on<OnValidateTokenEvent>(onValidate);
   }
 
   Future<void> initialAddCustomer(InitialAddCustomerEvent event, Emitter<AddCustomerState> emit) async {
@@ -97,5 +100,39 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
         emit(AddCustomerFailureState(error.toString()));
       }
     }
+  }
+
+  Future<void> onValidate(OnValidateTokenEvent event, Emitter<AddCustomerState> emit) async{
+    emit(OnValidateTokenState());
+
+    await SharedPrefUtils().getSession().then((value) async {
+      if(value != null){
+        SessionToken sessionToken = SessionToken.fromJson(json.decode(value));
+        
+        try{
+          ValidateTokenResponse validateTokenResponse = await AddCustomerApi().validateTokenService(sessionToken.accesToken);
+
+          if(validateTokenResponse.statusResponse != null){
+            if(validateTokenResponse.statusResponse!.code == 200){
+              final String session = json.encode(validateTokenResponse.data!.sessionToken!.toJson());
+              final String user = json.encode(validateTokenResponse.data!.user!.toJson());
+
+              SharedPrefUtils().storedSession(session);
+              SharedPrefUtils().storedUser(user);
+
+              emit(ValidateTokenSuccesState());
+            } else {
+              emit(ValidateTokenFailureState(validateTokenResponse.statusResponse!.message));
+            }
+          } else {
+            emit(const ValidateTokenFailureState("can't get data from server"));
+          }
+        } catch(error){
+          emit(ValidateTokenFailureState(error.toString()));
+        }
+      } else {
+        emit(const ValidateTokenFailureState("can't get session token"));
+      }
+    });
   }
 }

@@ -38,6 +38,8 @@ class OnBoarding2Screen extends StatelessWidget{
               AutoSizeText(
                 "Layanan internet terbaik untuk rumahmu",
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                minFontSize: 8,
                 style: TextStyle(
                   color: C10,
                   fontSize: 12
@@ -52,24 +54,24 @@ class OnBoarding2Screen extends StatelessWidget{
                 style: const TextStyle(
                   fontSize: 35
                 ),
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Jaminan \nKualitas",
-                    style: TextStyle(
-                      color: C10,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Jaminan \nKualitas",
+                      style: TextStyle(
+                        color: C10,
+                      )
+                    ),
+                    TextSpan(
+                      text: " Jaringan",
+                      style: TextStyle(
+                        color: C1,
+                      fontWeight: FontWeight.w600
+                      )
                     )
-                  ),
-                  TextSpan(
-                    text: " Jaringan",
-                    style: TextStyle(
-                      color: C1,
-                    fontWeight: FontWeight.w600
-                    )
-                  )
-                ]
+                  ]
+                )
               )
-            )
             ],
           )
         ),

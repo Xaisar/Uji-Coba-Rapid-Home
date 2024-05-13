@@ -32,3 +32,13 @@ final class AddCustomerFailureState extends AddCustomerState {
 
   const AddCustomerFailureState(this.error);
 }
+
+final class OnValidateTokenState extends AddCustomerState {}
+
+final class ValidateTokenSuccesState extends AddCustomerState {}
+
+final class ValidateTokenFailureState extends AddCustomerState {
+  final String error;
+
+  const ValidateTokenFailureState(this.error);
+}

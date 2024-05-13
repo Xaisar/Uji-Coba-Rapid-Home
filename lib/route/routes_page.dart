@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:isp_management_app/feature/addCustomer/view/add_customer_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../feature/addCustomer/view/add_customer_screen.dart';
 import '../feature/register/view/register_screen.dart';
 import '../screen/onboarding/onboardingmenu_screen.dart';
 import '../feature/homeIndex/view/home_index.dart';
@@ -9,6 +9,8 @@ import '../feature/login/view/login_screen.dart';
 import '../screen/onboarding/onboarding1_screen.dart';
 import '../screen/not_found_screen.dart';
 import '../screen/splash_screen.dart';
+
+import '../feature/home/bloc/home_bloc/home_bloc.dart';
 
 import './routes_name.dart';
 
@@ -77,9 +79,9 @@ class MyRoute {
         settings: settings
       );
       
-      case ADDCUSTOMER :
+      case ADDCUSTOMERFROMLOGIN :
       return PageTransition(
-        child: const AddCustomerScreen(),
+        child: AddCustomerScreen(routeState: false),
         type: PageTransitionType.fade,
         duration: const Duration(milliseconds: 800),
         settings: settings
@@ -88,6 +90,14 @@ class MyRoute {
       case HOME :
       return PageTransition(
         child: const HomeIndex(),
+        type: PageTransitionType.fade,
+        duration: const Duration(milliseconds: 800),
+        settings: settings
+      );
+
+      case ADDCUSTOMERFROMHOME :
+      return PageTransition(
+        child: AddCustomerScreen(routeState: true, homebloc: settings.arguments as HomeBloc,),
         type: PageTransitionType.fade,
         duration: const Duration(milliseconds: 800),
         settings: settings

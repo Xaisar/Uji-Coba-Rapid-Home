@@ -44,26 +44,24 @@ class _OnBoardingMenuScreenState extends State<OnBoardingMenuScreen> {
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: List.generate(
-                    3, 
-                    (index) {
-                      return Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 500),
-                            height: 8,
-                            width: index == indexpointview? 85 : 35,
-                            decoration: BoxDecoration(
-                              color: index == indexpointview? SlidePointOn: SlidePointOff,
-                              borderRadius: BorderRadius.circular(4.5)
-                            ),
+                  children: List.generate(3, (index) {
+                    return Row(
+                      children: [
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          height: 8,
+                          width: index == indexpointview? 105 : 35,
+                          decoration: BoxDecoration(
+                            color: index == indexpointview? SlidePointOn: SlidePointOff,
+                            borderRadius: BorderRadius.circular(4.5)
                           ),
-                          const SizedBox(
-                            width: 2,
-                          )
-                        ],
-                      ); 
-                    })
+                        ),
+                        const SizedBox(
+                          width: 2,
+                        )
+                      ],
+                    ); 
+                  })
                 ),
               ),
               // slide 

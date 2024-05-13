@@ -34,13 +34,14 @@ class OnBoarding4Screen extends StatelessWidget{
             horizontal: MediaQuery.of(context).size.width * 0.1
           ),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //note text
               AutoSizeText(
                 "Layanan internet terbaik untuk rumahmu",
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                minFontSize: 8,
                 style: TextStyle(
                   color: C10,
                   fontSize: 12
@@ -54,25 +55,25 @@ class OnBoarding4Screen extends StatelessWidget{
                 style: const TextStyle(
                   fontSize: 30
                 ),
-              //title
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Harga Terjangkau \n",
-                    style: TextStyle(
-                      color: C1,
-                      fontWeight: FontWeight.w600
-                    )
-                  ),
-                  TextSpan(
-                    text: "Dengan Berbagai Pilihan Paket",
-                    style: TextStyle(
-                      color: C10,
-                    )
-                  ),
-                ]
+                //title
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Harga Terjangkau \n",
+                      style: TextStyle(
+                        color: C1,
+                        fontWeight: FontWeight.w600
+                      )
+                    ),
+                    TextSpan(
+                      text: "Dengan Berbagai Pilihan Paket",
+                      style: TextStyle(
+                        color: C10,
+                      )
+                    ),
+                  ]
+                )
               )
-            )
             ],
           )
         ),
@@ -135,5 +136,4 @@ class OnBoarding4Screen extends StatelessWidget{
       ],
     );
   }
-
 }

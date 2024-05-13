@@ -41,6 +41,8 @@ class OnBoarding3Screen extends StatelessWidget{
               AutoSizeText(
                 "Layanan internet terbaik untuk rumahmu",
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                minFontSize: 8,
                 style: TextStyle(
                   color: C10,
                   fontSize: 12
@@ -54,32 +56,32 @@ class OnBoarding3Screen extends StatelessWidget{
                 style: const TextStyle(
                   fontSize: 30
                 ),
-              //title
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: "Unlimited \n",
-                    style: TextStyle(
-                      color: C1,
-                      fontWeight: FontWeight.w600
+                //title
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Unlimited \n",
+                      style: TextStyle(
+                        color: C1,
+                        fontWeight: FontWeight.w600
+                      )
+                    ),
+                    TextSpan(
+                      text: "Bebas Tanpa",
+                      style: TextStyle(
+                        color: C10,
+                      )
+                    ),
+                    TextSpan(
+                      text: " Kuota",
+                      style: TextStyle(
+                        color: C14,
+                        fontWeight: FontWeight.w600
+                      )
                     )
-                  ),
-                  TextSpan(
-                    text: "Bebas Tanpa",
-                    style: TextStyle(
-                      color: C10,
-                    )
-                  ),
-                  TextSpan(
-                    text: " Kuota",
-                    style: TextStyle(
-                      color: C14,
-                    fontWeight: FontWeight.w600
-                    )
-                  )
-                ]
+                  ]
+                )
               )
-            )
             ],
           )
         ),

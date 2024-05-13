@@ -26,9 +26,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       emit(AuthenticationUnAuthenticationState());
     });
 
-    on<UnAuthenticationEvent>((event, emit) {
-      emit(AuthenticationUnAuthenticationState());
-    });
+    on<UnAuthenticationEvent>(unAuthentication);
 
      on<IsAuthenticationEvent>((event, emit) {
       emit(AuthenticationAuthenticationState());
@@ -72,11 +70,16 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
     });
   } 
 
+  Future<void> unAuthentication(UnAuthenticationEvent event, Emitter<AuthenticationState> emit) async {
+    await SharedPrefUtils().removeSession();
+    await SharedPrefUtils().removeUser();
+
+    emit(AuthenticationUnAuthenticationState());
+  }
+
   Future<void> logout(IsLogoutEvent event, Emitter<AuthenticationState> emit) async {
     final String? dataSession = await SharedPrefUtils().getSession();
     SessionToken sessionToken;
-
-    bool berhasil = false;
 
     if(dataSession != null){
       sessionToken = SessionToken.fromJson(json.decode(dataSession));
@@ -85,7 +88,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
         if(logoutResponse.statusResponse != null)  {
           if(logoutResponse.statusResponse!.code == 200) {
-            berhasil = true;
             emit(LogoutSuccessState());
           } else {
             emit(LogoutFailureState(logoutResponse.statusResponse!.message));
@@ -98,11 +100,6 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       }
     } else {
       emit(const LogoutFailureState("Cant get dataSession"));
-    }
-
-    if(berhasil == true){
-      await SharedPrefUtils().removeSession();
-      await SharedPrefUtils().removeUser();
     }
   }
 }

@@ -15,3 +15,5 @@ final class OnSubmiteEvent extends AddCustomerEvent{
 
   const OnSubmiteEvent(this.merchantId, this.customerId);
 }
+
+final class OnValidateTokenEvent extends AddCustomerEvent {}

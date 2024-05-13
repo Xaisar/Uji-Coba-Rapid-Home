@@ -35,27 +35,30 @@ class _SplashScreenViewState extends State<SplashScreenView> {
           Navigator.of(context).pushReplacementNamed(LOGIN);
         } else if (state is UserFoundWithNoCustomerState){
           context.read<AuthenticationBloc>().add(IsAuthenticationEvent());
-          Navigator.of(context).pushReplacementNamed(ADDCUSTOMER);
+          Navigator.of(context).pushReplacementNamed(ADDCUSTOMERFROMLOGIN);
         } else if (state is UserFoundWithCustomerState){
           context.read<AuthenticationBloc>().add(IsAuthenticationEvent());
           Navigator.of(context).pushReplacementNamed(HOME);
         }
       },
       child: Scaffold(
-          body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [C1, const Color(0xFF003D93)])),
-        child: Image.asset(
-          "assets/logos/Full_Logo.png",
-          width: MediaQuery.of(context).size.width * 0.7,
-        ),
-      )),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [C1, const Color(0xFF003D93)]
+            )
+          ),
+          child: Image.asset(
+            "assets/logos/Full_Logo.png",
+            width: MediaQuery.of(context).size.width * 0.7,
+          ),
+        )
+      ),
     );
   }
 }
