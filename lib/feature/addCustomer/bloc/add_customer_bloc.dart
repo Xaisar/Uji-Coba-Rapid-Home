@@ -10,7 +10,7 @@ import '../model/get_merchant_response_model.dart';
 import '../service/add_customer_api.dart';
 import '../../authentication/model/session_token_model.dart';
 import '../../../utils/shared_preferences_utils/shared_preferences_utils.dart';
-import '../model/merchant_model.dart';
+import '../model/add_customer_merchant_model.dart';
 
 part 'add_customer_event.dart';
 part 'add_customer_state.dart';

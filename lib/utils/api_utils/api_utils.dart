@@ -60,7 +60,7 @@ class ApiUtils{
 
   Uri urlGetDetailCatalog(String parameter){
     const String urlGetDetailCatalog = GETDETAILCATALOGURL;
-    return Uri.parse(_baseUrl + _apiVersion + urlGetDetailCatalog);
+    return Uri.parse(_baseUrl + _apiVersion + urlGetDetailCatalog + parameter);
   }
 
   Uri urlGetBilling(String parameter){

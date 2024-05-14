@@ -10,5 +10,7 @@ const String REGISTERFROMLOGIN = "/registerfromlogin";
 const String ADDCUSTOMERFROMLOGIN = "/addcustomerfromlogin";
 const String HOME = "/home";
 const String ADDCUSTOMERFROMHOME = "/addcustomerfromhome";
+const String DETAILCATALOGHOME = "/detailcataloghome";
+const String DETAILBILLING = "/detailbilling";
 
 const String ERROR = "/error";

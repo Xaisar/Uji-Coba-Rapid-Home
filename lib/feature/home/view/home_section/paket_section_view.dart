@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../../route/routes_name.dart';
 import '../../../../theme/pallet_color.dart';
 import '../../../authentication/model/customer_model.dart';
 import '../../bloc/catalog_home_bloc/catalog_home_bloc.dart';
@@ -300,7 +301,9 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                       width: MediaQuery.of(context).size.width,
                                       margin: const EdgeInsets.symmetric(horizontal: 12),
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pushNamed(context, DETAILCATALOGHOME, arguments: catalogs[index1]);
+                                        },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: C9,
                                           padding: const EdgeInsets.all(0)),

@@ -1,6 +1,6 @@
-import 'package:isp_management_app/feature/authentication/model/response_status_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../authentication/model/response_status_model.dart';
 import './billing_model.dart';
 
 // part "get_billing_response_model.g.dart";

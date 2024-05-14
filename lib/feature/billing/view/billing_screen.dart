@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:intl/intl.dart';
 
+import '../../../route/routes_name.dart';
 import '../../../theme/pallet_color.dart';
 import '../bloc/billing_bloc.dart';
 import '../model/billing_model.dart';
@@ -102,54 +104,59 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                         color: Colors.transparent,
                       ) 
                       : const SizedBox(),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 15
-                        ),
-                        decoration: BoxDecoration(
-                          color: C3,
-                          border: Border.all(
-                            color: C6,
-                            width: 1.5
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, DETAILBILLING, arguments: billings[index]);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 15
                           ),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              billings[index].customerName,
-                              style: TextStyle(
-                                color: C6,
-                                fontSize: 12
-                              ),
+                          decoration: BoxDecoration(
+                            color: C3,
+                            border: Border.all(
+                              color: C6,
+                              width: 1.5
                             ),
-                            Text(
-                              billings[index].billNumber,
-                              style: TextStyle(
-                                color: C6,
-                                fontSize: 12
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                billings[index].customerName,
+                                style: TextStyle(
+                                  color: C6,
+                                  fontSize: 12
+                                ),
                               ),
-                            ),
-                            Text(
-                              "Rp. ${NumberFormat("000,000","id_ID").format(billings[index].grandTotal)}",
-                              style: TextStyle(
-                                color: C6,
-                                fontSize: 12
+                              Text(
+                                billings[index].billNumber,
+                                style: TextStyle(
+                                  color: C6,
+                                  fontSize: 12
+                                ),
                               ),
-                            ),
-                            Text(
-                              DateFormat("d MMMM y", "id_ID").format(billings[index].dueDate),
-                              style: TextStyle(
-                                color: C6,
-                                fontSize: 12
+                              Text(
+                                "Rp. ${NumberFormat("000,000","id_ID").format(billings[index].grandTotal)}",
+                                style: TextStyle(
+                                  color: C6,
+                                  fontSize: 12
+                                ),
                               ),
-                            ),
-              
-                          ],
+                              Text(
+                                DateFormat("d MMMM y", "id_ID").format(billings[index].dueDate),
+                                style: TextStyle(
+                                  color: C6,
+                                  fontSize: 12
+                                ),
+                              ),
+                                      
+                            ],
+                          ),
                         ),
                       ),
                       const Divider(

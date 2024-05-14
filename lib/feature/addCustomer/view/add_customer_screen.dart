@@ -6,7 +6,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../route/routes_name.dart';
 
 import '../../home/bloc/home_bloc/home_bloc.dart';
-import '../model/merchant_model.dart';
+import '../model/add_customer_merchant_model.dart';
 import '../bloc/add_customer_bloc.dart';
 import '../bloc/cubit/customer_id_cubit/customer_id_cubit.dart';
 import '../../../theme/pallet_color.dart';

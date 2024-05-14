@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-// part 'billing_model.g.dart';
+// part 'detail_billing_model.g.dart';
 
 // @JsonSerializable()
-class BillingModel {
+class DetailBilling {
   String id;
   @JsonKey(name: "customer_id")
   String customerId;
@@ -41,7 +41,7 @@ class BillingModel {
   @JsonKey(name: "updated_at")
   String? updatedAt;
 
-  BillingModel({
+  DetailBilling({
     required this.id,
     required this.customerId,
     required this.merchantId,
@@ -65,13 +65,13 @@ class BillingModel {
     this.updatedAt,
   });
 
-  factory BillingModel.fromJson(Map<String, dynamic> json) => _$BillingModelFromJson(json);
+  factory DetailBilling.fromJson(Map<String, dynamic> json) => _$DetailBillingFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BillingModelToJson(this);
+  Map<String, dynamic> toJson() => _$DetailBillingToJson(this);
 
 }
 
-BillingModel _$BillingModelFromJson(Map<String, dynamic> json) => BillingModel(
+DetailBilling _$DetailBillingFromJson(Map<String, dynamic> json) => DetailBilling(
       id: json['id'] as String,
       customerId: json['customer_id'] as String,
       merchantId: json['merchant_id'] as String,
@@ -97,7 +97,7 @@ BillingModel _$BillingModelFromJson(Map<String, dynamic> json) => BillingModel(
       updatedAt: json['updated_at'] as String?,
     );
 
-Map<String, dynamic> _$BillingModelToJson(BillingModel instance) =>
+Map<String, dynamic> _$DetailBillingToJson(DetailBilling instance) =>
     <String, dynamic>{
       'id': instance.id,
       'customer_id': instance.customerId,

@@ -8,3 +8,17 @@ sealed class DetailBillingState extends Equatable {
 }
 
 final class DetailBillingInitial extends DetailBillingState {}
+
+final class DetailBillingInitialProccesState extends DetailBillingState {}
+
+final class DetailBillingInitialSuccesState extends DetailBillingState {
+  final DetailBilling detailBilling;
+
+  const DetailBillingInitialSuccesState(this.detailBilling);
+}
+
+final class DetailBillingInitialFailureState extends DetailBillingState{
+  final String error;
+
+  const DetailBillingInitialFailureState(this.error);
+}

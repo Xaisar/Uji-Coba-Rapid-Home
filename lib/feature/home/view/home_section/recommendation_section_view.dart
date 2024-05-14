@@ -44,13 +44,19 @@ class _RecommedationHomeWidgetState extends State<RecommedationHomeWidget> {
           itemCount: 4,
           itemBuilder: (context, index, realIndex) {
             return Container(
-              // color: C1,
               margin: EdgeInsets.symmetric(
                 vertical: 10,
-                horizontal: MediaQuery.of(context).size.width * 0.047),        
-              child: Image.asset(
-                "assets/images/Image_Recomendation.png",
-                width: MediaQuery.of(context).size.width,
+                horizontal: MediaQuery.of(context).size.width * 0.047), 
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15)
+              ),       
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  "assets/images/Image_Recomendation.png",
+                  width: MediaQuery.of(context).size.width,
+                  // fit: BoxFit.cover,
+                ),
               ),
             );
           },

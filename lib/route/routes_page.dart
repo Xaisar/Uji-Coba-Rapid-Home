@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../feature/addCustomer/view/add_customer_screen.dart';
+import '../feature/billing/model/billing_model.dart';
+import '../feature/detailBilling/view/detail_billing_screen.dart';
+import '../feature/detailCatalog/view/detail_catalog_screen.dart';
+import '../feature/home/model/catalog_model.dart';
 import '../feature/register/view/register_screen.dart';
 import '../screen/onboarding/onboardingmenu_screen.dart';
 import '../feature/homeIndex/view/home_index.dart';
@@ -100,6 +104,22 @@ class MyRoute {
         child: AddCustomerScreen(routeState: true, homebloc: settings.arguments as HomeBloc,),
         type: PageTransitionType.fade,
         duration: const Duration(milliseconds: 800),
+        settings: settings
+      );
+
+      case DETAILCATALOGHOME :
+      return PageTransition(
+        child: DetailCatalogScreen(catalog: settings.arguments as Catalog), 
+        type: PageTransitionType.fade,
+        duration: const Duration(milliseconds: 100),
+        settings: settings
+      );
+
+      case DETAILBILLING :
+      return PageTransition(
+        child: DetailBillingScreen(billingModel: settings.arguments as BillingModel,), 
+        type: PageTransitionType.fade,
+        duration: const Duration(milliseconds: 100),
         settings: settings
       );
 
