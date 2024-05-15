@@ -66,8 +66,16 @@ class _BillingScreenViewState extends State<BillingScreenView> {
             if(state is GetBillingSuccesState){
               billings = state.billings;  
             }
+            if(state is OnRefreshBillingFailureState){
+              showTopSnackBar(Overlay.of(context),
+                CustomSnackBar.error(message: state.error));
+            }
+            if(state is OnRefreshBillingSuccesState){
+              billings = state.billings;  
+            }
           },
           builder: (context, state) {
+            debugPrint(state.toString());
             if(state is GetBillingProcessState){
               return Center(
                 child : CircularProgressIndicator(
@@ -88,11 +96,10 @@ class _BillingScreenViewState extends State<BillingScreenView> {
             )
             : RefreshIndicator(
               onRefresh: () async {
-                billingBloc.add(InitialBillingEvent());
+                billingBloc.add(OnRefreshBillingEvent());
               },
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
-                physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
                 itemCount: billings.length,
                 itemBuilder: (context, index) {
                   return Column(

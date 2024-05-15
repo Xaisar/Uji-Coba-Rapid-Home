@@ -5,7 +5,6 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../authentication/bloc/authentication_bloc.dart';
-import '../../authentication/model/user_model.dart';
 import '../bloc/card_home_bloc/card_home_bloc.dart';
 import '../bloc/catalog_home_bloc/catalog_home_bloc.dart';
 import '../bloc/home_bloc/home_bloc.dart';
@@ -15,6 +14,7 @@ import '../bloc/cubit/index_customer/index_customer_cubit.dart';
 
 import '../../../theme/pallet_color.dart';
 import '../bloc/recommendation_home_bloc/recommendation_home_bloc.dart';
+import '../model/user_model.dart';
 import 'home_section/bottom_sheet_customer.dart';
 import 'home_section/card_section_view.dart';
 import 'home_section/paket_section_view.dart';
@@ -61,16 +61,23 @@ class _HomeScreenViewState extends State<HomeScreenView> {
 
     return MultiBlocListener(
         listeners: [
-          BlocListener<HomeBloc, HomeState>(listener: (context, state) {
+          BlocListener<HomeBloc, HomeState>(
+            listener: (context, state) {
             if (state is InitialHomeSuccesState) {
               user = state.user;
-              debugPrint(state.indexCustomer.toString());
               indexCustomerCubit.changeState(state.indexCustomer);
             }
             if (state is InitialHomeFailureState) {
               showTopSnackBar(Overlay.of(context),
                 CustomSnackBar.error(message: state.error));
-              context.read<AuthenticationBloc>().add(UnAuthenticationEvent());
+            }
+            if (state is OnRefreshHomeSuccesState) {
+              user = state.user;
+              indexCustomerCubit.changeState(state.indexCustomer);
+            }
+            if (state is OnRefreshHomeFailureState) {
+              showTopSnackBar(Overlay.of(context),
+                CustomSnackBar.error(message: state.error));
             }
           }),
           BlocListener<IndexCustomerCubit, IndexCustomerState>(
@@ -95,9 +102,15 @@ class _HomeScreenViewState extends State<HomeScreenView> {
             //FrontView
             BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
-                if(state is InitialHomeSuccesState){
+                debugPrint(state.toString());
+                if(state is InitialHomeSuccesState || 
+                  state is OnRefreshHomeSuccesState || 
+                  state is OnRefreshHomeFailureState ||
+                  state is OnRefreshHomeProccesState
+                  ){
                   return BlocBuilder<IndexCustomerCubit, IndexCustomerState>(
                   builder: (context, state) {
+                    debugPrint("build ulang");
                     return Scaffold(
                       backgroundColor: Colors.transparent,
                       appBar: AppBar(
@@ -116,8 +129,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                         user.avatar!,
                                         errorBuilder:
                                             (context, error, stackTrace) {
-                                          return const Icon(Icons.person,
-                                              color: Colors.red);
+                                          return Icon(Icons.person,
+                                              color: C6);
                                         },
                                       )
                                     : Icon(
@@ -201,41 +214,62 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           )
                         ],
                       ),
-                      body: SingleChildScrollView(
-                        padding: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.04,
-                            bottom: MediaQuery.of(context).size.height * 0.025),
-                        child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                //card section
-                                CardHomeWidget(customer: user.customers[indexCustomer]),
-                                //paket untuk anda section
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.015,
-                                ),
-                                PaketHomeWidget(customer: user.customers[indexCustomer]),
-                                //Recommendation section
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height *
-                                      0.015,
-                                ),
-                                const RecommedationHomeWidget()
-                              ],
-                            )
-                          ),
+                      body: RefreshIndicator.adaptive(
+                        color: C3,
+                        onRefresh: () async {
+                          homeBloc.add(OnRefreshHomeEvent());
+                        },
+                        child: SingleChildScrollView(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.04,
+                              bottom: MediaQuery.of(context).size.height * 0.025),
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  //card section
+                                  CardHomeWidget(customer: user.customers[indexCustomer]),
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.015,
+                                  ),
+                                  //paket untuk anda section
+                                  Container(
+                                    color: C20,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: MediaQuery.of(context).size.height * 0.015 / 3,
+                                        ),
+                                        PaketHomeWidget(customer: user.customers[indexCustomer]),
+                                      ],
+                                    ),
+                                  ),
+                                  //Recommendation section
+                                  Container(
+                                    color: C20,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: MediaQuery.of(context).size.height * 0.015,
+                                        ),
+                                        const RecommedationHomeWidget(),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ),
+                        ),
                       ),
                     );
                   },
                 );
                 } 
-                if(state is InitialHomeProccesState){
-                  return Center(child: CircularProgressIndicator(color: C1));
+                if(state is InitialHomeFailureState){
+                  return const Center();
                 }
-                return const Center();
+                return Center(child: CircularProgressIndicator(color: C1));
               },
             )
           ],

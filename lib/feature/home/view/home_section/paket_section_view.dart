@@ -7,9 +7,9 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../route/routes_name.dart';
 import '../../../../theme/pallet_color.dart';
-import '../../../authentication/model/customer_model.dart';
 import '../../bloc/catalog_home_bloc/catalog_home_bloc.dart';
 import '../../model/catalog_model.dart';
+import '../../model/customer_model.dart';
 
 class PaketHomeWidget extends StatefulWidget {
   const PaketHomeWidget({super.key, required this.customer});
@@ -48,7 +48,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
           //title paket untuk anda section
           Container(
             alignment: Alignment.topLeft,
-            padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.041),
+            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.041),
             child: Text(
               "Paket Untuk Anda",
               style: TextStyle(

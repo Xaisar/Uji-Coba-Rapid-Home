@@ -72,4 +72,9 @@ class ApiUtils{
     const String urlGetDetailBilling = GETDETAILBILLINGURL;
     return Uri.parse(_baseUrl + _apiVersion + urlGetDetailBilling + parameter);
   }
+
+  Uri urlGeUser(String parameter){
+    const String urlGetUser = GETUSER;
+    return Uri.parse(_baseUrl + _apiVersion + urlGetUser + parameter);
+  }
 }

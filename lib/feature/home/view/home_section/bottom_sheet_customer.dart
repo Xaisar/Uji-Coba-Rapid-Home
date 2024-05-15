@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:isp_management_app/feature/home/bloc/home_bloc/home_bloc.dart';
 import 'package:isp_management_app/route/routes_name.dart';
 
-import '../../../authentication/model/user_model.dart';
 import '../../bloc/cubit/index_customer/index_customer_cubit.dart';
 import '../../../../theme/pallet_color.dart';
+import '../../model/user_model.dart';
 
 // ignore: must_be_immutable
 class BottomSheetCustomerSetting extends StatefulWidget {
@@ -306,7 +305,6 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
               //footer bottom sheet
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
                   vertical: 5
                 ),
                 width: MediaQuery.of(context).size.width,
@@ -318,30 +316,42 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
                     )
                   )
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, ADDCUSTOMERFROMHOME, arguments: widget.homeBloc);
-                      },
-                      icon: Icon(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, ADDCUSTOMERFROMHOME, arguments: widget.homeBloc);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 10
+                    ),
+                    elevation: 0,
+                    animationDuration: const Duration(milliseconds: 500),
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0)
+                    )
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
                         Icons.add,
                         color: C6,
                         size: 16 *2,
-                      )
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Tambahkan Customer",
-                      style: TextStyle(
-                        color: C6,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500
                       ),
-                    ),                  ],
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        "Tambahkan Customer",
+                        style: TextStyle(
+                          color: C6,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),                  ],
+                  ),
                 ),
               )
             ],

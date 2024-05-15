@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 import '../model/logout_response_model.dart';
-import '../model/user_model.dart';
+import '../model/user_validate_model.dart';
 import '../service/authentication_api.dart';
 import '../model/session_token_model.dart';
 import '../../../utils/shared_preferences_utils/shared_preferences_utils.dart';
@@ -49,7 +49,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
             } else {
               await SharedPrefUtils().getUser().then((value) {
                 if (value != null) {
-                  User user = User.fromJson(json.decode(value));
+                  UserValidate user = UserValidate.fromJson(json.decode(value));
                   debugPrint(user.customers.length.toString());
 
                   if(user.customers.isEmpty){

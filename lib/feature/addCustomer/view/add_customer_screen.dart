@@ -294,7 +294,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                           }
                           if (state is ValidateTokenSuccesState){
                             if (widget.routeState) {
-                              widget.homeBloc!.add(InitialHomeEvent());
+                              widget.homeBloc!.add(OnRefreshHomeEvent());
                               Navigator.pop(context);
                               Navigator.pop(context);
                             } else {

@@ -24,7 +24,14 @@ final class InitialHomeFailureState extends HomeState {
   const InitialHomeFailureState(this.error);
 } 
 
-final class OnRefreshHomeSuccesState extends HomeState {} 
+final class OnRefreshHomeProccesState extends HomeState {}
+
+final class OnRefreshHomeSuccesState extends HomeState {
+  final User user;
+  final int indexCustomer;
+
+  const OnRefreshHomeSuccesState(this.user, this.indexCustomer);
+} 
 
 final class OnRefreshHomeFailureState extends HomeState {
   final String error;

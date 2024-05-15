@@ -18,3 +18,4 @@ const String GETCATALOGSURL = "/catalogs";
 const String GETDETAILCATALOGURL = "/catalog/";
 const String GETBILLINGURL = "/bills/";
 const String GETDETAILBILLINGURL = "/bill/";
+const String GETUSER = "/user/";

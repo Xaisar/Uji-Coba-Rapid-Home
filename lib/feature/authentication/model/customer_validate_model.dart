@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 // part 'customer_model.g.dart';
 
 // @JsonSerializable()
-class Customer {
+class CustomerValidate {
   final String id;
   @JsonKey(name: 'profile_group_id')
   final String profileGroupId;
@@ -32,7 +32,7 @@ class Customer {
   @JsonKey(name: 'last_check')
   bool? lastCheck;
 
-  Customer({
+  CustomerValidate({
     required this.id,
     required this.profileGroupId,
     required this.servicePlanId,
@@ -54,12 +54,12 @@ class Customer {
     this.lastCheck
   });
 
-  factory Customer.fromJson(Map<String, dynamic> json) => _$CustomerFromJson(json);
+  factory CustomerValidate.fromJson(Map<String, dynamic> json) => _$CustomerValidateFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CustomerToJson(this);
+  Map<String, dynamic> toJson() => _$CustomerValidateToJson(this);
 }
 
-Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
+CustomerValidate _$CustomerValidateFromJson(Map<String, dynamic> json) => CustomerValidate(
       id: json['id'] as String,
       profileGroupId: json['profile_group_id'] as String,
       servicePlanId: json['service_plan_id'] as String,
@@ -74,20 +74,14 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) => Customer(
       code: json['code'] as String,
       ppn: json['ppn'] as int,
       address: json['address'] as String,
-      postalCode: json['postal_code'] == null //
-      ? null
-      : json['postal_code'] as String?,
+      postalCode: json['postal_code'] as String?,
       disabled: json['disabled'] as int?,
       isOnline: json['is_online'] as int?,
-      notifSent: json['notif_sent'] == null //
-      ? null
-      : json['notif_sent'] as bool?,
-      lastCheck: json['last_check'] == null //
-      ? null
-      : json['last_check'] as bool?, 
+      notifSent: json['notif_sent'] as bool?,
+      lastCheck: json['last_check'] as bool?, 
     );
 
-Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
+Map<String, dynamic> _$CustomerValidateToJson(CustomerValidate instance) => <String, dynamic>{
       'id': instance.id,
       'profile_group_id': instance.profileGroupId,
       'service_plan_id': instance.servicePlanId,

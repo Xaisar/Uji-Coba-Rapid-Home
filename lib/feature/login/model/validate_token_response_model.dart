@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 import '../../authentication/model/response_status_model.dart';
 import '../../authentication/model/session_token_model.dart';
-import '../../authentication/model/user_model.dart';
+import '../../authentication/model/user_validate_model.dart';
 
 // part 'validate_token_response_model.g.dart';
 
@@ -26,7 +26,7 @@ class ValidateTokenResponse{
 class Data{
   @JsonKey(name: 'token')
   SessionToken? sessionToken;
-  User? user;
+  UserValidate? user;
 
   Data({
     this.sessionToken,
@@ -63,7 +63,7 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
           : SessionToken.fromJson(json['token'] as Map<String, dynamic>),
       user: json['user'] == null
           ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
+          : UserValidate.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{

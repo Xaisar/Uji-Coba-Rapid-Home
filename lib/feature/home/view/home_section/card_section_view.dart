@@ -7,10 +7,10 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../theme/pallet_color.dart';
-import '../../../authentication/model/customer_model.dart';
 import '../../../billing/model/billing_model.dart';
 import '../../bloc/card_home_bloc/card_home_bloc.dart';
 import '../../model/catalog_model.dart';
+import '../../model/customer_model.dart';
 
 
 class CardHomeWidget extends StatefulWidget {

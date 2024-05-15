@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import './customer_model.dart';
+import 'customer_model.dart';
 
 // part 'user_model.g.dart';
 
@@ -23,12 +23,12 @@ class User {
     required this.customers
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserValidateFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$UserValidateToJson(this);
 }
 
-User _$UserFromJson(Map<String, dynamic> json) => User(
+User _$UserValidateFromJson(Map<String, dynamic> json) => User(
       id: json['id'] as String,
       globalId: json['global_id'] as String,
       name: json['name'] as String,
@@ -39,7 +39,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
           .toList(),
     );
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$UserValidateToJson(User instance) => <String, dynamic>{
       'id': instance.id,
       'global_id': instance.globalId,
       'name': instance.name,

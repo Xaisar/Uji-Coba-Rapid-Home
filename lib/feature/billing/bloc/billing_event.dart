@@ -8,3 +8,5 @@ sealed class BillingEvent extends Equatable {
 }
 
 final class InitialBillingEvent extends BillingEvent {}
+
+final class OnRefreshBillingEvent extends BillingEvent {}
