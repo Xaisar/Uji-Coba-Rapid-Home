@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +56,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
         width: MediaQuery.of(context).size.width,
         alignment: Alignment.topCenter,
         padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.05,
+          horizontal: MediaQuery.of(context).size.width * 0.032,
         ),
         child: BlocConsumer<BillingBloc, BillingState>(
           listener: (context, state) {
@@ -98,16 +99,22 @@ class _BillingScreenViewState extends State<BillingScreenView> {
               onRefresh: () async {
                 billingBloc.add(OnRefreshBillingEvent());
               },
-              child: ListView.builder(
+              child: ListView.separated(
                 scrollDirection: Axis.vertical,
                 itemCount: billings.length,
+                separatorBuilder: (context, index) {
+                  return const Divider(
+                    height: 10,
+                    color: Colors.transparent,
+                  );
+                },
                 itemBuilder: (context, index) {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       index == 0 
                       ? const Divider(
-                        height: 15,
+                        height: 12,
                         color: Colors.transparent,
                       ) 
                       : const SizedBox(),
@@ -117,59 +124,141 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 15
+                          padding: const EdgeInsets.only(
+                            left: 15,
                           ),
                           decoration: BoxDecoration(
-                            color: C3,
-                            border: Border.all(
-                              color: C6,
-                              width: 1.5
+                            color: C1,
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 14,
+                              vertical: 7
                             ),
-                            borderRadius: BorderRadius.circular(20)
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                billings[index].customerName,
-                                style: TextStyle(
-                                  color: C6,
-                                  fontSize: 12
+                            decoration: BoxDecoration(
+                              color: C3,
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10)
+                              )
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                //bill number and tags status
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                          billings[index].billNumber,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                          style: TextStyle(
+                                            color: C6,
+                                            fontSize: 21,
+                                            fontWeight: FontWeight.w600
+                                          ),
+                                        ),
+                                      ),
+                                      billings[index].grandTotal - billings[index].totalPaid == 0
+                                      ? Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 15,
+                                          vertical: 5
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color:  const Color(0xFF84F93C).withOpacity(0.75),
+                                          borderRadius: BorderRadius.circular(99)
+                                        ),
+                                        child: const Text(
+                                          'Lunas', 
+                                          style: TextStyle(
+                                            color:Color(0xFF399500),
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w400
+                                          ),
+                                        ),
+                                      )
+                                      : Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 15,
+                                          vertical: 5
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFFF2F2F).withOpacity(0.75),
+                                          borderRadius: BorderRadius.circular(99)
+                                        ),
+                                        child: const Text(
+                                          "Belum Lunas",
+                                          style: TextStyle(
+                                            color: Color(0xFF8A0000),
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w400
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  )
                                 ),
-                              ),
-                              Text(
-                                billings[index].billNumber,
-                                style: TextStyle(
-                                  color: C6,
-                                  fontSize: 12
+                                //name customer
+                                Text(
+                                  billings[index].customerName,
+                                  style: TextStyle(
+                                    color: C6,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "Rp. ${NumberFormat("000,000","id_ID").format(billings[index].grandTotal)}",
-                                style: TextStyle(
-                                  color: C6,
-                                  fontSize: 12
+                                //line separator
+                                Container(
+                                  width: MediaQuery.of(context).size.width * 0.35,
+                                  height: 2,
+                                  margin: const EdgeInsets.symmetric(vertical: 4),
+                                  decoration: BoxDecoration(
+                                    color: C6,
+                                    borderRadius: BorderRadius.circular(99)
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                DateFormat("d MMMM y", "id_ID").format(billings[index].dueDate),
-                                style: TextStyle(
-                                  color: C6,
-                                  fontSize: 12
-                                ),
-                              ),
-                                      
-                            ],
-                          ),
+                                //due date and price
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        DateFormat("d MMMM y","id_ID").format(billings[index].dueDate),
+                                        style: TextStyle(
+                                          color: C6,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Rp. ${NumberFormat(",###","id_ID").format(billings[index].grandTotal)}',
+                                        style: TextStyle(
+                                          color: C6,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
                         ),
                       ),
-                      const Divider(
-                        height: 15,
-                        color: Colors.transparent,
-                      )
                     ],
                   );
                 },

@@ -275,7 +275,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                                 ),
                                                 children: [
                                                   TextSpan(
-                                                    text: NumberFormat(",000","id_ID").format(catalogs[index1].price),
+                                                    text: NumberFormat(",###","id_ID").format(catalogs[index1].price),
                                                     style: const TextStyle(
                                                       fontSize: 15.5,
                                                       fontWeight: FontWeight.w700

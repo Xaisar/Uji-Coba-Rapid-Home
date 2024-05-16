@@ -155,7 +155,7 @@ class _CardHomeWidgetState extends State<CardHomeWidget> {
                                           0.255,
                                       child: AutoSizeText(
                                         billingModel != null 
-                                        ? "Rp. ${NumberFormat(",000","id_ID").format(billingModel!.grandTotal)}" 
+                                        ? "Rp. ${NumberFormat(",###","id_ID").format(billingModel!.grandTotal)}" 
                                         : "tidak ada data",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,

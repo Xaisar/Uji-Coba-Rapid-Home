@@ -9,7 +9,6 @@ import '../bloc/card_home_bloc/card_home_bloc.dart';
 import '../bloc/catalog_home_bloc/catalog_home_bloc.dart';
 import '../bloc/home_bloc/home_bloc.dart';
 import '../bloc/cubit/index_recommendation_bloc/index_recommendation_cubit.dart';
-import '../../homeIndex/bloc/cubit/index_home_cubit.dart';
 import '../bloc/cubit/index_customer/index_customer_cubit.dart';
 
 import '../../../theme/pallet_color.dart';
@@ -25,6 +24,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('///////////////////////screen');
     return MultiBlocProvider(providers: [
       BlocProvider(create: (context) => HomeBloc()),
       BlocProvider(create: (context) => IndexRecommendationCubit()),
@@ -55,7 +55,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
 
   @override
   Widget build(BuildContext context) {
-    final indexHomeCubit = BlocProvider.of<IndexHomeCubit>(context);
+    debugPrint('///////////////////////view');
     final homeBloc = BlocProvider.of<HomeBloc>(context);
     final indexCustomerCubit = BlocProvider.of<IndexCustomerCubit>(context);
 
@@ -202,9 +202,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                 right:
                                     MediaQuery.of(context).size.width * 0.03),
                             child: IconButton(
-                                onPressed: () {
-                                  indexHomeCubit.onChangeIndex(2);
-                                },
+                                onPressed: () {},
                                 iconSize:
                                     MediaQuery.of(context).size.width * 0.05,
                                 icon: Icon(

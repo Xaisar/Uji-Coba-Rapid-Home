@@ -6,7 +6,6 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 
 import '../../../route/routes_name.dart';
 
-import '../bloc/cubit/index_home_cubit.dart';
 import '../../billing/view/billing_screen.dart';
 import '../../home/view/home_screen.dart';
 import '../../../screen/not_found_screen.dart';
@@ -18,26 +17,23 @@ class HomeIndex extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => IndexHomeCubit(),
-      child: Scaffold(
-        body: DoubleBackToCloseApp(
-          snackBar: SnackBar(
-            elevation: 0,
-            backgroundColor: C3,
-            duration: const Duration(seconds: 3),
-            content: Text(
-              "Press again to leave",
-              style: TextStyle(
-                color: C1,
-                fontSize: 12,
-                fontWeight: FontWeight.w600
-              ),
-            )
-          ),
-          child: const HomeIndexView()
-        )
-      ),
+    return Scaffold(
+      body: DoubleBackToCloseApp(
+        snackBar: SnackBar(
+          elevation: 0,
+          backgroundColor: C3,
+          duration: const Duration(seconds: 3),
+          content: Text(
+            "Press again to leave",
+            style: TextStyle(
+              color: C1,
+              fontSize: 12,
+              fontWeight: FontWeight.w600
+            ),
+          )
+        ),
+        child: const HomeIndexView()
+      )
     );
   }
 }
@@ -50,16 +46,17 @@ class HomeIndexView extends StatefulWidget {
 }
 
 class _HomeIndexViewState extends State<HomeIndexView> {
-  List<Widget> bodyHome = [
-    const HomeScreen(),
-    const BillingScreen(),
-    const NotFoundScreen(),
-    const LogoutScreen(),
+  int indexPage = 0;
+
+  List<Widget> bodyHome = <Widget>[
+    const HomeScreen(key: Key("Home_Screen")),
+    const BillingScreen(key: Key("Billing_Screen")),
+    const NotFoundScreen(key: Key("Not_Found"),),
+    const LogoutScreen(key: Key("Logout")),
   ];
 
   @override
   Widget build(BuildContext context) {
-    final homeIndexCubit = BlocProvider.of<IndexHomeCubit>(context);
 
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
@@ -67,38 +64,36 @@ class _HomeIndexViewState extends State<HomeIndexView> {
           Navigator.pushReplacementNamed(context, LOGIN);
         }
       }, 
-      child: BlocBuilder<IndexHomeCubit, int>(
-        builder: (context, state) {
-          return Scaffold(
-            backgroundColor: C20,
-            body: bodyHome[state],
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: state,
-              onTap: (value) {
-                homeIndexCubit.onChangeIndex(value);
-              },
-              elevation: 0,
-              backgroundColor: C1,
-              type: BottomNavigationBarType.fixed,
-              selectedFontSize: 14,
-              unselectedFontSize: 13,
-              selectedLabelStyle: TextStyle(
-                color: C3, 
-                fontWeight: FontWeight.bold
-              ),
-              unselectedLabelStyle: TextStyle(
-                color: C3, 
-                fontWeight: FontWeight.w400
-              ),
-              items: const [
-                BottomNavigationBarItem(icon: SizedBox(), label: "Home"),
-                BottomNavigationBarItem(icon: SizedBox(), label: "Billing"),
-                BottomNavigationBarItem(icon: SizedBox(), label: "Notification"),
-                BottomNavigationBarItem(icon: SizedBox(), label: "Setting"),
-              ],
-            ),
-          );
-        },
+      child: Scaffold(
+        backgroundColor: C20,
+        body: bodyHome[indexPage],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: indexPage,
+          onTap: (value) {
+            setState(() {
+              indexPage = value;
+            });
+          },
+          elevation: 0,
+          backgroundColor: C1,
+          type: BottomNavigationBarType.fixed,
+          selectedFontSize: 14,
+          unselectedFontSize: 13,
+          selectedLabelStyle: TextStyle(
+            color: C3, 
+            fontWeight: FontWeight.bold
+          ),
+          unselectedLabelStyle: TextStyle(
+            color: C3, 
+            fontWeight: FontWeight.w400
+          ),
+          items: const [
+            BottomNavigationBarItem(icon: SizedBox(), label: "Home"),
+            BottomNavigationBarItem(icon: SizedBox(), label: "Billing"),
+            BottomNavigationBarItem(icon: SizedBox(), label: "Notification"),
+            BottomNavigationBarItem(icon: SizedBox(), label: "Setting"),
+          ],
+        ),
       )
     );
   }
@@ -141,3 +136,4 @@ class LogoutScreen extends StatelessWidget {
     );
   }
 }
+
