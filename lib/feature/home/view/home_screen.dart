@@ -120,9 +120,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CircleAvatar(
-                                radius: MediaQuery.of(context).size.width *
-                                    0.083 /
-                                    2,
+                                radius: MediaQuery.sizeOf(context).width * 0.083 / 2,
                                 backgroundColor: C3,
                                 child: user.avatar != null
                                     ? Image.network(

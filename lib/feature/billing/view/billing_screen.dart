@@ -175,15 +175,15 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                           vertical: 5
                                         ),
                                         decoration: BoxDecoration(
-                                          color:  const Color(0xFF84F93C).withOpacity(0.75),
+                                          color:  const Color(0xFFF2FDF5 * 2),
                                           borderRadius: BorderRadius.circular(99)
                                         ),
                                         child: const Text(
                                           'Lunas', 
                                           style: TextStyle(
-                                            color:Color(0xFF399500),
+                                            color:Color(0xFF147638),
                                             fontSize: 11,
-                                            fontWeight: FontWeight.w400
+                                            fontWeight: FontWeight.w600
                                           ),
                                         ),
                                       )
@@ -193,15 +193,15 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                           vertical: 5
                                         ),
                                         decoration: BoxDecoration(
-                                          color: const Color(0xFFFF2F2F).withOpacity(0.75),
+                                          color: const Color(0xFFFFF1F2 * 2),
                                           borderRadius: BorderRadius.circular(99)
                                         ),
                                         child: const Text(
                                           "Belum Lunas",
                                           style: TextStyle(
-                                            color: Color(0xFF8A0000),
+                                            color: Color(0xFFB4173A),
                                             fontSize: 11,
-                                            fontWeight: FontWeight.w400
+                                            fontWeight: FontWeight.w600
                                           ),
                                         ),
                                       ),

@@ -201,7 +201,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                       ? const Text(
                                         "Lunas",
                                         style: TextStyle(
-                                          color:Color(0xFF1BD717),
+                                          color:Color(0xFF147638),
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600
                                         )
@@ -209,7 +209,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                       : const Text(
                                         "Belum Lunas",
                                         style: TextStyle(
-                                          color: Color(0xFFDC1B1B),
+                                          color: Color(0xFFB4173A),
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600
                                         )
