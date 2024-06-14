@@ -7,6 +7,8 @@ sealed class CatalogHomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class InitialCatalogHome extends CatalogHomeEvent{}
+
 final class CatalogHomeInitialEvent extends CatalogHomeEvent {
   final String customerId;
 

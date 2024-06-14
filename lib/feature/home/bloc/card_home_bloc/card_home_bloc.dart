@@ -19,6 +19,8 @@ class CardHomeBloc extends Bloc<CardHomeEvent, CardHomeState> {
   CardHomeBloc() : super(CardHomeInitial()) {
     on<CardHomeEvent>((event, emit) {});
 
+    on<InitialCardHome>((event, emit) => emit(CardHomeInitial()));
+
     on<CardHomeInitialEvent>(initalCardHome);
   }
 
@@ -41,7 +43,7 @@ class CardHomeBloc extends Bloc<CardHomeEvent, CardHomeState> {
 
                 String speed = getCatalogCardResponse.data!.catalog!.speed.replaceAll(RegExp(r'\D'), '');
 
-                emit(CardHomeInitialSuccesstate(
+                emit(CardHomeInitialSuccesState(
                   getCatalogCardResponse.data!.catalog,
                   getBillingCardResponse.data!.billingModel,
                   speed

@@ -78,6 +78,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
 
   Future<void> logout(IsLogoutEvent event, Emitter<AuthenticationState> emit) async {
+    emit(LogoutProccesState());
     final String? dataSession = await SharedPrefUtils().getSession();
     SessionToken sessionToken;
 

@@ -3,6 +3,7 @@ import "dart:convert";
 
 import "package:flutter/material.dart";
 import 'package:http/http.dart' as http;
+import "package:image_picker/image_picker.dart";
 
 class NetworkUtils{
 
@@ -55,6 +56,35 @@ class NetworkUtils{
     }).catchError((dynamic error){
       throw Exception(error);
     });
+  }
+
+  Future<dynamic> postMultiPart(Uri url, Map<String, String> header, Map<String, String> form, XFile? file) async {
+    final http.MultipartRequest request = http.MultipartRequest("POST", url);
+    request.headers.addAll(header);
+    request.fields.addAll(form);
+    if(file != null) {
+      request.files.add( await http.MultipartFile.fromPath('avatar', file.path));
+    }
+    
+
+    final http.Response res = await http.Response.fromStream(await request.send());
+
+    debugPrint("status code: ${res.statusCode}");
+    debugPrint("body: ${res.body}");
+
+    if(res.statusCode == 200 ||
+      res.statusCode == 201 ||
+      res.statusCode == 202 ||
+      res.statusCode == 206 ||
+      res.statusCode == 401 ||
+      res.statusCode == 403 ||
+      res.statusCode == 400 ||
+      res.statusCode == 422
+    ) {
+      return json.decode(res.body);
+    } else {
+      return throw Exception('Error while fetching data');
+    }
   }
   
   Future<dynamic> put(Uri url, Map<String, String> header, String body) async {

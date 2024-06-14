@@ -16,9 +16,19 @@ class ApiUtils{
     'Accept': 'application/json'
   };
 
+  Map<String, String> headerTokenForMultipart(String token) => {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'multipart/form-data',
+  };
+
   Uri urlLogin(){
     const String urlLogin = LOGINURL;
     return Uri.parse(_baseUrl + _apiVersion + urlLogin);
+  }
+
+  Uri urlResetPassword(){
+    const String urlResetPassword = RESETPASSWORDURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlResetPassword);
   }
 
   Uri urlValidateToken(){
@@ -74,7 +84,12 @@ class ApiUtils{
   }
 
   Uri urlGeUser(String parameter){
-    const String urlGetUser = GETUSER;
+    const String urlGetUser = GETUSERURL;
     return Uri.parse(_baseUrl + _apiVersion + urlGetUser + parameter);
+  }
+
+  Uri urlEditUser(String parameter) {
+    const String urlEditUser = EDITUSERURL;
+    return  Uri.parse(_baseUrl + _apiVersion + urlEditUser + parameter);
   }
 }

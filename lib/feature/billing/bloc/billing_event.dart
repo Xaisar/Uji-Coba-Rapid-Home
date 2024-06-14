@@ -7,6 +7,12 @@ sealed class BillingEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class InitialBillingEvent extends BillingEvent {}
+final class InitialBilling extends BillingEvent {}
+
+final class InitialBillingEvent extends BillingEvent {
+  final Customer customer;
+
+  const InitialBillingEvent(this.customer);
+}
 
 final class OnRefreshBillingEvent extends BillingEvent {}

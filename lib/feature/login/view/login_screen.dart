@@ -214,7 +214,9 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         //forgot password
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, FORGOTPASSWORD);
+                          },
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(0)
                           ),

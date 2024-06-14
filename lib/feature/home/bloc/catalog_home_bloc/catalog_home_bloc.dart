@@ -17,6 +17,8 @@ class CatalogHomeBloc extends Bloc<CatalogHomeEvent, CatalogHomeState> {
   CatalogHomeBloc() : super(CatalogHomeInitial()) {
     on<CatalogHomeEvent>((event, emit) {});
 
+    on<InitialCatalogHome>((event, emit) => emit(CatalogHomeInitial()));
+
     on<CatalogHomeInitialEvent>(initialCatalogHome);
   }
 

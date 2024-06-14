@@ -11,12 +11,12 @@ final class CardHomeInitial extends CardHomeState {}
 
 final class CardHomeInitialProccesState extends CardHomeState {}
 
-final class CardHomeInitialSuccesstate extends CardHomeState {
+final class CardHomeInitialSuccesState extends CardHomeState {
   final Catalog? catalog;
   final BillingModel? billingModel;
   final String? speed;
 
-  const CardHomeInitialSuccesstate(this.catalog, this.billingModel, this.speed);
+  const CardHomeInitialSuccesState(this.catalog, this.billingModel, this.speed);
 }
 
 final class CardHomeInitialFailureState extends CardHomeState {

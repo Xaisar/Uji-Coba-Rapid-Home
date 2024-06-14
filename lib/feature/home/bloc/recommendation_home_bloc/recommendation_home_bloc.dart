@@ -8,6 +8,8 @@ class RecommendationHomeBloc extends Bloc<RecommendationHomeEvent, Recommendatio
   RecommendationHomeBloc() : super(RecommendationHomeInitial()) {
     on<RecommendationHomeEvent>((event, emit) {});
 
+    on<InitialRecommendationHome>((event, emit) => emit(RecommendationHomeInitial()));
+
     on<RecommendationHomeInitialEvent>(recommendationHomeInitial);
   }
 

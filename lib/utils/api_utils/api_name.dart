@@ -8,6 +8,7 @@ const String APIVERSION = "/mobile/api/v1";
 
 //function url
 const String LOGINURL = "/login";
+const String RESETPASSWORDURL = "/forgot-password";
 const String REGISTERURL = "/register";
 const String VALIDATETOKENURL = "/validate-token";
 const String LOGOUTURL = "/logout";
@@ -18,4 +19,5 @@ const String GETCATALOGSURL = "/catalogs";
 const String GETDETAILCATALOGURL = "/catalog/";
 const String GETBILLINGURL = "/bills/";
 const String GETDETAILBILLINGURL = "/bill/";
-const String GETUSER = "/user/";
+const String GETUSERURL = "/user/";
+const String EDITUSERURL = "/user/";

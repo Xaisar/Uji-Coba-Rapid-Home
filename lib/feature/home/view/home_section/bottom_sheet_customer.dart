@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:isp_management_app/feature/home/bloc/home_bloc/home_bloc.dart';
-import 'package:isp_management_app/route/routes_name.dart';
 
-import '../../bloc/cubit/index_customer/index_customer_cubit.dart';
+import '../../../homeIndex/bloc/cubit/index_customer_cubit/index_customer_cubit.dart';
+import '../../../../route/routes_name.dart';
 import '../../../../theme/pallet_color.dart';
-import '../../model/user_model.dart';
+import '../../../homeIndex/model/user_model.dart';
 
 // ignore: must_be_immutable
 class BottomSheetCustomerSetting extends StatefulWidget {
   BottomSheetCustomerSetting({
     super.key,
     required this.indexCustomerCubit,
-    required this.homeBloc,
     required this.indexCustomer,
     required this.user
   });
   
   IndexCustomerCubit indexCustomerCubit;
-  HomeBloc homeBloc;
   int indexCustomer;
   User user;
 
@@ -171,7 +168,7 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
                                 ? null
                                 : (){
                                   setState(() {
-                                    widget.indexCustomerCubit.changeState(index);
+                                    widget.indexCustomerCubit.changeCustomer(index);
                                     widget.indexCustomer = index;
                                   });
                                 },
@@ -272,7 +269,7 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
                             ? null
                             : () {
                               setState(() {
-                                widget.indexCustomerCubit.changeState(index);
+                                widget.indexCustomerCubit.changeCustomer(index);
                                 widget.indexCustomer = index;
                               });
                             },
@@ -318,7 +315,7 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
                 ),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, ADDCUSTOMERFROMHOME, arguments: widget.homeBloc);
+                    Navigator.pushNamed(context, ADDCUSTOMERFROMHOME);
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
@@ -350,7 +347,8 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
                           fontSize: 14,
                           fontWeight: FontWeight.w500
                         ),
-                      ),                  ],
+                      ),                 
+                    ],
                   ),
                 ),
               )

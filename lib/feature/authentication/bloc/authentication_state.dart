@@ -19,6 +19,8 @@ final class UserFoundWithNoCustomerState extends AuthenticationState {}
 
 final class AuthenticationIsFirstState extends AuthenticationState {}
 
+final class LogoutProccesState extends AuthenticationState {}
+
 final class LogoutSuccessState extends AuthenticationState{}
 
 final class LogoutFailureState extends AuthenticationState{

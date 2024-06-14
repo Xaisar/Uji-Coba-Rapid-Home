@@ -7,4 +7,6 @@ sealed class RecommendationHomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class InitialRecommendationHome extends RecommendationHomeEvent{}
+
 final class RecommendationHomeInitialEvent extends RecommendationHomeEvent {}

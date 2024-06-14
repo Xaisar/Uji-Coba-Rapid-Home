@@ -34,7 +34,9 @@ class DetailCatalogBloc extends Bloc<DetailCatalogEvent, DetailCatalogState> {
 
           if(getDetailCatalogResponse.statusResponse != null) {
             if(getDetailCatalogResponse.statusResponse!.code == 200) {
-              emit(DetailCatalogInitialSuccesState(getDetailCatalogResponse.data!.detailCatalog));
+              String speed = getDetailCatalogResponse.data!.detailCatalog.speed.replaceAll(RegExp(r'\D'), '');
+
+              emit(DetailCatalogInitialSuccesState(getDetailCatalogResponse.data!.detailCatalog, speed));
             } else {
               emit(DetailCatalogInitialFailureState(getDetailCatalogResponse.statusResponse!.message));
             }

@@ -13,8 +13,9 @@ final class DetailCatalogInitialProccesState extends DetailCatalogState {}
 
 final class DetailCatalogInitialSuccesState extends DetailCatalogState {
   final DetailCatalog detailCatalog;
+  final String speed;
 
-  const DetailCatalogInitialSuccesState(this.detailCatalog);
+  const DetailCatalogInitialSuccesState(this.detailCatalog, this.speed);
 }
 
 final class DetailCatalogInitialFailureState extends DetailCatalogState {

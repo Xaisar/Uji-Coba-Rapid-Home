@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import '../../../theme/pallet_color.dart';
 import '../../billing/model/billing_model.dart';
 import '../bloc/detail_billing_bloc.dart';
-import '../model/detail_billing_model.dart';
 
 class DetailBillingScreen extends StatelessWidget{
   const DetailBillingScreen({
@@ -36,7 +35,6 @@ class DetailBillingView extends StatefulWidget{
 }
 
 class _DetailBillingViewState extends State<DetailBillingView> {
-  DetailBilling? detailBilling;
 
   @override
   void initState() {
@@ -47,9 +45,21 @@ class _DetailBillingViewState extends State<DetailBillingView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: C20,
-      appBar: AppBar(
-        title: const Text("Detail Billing"),
-        backgroundColor: C1,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(75),
+        child: AppBar(
+          toolbarHeight: 75,
+          centerTitle: true,
+          title: Text(
+            "Detail Billing",
+            style: TextStyle(
+                fontSize: 18,
+                color: C3, 
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          backgroundColor: C1,
+        ),
       ),
       body: BlocConsumer<DetailBillingBloc, DetailBillingState>(
         listener: (context, state) {
@@ -57,18 +67,13 @@ class _DetailBillingViewState extends State<DetailBillingView> {
             showTopSnackBar(Overlay.of(context),
             CustomSnackBar.error(message: state.error));
           }
-          if(state is DetailBillingInitialSuccesState){
-            detailBilling = state.detailBilling;
-          }
         },
         builder: (context, state) {
           if(state is DetailBillingInitialFailureState){
-            return const Center();
+            return Center(child: Text('Tidak ada Data', style: TextStyle(color: C1)));
           }
           if(state is DetailBillingInitialSuccesState){
-            return detailBilling == null 
-            ? Center(child: Text('Tidak ada Data', style: TextStyle(color: C1)))
-            : Stack(
+            return  Stack(
               fit: StackFit.expand,
               children: [
                 //body
@@ -76,12 +81,11 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                   alignment: Alignment.topCenter,
                   child: SingleChildScrollView(
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           //keterangan
                           Container(
@@ -120,7 +124,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                         )
                                       ),
                                       Text(
-                                        detailBilling!.customerName,
+                                        state.detailBilling.customerName,
                                         style: TextStyle(
                                           color: C6,
                                           fontSize: 12,
@@ -146,7 +150,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                         )
                                       ),
                                       Text(
-                                        detailBilling!.billNumber,
+                                        state.detailBilling.billNumber,
                                         style: TextStyle(
                                           color: C6,
                                           fontSize: 12,
@@ -172,7 +176,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                         )
                                       ),
                                       Text(
-                                        DateFormat("d MMMM y", 'id_ID').format(detailBilling!.dueDate),
+                                        DateFormat("d MMMM y", 'id_ID').format(state.detailBilling.dueDate),
                                         style: TextStyle(
                                           color: C6,
                                           fontSize: 12,
@@ -197,7 +201,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                           fontSize: 12,
                                         )
                                       ),
-                                      detailBilling!.grandTotal - detailBilling!.totalPaid == 0
+                                      state.detailBilling.grandTotal - state.detailBilling.totalPaid == 0
                                       ? const Text(
                                         "Lunas",
                                         style: TextStyle(
@@ -244,7 +248,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                   )
                                 ),
                                 Text(
-                                  "Rp. ${NumberFormat(',###','id_ID').format(detailBilling!.total)}",
+                                  "Rp. ${NumberFormat(',###','id_ID').format(state.detailBilling.total)}",
                                   style: TextStyle(
                                     color: C6,
                                     fontSize: 14,
@@ -278,7 +282,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                   )
                                 ),
                                 Text(
-                                  "Rp. ${NumberFormat(',###','id_ID').format(detailBilling!.tax)}",
+                                  "Rp. ${NumberFormat(',###','id_ID').format(state.detailBilling.tax)}",
                                   style: TextStyle(
                                     color: C6,
                                     fontSize: 14,
@@ -312,7 +316,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                   )
                                 ),
                                 Text(
-                                  "Rp. ${NumberFormat(',###','id_ID').format(detailBilling!.grandTotal)}",
+                                  "Rp. ${NumberFormat(',###','id_ID').format(state.detailBilling.grandTotal)}",
                                   style: TextStyle(
                                     color: C6,
                                     fontSize: 14,
@@ -346,7 +350,7 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                                   )
                                 ),
                                 Text(
-                                  "Rp. ${NumberFormat(',###','id_ID').format(detailBilling!.totalPaid)}",
+                                  "Rp. ${NumberFormat(',###','id_ID').format(state.detailBilling.totalPaid)}",
                                   style: TextStyle(
                                     color: C6,
                                     fontSize: 14,
@@ -356,6 +360,11 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                               ],
                             ),
                           ),
+                        
+                          //padding bawah
+                          const SizedBox(
+                            height: 75,
+                          )
                         ],
                       ),
                     ),

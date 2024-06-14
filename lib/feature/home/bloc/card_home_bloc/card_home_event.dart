@@ -7,6 +7,8 @@ sealed class CardHomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class InitialCardHome extends CardHomeEvent {}
+
 final class CardHomeInitialEvent extends CardHomeEvent {
   final String customerId;
 

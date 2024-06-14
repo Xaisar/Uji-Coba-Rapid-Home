@@ -5,7 +5,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../route/routes_name.dart';
 
-import '../../home/bloc/home_bloc/home_bloc.dart';
 import '../model/add_customer_merchant_model.dart';
 import '../bloc/add_customer_bloc.dart';
 import '../bloc/cubit/customer_id_cubit/customer_id_cubit.dart';
@@ -14,14 +13,12 @@ import '../../authentication/bloc/authentication_bloc.dart';
 
 // ignore: must_be_immutable
 class AddCustomerScreen extends StatelessWidget {
-  AddCustomerScreen({
+  const AddCustomerScreen({
     super.key,
-    required this.routeState,
-    this.homebloc
+    required this.routeState
   });
 
   final bool routeState;
-  HomeBloc? homebloc;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +36,7 @@ class AddCustomerScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: C13,
           body: SingleChildScrollView(
-            child: SafeArea(child: AddCustomerForm(routeState: routeState, homeBloc: homebloc))
+            child: SafeArea(child: AddCustomerForm(routeState: routeState))
           ),
         )
       ),
@@ -49,14 +46,12 @@ class AddCustomerScreen extends StatelessWidget {
 
 // ignore: must_be_immutable
 class AddCustomerForm extends StatefulWidget {
-  AddCustomerForm({
+  const AddCustomerForm({
     super.key,
     required this.routeState,
-    this.homeBloc  
-    });
+  });
   
   final bool routeState;
-  HomeBloc? homeBloc;
 
   @override
   State<AddCustomerForm> createState() => _AddCustomerFormState();
@@ -294,9 +289,10 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                           }
                           if (state is ValidateTokenSuccesState){
                             if (widget.routeState) {
-                              widget.homeBloc!.add(OnRefreshHomeEvent());
-                              Navigator.pop(context);
-                              Navigator.pop(context);
+                              showTopSnackBar(Overlay.of(context),
+                                const CustomSnackBar.success(message: "Customer berhasil ditambah")
+                              );
+                              Navigator.pushReplacementNamed(context, HOME);
                             } else {
                               Navigator.pushReplacementNamed(context, HOME);                              
                             }

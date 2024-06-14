@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -8,35 +6,25 @@ import 'package:intl/intl.dart';
 
 import '../../../route/routes_name.dart';
 import '../../../theme/pallet_color.dart';
+import '../../homeIndex/model/customer_model.dart';
 import '../bloc/billing_bloc.dart';
-import '../model/billing_model.dart';
 
-class BillingScreen extends StatelessWidget {
-  const BillingScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BillingBloc(),
-      child: const BillingScreenView(),
-    );
-  }
-}
-
-class BillingScreenView extends StatefulWidget {
-  const BillingScreenView({super.key});
+class BillingScreen extends StatefulWidget {
+  const BillingScreen({super.key, required this.customer});
+  final Customer customer;
 
   @override
-  State<BillingScreenView> createState() => _BillingScreenViewState();
+  State<BillingScreen> createState() => _BillingScreenState();
 }
 
-class _BillingScreenViewState extends State<BillingScreenView> {
-  List<BillingModel> billings = [];
+class _BillingScreenState extends State<BillingScreen> {
 
   @override
   void initState() {
     super.initState();
-    context.read<BillingBloc>().add(InitialBillingEvent());
+    if(context.read<BillingBloc>().state is! GetBillingSuccesState){
+      context.read<BillingBloc>().add(InitialBillingEvent(widget.customer));
+    }
   }
 
   @override
@@ -44,13 +32,22 @@ class _BillingScreenViewState extends State<BillingScreenView> {
     final billingBloc = BlocProvider.of<BillingBloc>(context);
 
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      appBar: AppBar(
+      backgroundColor: Colors.transparent, 
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(75),
+        child: AppBar(
           backgroundColor: C1,
+          centerTitle: true,
           title: Text(
             "Billing",
-            style: TextStyle(color: C3, fontWeight: FontWeight.bold),
-          )),
+            style: TextStyle(
+              fontSize: 18,
+              color: C3, 
+              fontWeight: FontWeight.bold
+            ),
+          )
+        ),
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -64,44 +61,43 @@ class _BillingScreenViewState extends State<BillingScreenView> {
               showTopSnackBar(Overlay.of(context),
                 CustomSnackBar.error(message: state.error));
             }
-            if(state is GetBillingSuccesState){
-              billings = state.billings;  
-            }
             if(state is OnRefreshBillingFailureState){
               showTopSnackBar(Overlay.of(context),
                 CustomSnackBar.error(message: state.error));
             }
-            if(state is OnRefreshBillingSuccesState){
-              billings = state.billings;  
-            }
           },
           builder: (context, state) {
-            debugPrint(state.toString());
-            if(state is GetBillingProcessState){
-              return Center(
-                child : CircularProgressIndicator(
-                  color: C1,
-                )
+            if(state is GetBillingFailureState){
+              Center(
+                child: Text(
+                  "Tidak ada Data",
+                  style: TextStyle(
+                    color: C1,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
+                  ),
+                ),
               );
             }
-            return billings.isEmpty
-            ? Center(
-              child: Text(
-                "Tidak ada Data",
-                style: TextStyle(
-                  color: C1,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600
+            if(state is GetBillingSuccesState){
+              return state.billings.isEmpty
+              ? Center(
+                child: Text(
+                  "Tidak ada Data",
+                  style: TextStyle(
+                    color: C1,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600
+                  ),
                 ),
-              ),
-            )
-            : RefreshIndicator(
+              )
+              : RefreshIndicator(
               onRefresh: () async {
-                billingBloc.add(OnRefreshBillingEvent());
+                billingBloc.add(InitialBillingEvent(widget.customer));
               },
               child: ListView.separated(
                 scrollDirection: Axis.vertical,
-                itemCount: billings.length,
+                itemCount: state.billings.length,
                 separatorBuilder: (context, index) {
                   return const Divider(
                     height: 10,
@@ -120,7 +116,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                       : const SizedBox(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, DETAILBILLING, arguments: billings[index]);
+                          Navigator.pushNamed(context, DETAILBILLING, arguments: state.billings[index]);
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width,
@@ -158,7 +154,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                     children: [
                                       Flexible(
                                         child: Text(
-                                          billings[index].billNumber,
+                                          state.billings[index].billNumber,
                                           maxLines: 1,
                                           overflow: TextOverflow.clip,
                                           style: TextStyle(
@@ -168,7 +164,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                           ),
                                         ),
                                       ),
-                                      billings[index].grandTotal - billings[index].totalPaid == 0
+                                      state.billings[index].grandTotal - state.billings[index].totalPaid == 0
                                       ? Container(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 15,
@@ -211,7 +207,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                 ),
                                 //name customer
                                 Text(
-                                  billings[index].customerName,
+                                  state.billings[index].customerName,
                                   style: TextStyle(
                                     color: C6,
                                     fontSize: 13,
@@ -236,7 +232,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Text(
-                                        DateFormat("d MMMM y","id_ID").format(billings[index].dueDate),
+                                        DateFormat("d MMMM y","id_ID").format(state.billings[index].dueDate),
                                         style: TextStyle(
                                           color: C6,
                                           fontSize: 13,
@@ -244,7 +240,7 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                                         ),
                                       ),
                                       Text(
-                                        'Rp. ${NumberFormat(",###","id_ID").format(billings[index].grandTotal)}',
+                                        'Rp. ${NumberFormat(",###","id_ID").format(state.billings[index].grandTotal)}',
                                         style: TextStyle(
                                           color: C6,
                                           fontSize: 15,
@@ -263,6 +259,12 @@ class _BillingScreenViewState extends State<BillingScreenView> {
                   );
                 },
               ),
+            );
+            }
+            return Center(
+              child : CircularProgressIndicator(
+                color: C1,
+              )
             );
           },
         ),

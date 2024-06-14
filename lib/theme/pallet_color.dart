@@ -27,3 +27,5 @@ Color C20 = const Color(0xFFD4E7E9);
 Color SlidePointOn = const Color(0xFF263238);
 Color SlidePointOff = const Color(0xFFADCAD9);
 
+Color HomeShimmerColor = const Color(0xFFC8C8C8);
+
