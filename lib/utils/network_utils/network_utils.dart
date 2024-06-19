@@ -59,18 +59,18 @@ class NetworkUtils{
   }
 
   Future<dynamic> postMultiPart(Uri url, Map<String, String> header, Map<String, String> form, XFile? file) async {
-    final http.MultipartRequest request = http.MultipartRequest("POST", url);
-    request.headers.addAll(header);
-    request.fields.addAll(form);
+    final http.MultipartRequest request = http.MultipartRequest("POST", url)
+    ..headers.addAll(header)
+    ..fields.addAll(form);
     if(file != null) {
       request.files.add( await http.MultipartFile.fromPath('avatar', file.path));
     }
-    
 
-    final http.Response res = await http.Response.fromStream(await request.send());
+    final res = await request.send();
+    final resBody = await res.stream.bytesToString();
 
     debugPrint("status code: ${res.statusCode}");
-    debugPrint("body: ${res.body}");
+    debugPrint("body: $resBody");
 
     if(res.statusCode == 200 ||
       res.statusCode == 201 ||
@@ -81,9 +81,9 @@ class NetworkUtils{
       res.statusCode == 400 ||
       res.statusCode == 422
     ) {
-      return json.decode(res.body);
+      return json.decode(resBody);
     } else {
-      return throw Exception('Error while fetching data');
+      return throw Exception('Error while fetching data or Your session has expired');
     }
   }
   

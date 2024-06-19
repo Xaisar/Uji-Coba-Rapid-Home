@@ -10,8 +10,6 @@ class DetailBillingApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetDetailBillingResponse.fromJson(response);
-    }).catchError((dynamic onError) {
-      return onError;
     });
 
   }

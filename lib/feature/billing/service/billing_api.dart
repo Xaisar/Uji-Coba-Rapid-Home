@@ -12,8 +12,6 @@ class BillingApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetBillingResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
 }

@@ -14,9 +14,6 @@ class RegisterApi{
 
     return await NetworkUtils().post(link, header, body).then((response) {
       return RegisterResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
-
 }

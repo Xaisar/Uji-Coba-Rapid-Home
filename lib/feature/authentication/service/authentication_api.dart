@@ -12,8 +12,6 @@ class AuthenticationApi {
 
     return await NetworkUtils().post(link, header, body).then((response) {
       return LogoutResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
 }

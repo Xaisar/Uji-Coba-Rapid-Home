@@ -10,9 +10,6 @@ class HomeIndexApi {
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetUserResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
-
 }

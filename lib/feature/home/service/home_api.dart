@@ -12,9 +12,6 @@ class HomeApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetCatalogCardResponse.fromJson(response);
-    })
-    .catchError((dynamic onError){
-      return onError;
     });
   }
 
@@ -24,9 +21,6 @@ class HomeApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetBillingCardResponse.fromJson(response); 
-    })
-    .catchError((dynamic onError){
-      return onError;
     });
   }
   
@@ -36,9 +30,6 @@ class HomeApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetCatalogsResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
-  
 }

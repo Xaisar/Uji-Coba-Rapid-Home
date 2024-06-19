@@ -15,8 +15,6 @@ class AddCustomerApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetMerchantResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
 
@@ -27,8 +25,6 @@ class AddCustomerApi{
 
     return await NetworkUtils().post(link, header, body).then((response) {
       return AddCustomerResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
 
@@ -39,9 +35,6 @@ class AddCustomerApi{
 
     return await NetworkUtils().post(link, header, body).then((response) {
       return ValidateTokenResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
-
 }

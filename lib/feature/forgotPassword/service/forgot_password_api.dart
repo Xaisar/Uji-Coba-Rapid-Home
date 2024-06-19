@@ -15,8 +15,6 @@ class ForgotPasswordApi {
 
     return await NetworkUtils().post(link, header, body).then((response) {
       return ForgotPasswordResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
 }

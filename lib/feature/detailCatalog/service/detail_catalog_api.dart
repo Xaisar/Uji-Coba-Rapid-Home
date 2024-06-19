@@ -10,8 +10,6 @@ class DetailCatalogApi{
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetDetailCatalogResponse.fromJson(response);
-    }).catchError((dynamic onError){
-      return onError;
     });
   }
 }
