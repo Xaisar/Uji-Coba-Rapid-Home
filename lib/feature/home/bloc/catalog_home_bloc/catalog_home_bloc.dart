@@ -37,6 +37,8 @@ class CatalogHomeBloc extends Bloc<CatalogHomeEvent, CatalogHomeState> {
           if(getCatalogsResponse.statusResponse != null) {
             if(getCatalogsResponse.statusResponse!.code == 200) {
               emit(CatalogHomeInitialSuccesstate(getCatalogsResponse.data!.catalogs));
+            } else if (getCatalogsResponse.statusResponse!.code == 401) {
+              emit(CatalogHomeExpiredTokenState());
             } else {
               emit(CatalogHomeInitialFailureState(getCatalogsResponse.statusResponse!.message));
             }

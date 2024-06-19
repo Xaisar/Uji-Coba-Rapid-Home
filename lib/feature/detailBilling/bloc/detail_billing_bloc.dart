@@ -35,6 +35,8 @@ class DetailBillingBloc extends Bloc<DetailBillingEvent, DetailBillingState> {
           if(getDetailBillingResponse.statusResponse != null){
             if(getDetailBillingResponse.statusResponse!.code == 200){
               emit(DetailBillingInitialSuccesState(getDetailBillingResponse.data!.detailBilling));
+            } else if (getDetailBillingResponse.statusResponse!.code == 401) {
+              emit(DetailBillingExpiredTokenState());
             } else {
               emit(DetailBillingInitialFailureState(getDetailBillingResponse.statusResponse!.message));
             }

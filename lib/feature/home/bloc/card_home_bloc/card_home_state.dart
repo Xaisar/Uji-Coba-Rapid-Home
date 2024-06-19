@@ -9,6 +9,10 @@ sealed class CardHomeState extends Equatable {
 
 final class CardHomeInitial extends CardHomeState {}
 
+final class CardHomeExpiredTokenState extends CardHomeState {
+  final String message = "Your session has expired, please login again";
+}
+
 final class CardHomeInitialProccesState extends CardHomeState {}
 
 final class CardHomeInitialSuccesState extends CardHomeState {

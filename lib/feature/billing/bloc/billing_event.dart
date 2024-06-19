@@ -14,5 +14,3 @@ final class InitialBillingEvent extends BillingEvent {
 
   const InitialBillingEvent(this.customer);
 }
-
-final class OnRefreshBillingEvent extends BillingEvent {}

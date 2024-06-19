@@ -377,7 +377,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height * 0.031),
-
+              //button logout
               BlocConsumer<AuthenticationBloc, AuthenticationState>(
                 listener: (context, state) {
                   if(state is LogoutFailureState) {

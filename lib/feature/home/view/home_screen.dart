@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../route/routes_name.dart';
 import '../../editProfile/view/edit_profile_screen.dart';
 import '../../homeIndex/bloc/cubit/index_customer_cubit/index_customer_cubit.dart';
 import '../../homeIndex/bloc/user_bloc.dart';

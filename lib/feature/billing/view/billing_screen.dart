@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../route/routes_name.dart';
 import '../../../theme/pallet_color.dart';
+import '../../authentication/bloc/authentication_bloc.dart';
 import '../../homeIndex/model/customer_model.dart';
 import '../bloc/billing_bloc.dart';
 
@@ -30,6 +31,7 @@ class _BillingScreenState extends State<BillingScreen> {
   @override
   Widget build(BuildContext context) {
     final billingBloc = BlocProvider.of<BillingBloc>(context);
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return Scaffold(
       backgroundColor: Colors.transparent, 
@@ -61,33 +63,46 @@ class _BillingScreenState extends State<BillingScreen> {
               showTopSnackBar(Overlay.of(context),
                 CustomSnackBar.error(message: state.error));
             }
-            if(state is OnRefreshBillingFailureState){
-              showTopSnackBar(Overlay.of(context),
-                CustomSnackBar.error(message: state.error));
+            if(state is BillingExpiredTokenState) {
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.error(message: state.message)
+              );
+              authenticationBloc.add(UnAuthenticationEvent());
             }
           },
           builder: (context, state) {
             if(state is GetBillingFailureState){
               Center(
-                child: Text(
-                  "Tidak ada Data",
-                  style: TextStyle(
-                    color: C1,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    billingBloc.add(InitialBillingEvent(widget.customer));
+                  },
+                  child: Text(
+                    "Tidak ada Data",
+                    style: TextStyle(
+                      color: C1,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
+                    ),
                   ),
                 ),
               );
             }
             if(state is GetBillingSuccesState){
               return state.billings.isEmpty
-              ? Center(
-                child: Text(
-                  "Tidak ada Data",
-                  style: TextStyle(
-                    color: C1,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
+              ? RefreshIndicator(
+                onRefresh: () async {
+                  billingBloc.add(InitialBillingEvent(widget.customer));
+                },
+                child: Center(
+                  child: Text(
+                    "Tidak ada Data",
+                    style: TextStyle(
+                      color: C1,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
+                    ),
                   ),
                 ),
               )

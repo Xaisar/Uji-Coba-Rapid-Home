@@ -6,8 +6,6 @@ part 'delete_account_state.dart';
 
 class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
   DeleteAccountBloc() : super(DeleteAccountInitial()) {
-    on<DeleteAccountEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<DeleteAccountEvent>((event, emit) {});
   }
 }

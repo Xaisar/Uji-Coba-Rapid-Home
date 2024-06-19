@@ -5,6 +5,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:intl/intl.dart';
 
 import '../../../theme/pallet_color.dart';
+import '../../authentication/bloc/authentication_bloc.dart';
 import '../../billing/model/billing_model.dart';
 import '../bloc/detail_billing_bloc.dart';
 
@@ -43,6 +44,8 @@ class _DetailBillingViewState extends State<DetailBillingView> {
   }
   @override
   Widget build(BuildContext context) {
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+
     return Scaffold(
       backgroundColor: C20,
       appBar: PreferredSize(
@@ -66,6 +69,13 @@ class _DetailBillingViewState extends State<DetailBillingView> {
           if(state is DetailBillingInitialFailureState){
             showTopSnackBar(Overlay.of(context),
             CustomSnackBar.error(message: state.error));
+          }
+          if(state is DetailBillingExpiredTokenState) {
+            showTopSnackBar(
+              Overlay.of(context),
+              CustomSnackBar.error(message: state.message)
+            );
+            authenticationBloc.add(UnAuthenticationEvent());
           }
         },
         builder: (context, state) {

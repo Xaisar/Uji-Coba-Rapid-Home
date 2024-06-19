@@ -9,6 +9,10 @@ sealed class UserState extends Equatable {
 
 final class UserInitial extends UserState {}
 
+final class UserExpiredTokenState extends UserState {
+  final String message = "Your session has expired, please login again";
+}
+
 final class InitialUserProccesState extends UserState {}
 
 final class InitialUserSuccesState extends UserState {

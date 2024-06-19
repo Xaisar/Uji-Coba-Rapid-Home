@@ -6,6 +6,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../theme/pallet_color.dart';
+import '../../authentication/bloc/authentication_bloc.dart';
 import '../../home/model/catalog_model.dart';
 import '../bloc/detail_catalog_bloc.dart';
 
@@ -45,6 +46,7 @@ class _DetailCatalogViewState extends State<DetailCatalogView> {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context); 
 
     return Scaffold(
       backgroundColor: C20,
@@ -83,6 +85,13 @@ class _DetailCatalogViewState extends State<DetailCatalogView> {
                 if(state is DetailCatalogInitialFailureState){
                   showTopSnackBar(Overlay.of(context),
                   CustomSnackBar.error(message: state.error));
+                }
+                if(state is DetailCatalogExpiredTokenState){
+                  showTopSnackBar(
+                    Overlay.of(context),
+                    CustomSnackBar.error(message: state.message)
+                  );
+                  authenticationBloc.add(UnAuthenticationEvent());
                 }
               },
               builder: (context, state) {

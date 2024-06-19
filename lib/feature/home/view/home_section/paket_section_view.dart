@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../route/routes_name.dart';
 import '../../../../theme/pallet_color.dart';
+import '../../../authentication/bloc/authentication_bloc.dart';
 import '../../bloc/catalog_home_bloc/catalog_home_bloc.dart';
 import '../../../homeIndex/model/customer_model.dart';
 
@@ -32,6 +33,8 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+
     return BlocConsumer<CatalogHomeBloc, CatalogHomeState>(
       listener: (context, state) {
         if (state is CatalogHomeInitialFailureState) {
@@ -39,6 +42,13 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
             Overlay.of(context), CustomSnackBar.error(message: state.error)
           );
         }
+        if (state is CatalogHomeExpiredTokenState) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(message: state.message)
+          );
+          authenticationBloc.add(UnAuthenticationEvent());
+    }
       },
       builder: (context, state) {
         if (state is  CatalogHomeInitialFailureState) {

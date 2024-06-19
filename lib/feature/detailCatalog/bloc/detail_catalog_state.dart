@@ -9,6 +9,10 @@ sealed class DetailCatalogState extends Equatable {
 
 final class DetailCatalogInitial extends DetailCatalogState {}
 
+final class DetailCatalogExpiredTokenState extends DetailCatalogState {
+  final String message = "Your session has expired, please login again";
+}
+
 final class DetailCatalogInitialProccesState extends DetailCatalogState {}
 
 final class DetailCatalogInitialSuccesState extends DetailCatalogState {

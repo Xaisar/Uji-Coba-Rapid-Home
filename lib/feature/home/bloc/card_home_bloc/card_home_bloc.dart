@@ -38,8 +38,8 @@ class CardHomeBloc extends Bloc<CardHomeEvent, CardHomeState> {
           GetBillingCardResponse getBillingCardResponse = await HomeApi().billingCardService(sessionToken!.accesToken, event.customerId);
 
           if (getCatalogCardResponse.statusResponse != null && getBillingCardResponse.statusResponse != null){
-            if (getCatalogCardResponse.statusResponse!.code == 200){
-              if (getBillingCardResponse.statusResponse!.code == 200){
+            if (getCatalogCardResponse.statusResponse!.code == 200) {
+              if (getBillingCardResponse.statusResponse!.code == 200) {
 
                 String speed = getCatalogCardResponse.data!.catalog!.speed.replaceAll(RegExp(r'\D'), '');
 
@@ -48,9 +48,13 @@ class CardHomeBloc extends Bloc<CardHomeEvent, CardHomeState> {
                   getBillingCardResponse.data!.billingModel,
                   speed
                 ));
+              } else if (getBillingCardResponse.statusResponse!.code == 401) {
+                emit(CardHomeExpiredTokenState());
               } else {
                 emit(CardHomeInitialFailureState(getBillingCardResponse.statusResponse!.message));
               }
+            } else if (getCatalogCardResponse.statusResponse!.code == 401) {
+              emit(CardHomeExpiredTokenState());
             } else{
               emit(CardHomeInitialFailureState(getCatalogCardResponse.statusResponse!.message));
             }

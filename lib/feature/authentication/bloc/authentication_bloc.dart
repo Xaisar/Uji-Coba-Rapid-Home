@@ -90,7 +90,9 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         if(logoutResponse.statusResponse != null)  {
           if(logoutResponse.statusResponse!.code == 200) {
             emit(LogoutSuccessState());
-          } else {
+          } else if (logoutResponse.statusResponse!.code == 401) {
+            emit(LogoutSuccessState());
+          }else {
             emit(LogoutFailureState(logoutResponse.statusResponse!.message));
           }
         } else {

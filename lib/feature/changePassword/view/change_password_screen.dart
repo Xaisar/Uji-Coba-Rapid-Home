@@ -4,6 +4,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../theme/pallet_color.dart';
+import '../../authentication/bloc/authentication_bloc.dart';
 import '../../homeIndex/model/user_model.dart';
 import '../bloc/change_password_bloc.dart';
 import '../model/change_password_model.dart';
@@ -39,6 +40,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
   @override
   Widget build(BuildContext context) {
     final changePasswordBloc = BlocProvider.of<ChangePasswordBloc>(context);
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return Scaffold(
       backgroundColor: C3,
@@ -272,6 +274,13 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     showTopSnackBar(Overlay.of(context),
                       const CustomSnackBar.success(message: "password sudah diganti")
                     );
+                  }
+                  if(state is ChangePasswordExpiredTokenState){
+                    showTopSnackBar(
+                      Overlay.of(context),
+                      CustomSnackBar.error(message: state.message)
+                    );
+                    authenticationBloc.add(UnAuthenticationEvent());
                   }
                 },
                 builder: (context, state) {

@@ -8,6 +8,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../theme/pallet_color.dart';
+import '../../authentication/bloc/authentication_bloc.dart';
 import '../../homeIndex/bloc/user_bloc.dart';
 import '../../homeIndex/model/user_model.dart';
 import '../bloc/edit_profile_bloc.dart';
@@ -66,6 +67,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     final editProfileBloc = BlocProvider.of<EditProfileBloc>(context);
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
 
     return Scaffold(
       backgroundColor: C1,
@@ -422,6 +424,13 @@ class _EditProfileViewState extends State<EditProfileView> {
                         const CustomSnackBar.success(message: "profile sudah diganti")
                       );
                       context.read<UserBloc>().add(InitialUserEvent());
+                    }
+                    if(state is EditProfileExpiredTokenState){
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        CustomSnackBar.error(message: state.message)
+                      );
+                      authenticationBloc.add(UnAuthenticationEvent());
                     }
                   },
                   builder: (context, state) {

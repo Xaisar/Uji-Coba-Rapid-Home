@@ -73,6 +73,7 @@ class _HomeIndexViewState extends State<HomeIndexView> {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
     final cardHomeBloc = BlocProvider.of<CardHomeBloc>(context);
     final catalogHomeBloc = BlocProvider.of<CatalogHomeBloc>(context);
     final recommendationHomeBLoc = BlocProvider.of<RecommendationHomeBloc>(context);
@@ -94,6 +95,13 @@ class _HomeIndexViewState extends State<HomeIndexView> {
               catalogHomeBloc.add(InitialCatalogHome());
               recommendationHomeBLoc.add(InitialRecommendationHome());
               billingBloc.add(InitialBilling());
+            }
+            if (state is UserExpiredTokenState) {
+              showTopSnackBar(
+                Overlay.of(context),
+                CustomSnackBar.error(message: state.message)
+              );
+              authenticationBloc.add(UnAuthenticationEvent());
             }
           },
         ),

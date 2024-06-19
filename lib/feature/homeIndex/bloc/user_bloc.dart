@@ -42,6 +42,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
                 SharedPrefUtils().storedUser(json.encode(getUserResponse.data!.user.toJson()));
 
                 emit(InitialUserSuccesState(getUserResponse.data!.user));
+              } else if (getUserResponse.statusResponse!.code == 401) {
+                emit(UserExpiredTokenState());               
               } else {
                 emit(InitialUserFailureState(getUserResponse.statusResponse!.message));
               }

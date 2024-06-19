@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../theme/pallet_color.dart';
+import '../../../authentication/bloc/authentication_bloc.dart';
 import '../../bloc/card_home_bloc/card_home_bloc.dart';
 import '../../../homeIndex/model/customer_model.dart';
 
@@ -33,11 +34,21 @@ class _CardHomeWidgetState extends State<CardHomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+
     return BlocConsumer<CardHomeBloc, CardHomeState>(
       listener: (context, state) {
         if (state is CardHomeInitialFailureState) {
           showTopSnackBar(
-            Overlay.of(context), CustomSnackBar.error(message: state.error));
+            Overlay.of(context), CustomSnackBar.error(message: state.error)
+          );
+        }
+        if (state is CardHomeExpiredTokenState) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(message: state.message)
+          );
+          authenticationBloc.add(UnAuthenticationEvent());
         }
       },
       builder:(context, state) {

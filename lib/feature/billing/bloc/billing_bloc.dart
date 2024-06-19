@@ -39,6 +39,8 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
             if (getBillingResponse.statusResponse!.code == 200){
               debugPrint(getBillingResponse.data!.billings.length.toString());
               emit(GetBillingSuccesState(getBillingResponse.data!.billings));
+            } else if (getBillingResponse.statusResponse!.code == 401) {
+              emit(BillingExpiredTokenState());
             } else {
               emit(GetBillingFailureState(getBillingResponse.statusResponse!.message));
             }

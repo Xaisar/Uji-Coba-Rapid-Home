@@ -38,6 +38,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           if(editProfileResponse.statusResponse != null){
             if(editProfileResponse.statusResponse!.code == 200){
               emit(EditProfielUserSuccesState());
+            } else if (editProfileResponse.statusResponse!.code == 401) {
+              emit(EditProfileExpiredTokenState());
             } else {
               if(editProfileResponse.errors != null){
                 if (editProfileResponse.errors!.name != null) {

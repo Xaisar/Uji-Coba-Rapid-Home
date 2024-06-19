@@ -35,6 +35,8 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
           if(changePasswordResponse.statusResponse != null){
             if(changePasswordResponse.statusResponse!.code == 200){
               emit(ChangePasswordSuccesState());
+            } else if (changePasswordResponse.statusResponse!.code == 401) {
+              emit(ChangePasswordExpiredTokenState());
             } else {
               if(changePasswordResponse.errors != null){
                 if(changePasswordResponse.errors!.password != null){

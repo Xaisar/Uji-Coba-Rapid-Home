@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../feature/addCustomer/view/add_customer_screen.dart';
@@ -9,10 +8,8 @@ import '../feature/deleteAccount/view/confirmation_delete_account_screen.dart';
 import '../feature/deleteAccount/view/delete_account_screen.dart';
 import '../feature/detailBilling/view/detail_billing_screen.dart';
 import '../feature/detailCatalog/view/detail_catalog_screen.dart';
-import '../feature/editProfile/view/edit_profile_screen.dart';
 import '../feature/forgotPassword/view/forgot_password_screen.dart';
 import '../feature/home/model/catalog_model.dart';
-import '../feature/homeIndex/bloc/user_bloc.dart';
 import '../feature/homeIndex/model/user_model.dart';
 import '../feature/register/view/register_screen.dart';
 import '../screen/onboarding/onboardingmenu_screen.dart';

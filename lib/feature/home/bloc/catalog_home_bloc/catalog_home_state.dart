@@ -9,6 +9,10 @@ sealed class CatalogHomeState extends Equatable {
 
 final class CatalogHomeInitial extends CatalogHomeState {}
 
+final class CatalogHomeExpiredTokenState extends CatalogHomeState {
+  final String message = "Your session has expired, please login again";
+}
+
 final class CatalogHomeInitialProccesState extends CatalogHomeState {}
 
 // ignore: must_be_immutable
