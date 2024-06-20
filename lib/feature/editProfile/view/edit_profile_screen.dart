@@ -7,6 +7,7 @@ import 'package:isp_management_app/route/routes_name.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+import '../../../screen/image_viewer_screen.dart';
 import '../../../theme/pallet_color.dart';
 import '../../authentication/bloc/authentication_bloc.dart';
 import '../../homeIndex/bloc/user_bloc.dart';
@@ -121,25 +122,41 @@ class _EditProfileViewState extends State<EditProfileView> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(MediaQuery.sizeOf(context).width),
                         child: image != null 
-                        ? Image.file(
-                          File(image!.path),
-                          fit: BoxFit.cover,
-                          height: MediaQuery.sizeOf(context).height,
-                          width: MediaQuery.sizeOf(context).width,
-                        ) 
-                        : widget.user.avatar != null
-                        ? Image.network(
-                          widget.user.avatar!,
-                          fit: BoxFit.cover,
-                          height: MediaQuery.sizeOf(context).height,
-                          width: MediaQuery.sizeOf(context).width,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              size: MediaQuery.sizeOf(context).height * 0.148,
-                              Icons.person,
-                              color: C6
+                        ? GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context, 
+                              builder: (context) => ImageViewerScreen(imageFile: image!),
                             );
                           },
+                          child: Image.file(
+                            File(image!.path),
+                            fit: BoxFit.cover,
+                            height: MediaQuery.sizeOf(context).height,
+                            width: MediaQuery.sizeOf(context).width,
+                          ),
+                        ) 
+                        : widget.user.avatar != null
+                        ? GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context, 
+                              builder: (context) => ImageViewerScreen(imageLink: widget.user.avatar!),
+                            );
+                          },
+                          child: Image.network(
+                            widget.user.avatar!,
+                            fit: BoxFit.cover,
+                            height: MediaQuery.sizeOf(context).height,
+                            width: MediaQuery.sizeOf(context).width,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(
+                                size: MediaQuery.sizeOf(context).height * 0.148,
+                                Icons.person,
+                                color: C6
+                              );
+                            },
+                          ),
                         ) 
                         : Icon(
                           size: MediaQuery.sizeOf(context).height * 0.148,
