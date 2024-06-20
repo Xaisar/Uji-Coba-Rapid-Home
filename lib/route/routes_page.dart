@@ -8,9 +8,12 @@ import '../feature/deleteAccount/view/confirmation_delete_account_screen.dart';
 import '../feature/deleteAccount/view/delete_account_screen.dart';
 import '../feature/detailBilling/view/detail_billing_screen.dart';
 import '../feature/detailCatalog/view/detail_catalog_screen.dart';
+import '../feature/detailNotification/view/detail_notification_screen.dart';
 import '../feature/forgotPassword/view/forgot_password_screen.dart';
 import '../feature/home/model/catalog_model.dart';
 import '../feature/homeIndex/model/user_model.dart';
+import '../feature/kebijakanPrivasi/view/kebijakan_privasi_screen.dart';
+import '../feature/ketentuanPengguna/view/ketentuan_pengguna_screen.dart';
 import '../feature/register/view/register_screen.dart';
 import '../screen/onboarding/onboardingmenu_screen.dart';
 import '../feature/homeIndex/view/home_index.dart';
@@ -121,6 +124,12 @@ class MyRoute {
         builder: (context) => DetailBillingScreen(billingModel: settings.arguments as BillingModel),
         settings: settings
       );
+
+      case DETAILNOTIFICATION :
+      return MaterialPageRoute(
+        builder: (context) => const DetailNotificationScreen(),
+        settings: settings
+      );
       
       case CHANGEPASSWORD :
       return MaterialPageRoute(
@@ -137,6 +146,18 @@ class MyRoute {
       case CONFIRMATIONDELETEACCOUNT :
       return MaterialPageRoute(
         builder: (context) => ConfirmationDeleteAccountScreen(user: settings.arguments as User),
+        settings: settings
+      );
+
+      case KEBIJAKANPRIVASI :
+      return MaterialPageRoute(
+        builder: (context) => const KebijakanPrivasiScreen(),
+        settings: settings
+      );
+
+      case KETENTUANPENGGUNA :
+      return MaterialPageRoute(
+        builder: (context) => const KetentuanPenggunaScreen(),
         settings: settings
       );
 

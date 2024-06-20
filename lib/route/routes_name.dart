@@ -1,20 +1,23 @@
 // ignore_for_file: constant_identifier_names
 
 const String SPLASHSCREEN = "/";
-const String ONBOARDING = "/onBoarding";
-const String ONBOARDINGMENU = "/onBoardingmenu";
-const String LOGIN = "/login";
-const String FORGOTPASSWORD = "/forgotpassword";
-const String LOGINFROMREGISTER = "/loginfromregister";
-const String REGISTER = "/register";
-const String REGISTERFROMLOGIN = "/registerfromlogin";
-const String ADDCUSTOMERFROMLOGIN = "/addcustomerfromlogin";
-const String HOME = "/home";
-const String ADDCUSTOMERFROMHOME = "/addcustomerfromhome";
-const String DETAILCATALOGHOME = "/detailcataloghome";
-const String DETAILBILLING = "/detailbilling";
-const String CHANGEPASSWORD = "/changepassword";
-const String DELETEACCOUNT = "/deleteaccount";
-const String CONFIRMATIONDELETEACCOUNT = "/deleteaccount/confirmationdeleteaccount";
+const String ONBOARDING = "/OnBoarding";
+const String ONBOARDINGMENU = "/OnBoardingMenu";
+const String LOGIN = "/Login";
+const String FORGOTPASSWORD = "/ForgotPassword";
+const String LOGINFROMREGISTER = "/LoginFromRegister";
+const String REGISTER = "/Register";
+const String REGISTERFROMLOGIN = "/RegisterFromLogin";
+const String ADDCUSTOMERFROMLOGIN = "/AddCustomerFromLogin";
+const String HOME = "/Home";
+const String ADDCUSTOMERFROMHOME = "/AddCustomerFromHome";
+const String DETAILCATALOGHOME = "/DetailCatalogHome";
+const String DETAILBILLING = "/DetailBilling";
+const String DETAILNOTIFICATION = "/DetailNotification";
+const String CHANGEPASSWORD = "/ChangePassword";
+const String DELETEACCOUNT = "/DeleteAccount";
+const String CONFIRMATIONDELETEACCOUNT = "/ConfirmationDeleteAccount";
+const String KEBIJAKANPRIVASI = "/KebijakanPrivasi";
+const String KETENTUANPENGGUNA = "/KetentuanPengguna";
 
-const String ERROR = "/error";
+const String ERROR = "/Error";

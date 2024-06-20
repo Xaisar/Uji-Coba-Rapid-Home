@@ -35,20 +35,18 @@ class _BillingScreenState extends State<BillingScreen> {
 
     return Scaffold(
       backgroundColor: Colors.transparent, 
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(75),
-        child: AppBar(
-          backgroundColor: C1,
-          centerTitle: true,
-          title: Text(
-            "Billing",
-            style: TextStyle(
-              fontSize: 18,
-              color: C3, 
-              fontWeight: FontWeight.bold
-            ),
-          )
-        ),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: C1,
+        centerTitle: true,
+        title: Text(
+          "Billing",
+          style: TextStyle(
+            fontSize: 19,
+            color: C3, 
+            fontWeight: FontWeight.bold
+          ),
+        )
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

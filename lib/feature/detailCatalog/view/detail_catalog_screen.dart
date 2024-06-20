@@ -64,21 +64,19 @@ class _DetailCatalogViewState extends State<DetailCatalogView> {
           //Frontend
           Scaffold(
             backgroundColor: Colors.transparent,
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(75),
-              child: AppBar(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                centerTitle: true,
-                title: Text(
-                  "Detail Paket",
-                  style: TextStyle(
-                    color: C3,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600
-                  ),
-                )
-              ),
+            appBar: AppBar(
+              toolbarHeight: 70,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+              title: Text(
+                "Detail Paket",
+                style: TextStyle(
+                  color: C3,
+                  fontSize: 19,
+                  fontWeight: FontWeight.w600
+                ),
+              )
             ),
             body: BlocConsumer<DetailCatalogBloc, DetailCatalogState>(
               listener:(context, state) {

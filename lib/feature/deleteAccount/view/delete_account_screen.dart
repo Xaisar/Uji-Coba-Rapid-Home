@@ -12,20 +12,18 @@ class DeleteAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: C3,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(75),
-        child: AppBar(
-          backgroundColor: C1,
-          centerTitle: true,
-          title: Text(
-            "Hapus Akun",
-            style: TextStyle(
-              fontSize: 18,
-              color: C3, 
-              fontWeight: FontWeight.bold
-            ),
-          )
-        ),
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: C1,
+        centerTitle: true,
+        title: Text(
+          "Hapus Akun",
+          style: TextStyle(
+            fontSize: 19,
+            color: C3, 
+            fontWeight: FontWeight.bold
+          ),
+        )
       ),
       body: Padding(
         padding: EdgeInsets.only(

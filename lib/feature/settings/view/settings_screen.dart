@@ -26,17 +26,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
         backgroundColor: C3,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(75),
-          child: AppBar(
-            backgroundColor: C1,
-            centerTitle: true,
-            title: Text(
-              "Setting",
-              style: TextStyle(
-                fontSize: 18, color: C3, fontWeight: FontWeight.bold),
-            )
-          ),
+        appBar: AppBar(
+          toolbarHeight: 70,
+          backgroundColor: C1,
+          centerTitle: true,
+          title: Text(
+            "Setting",
+            style: TextStyle(
+              fontSize: 19, color: C3, fontWeight: FontWeight.bold),
+          )
         ),
         body: Container(
           width: MediaQuery.sizeOf(context).width,
@@ -224,7 +222,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   //kebijakan privasi
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, KEBIJAKANPRIVASI);
+                    },
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
                       padding: const EdgeInsets.symmetric(
@@ -262,7 +262,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   //ketentuan pengguna
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, KETENTUANPENGGUNA);
+                    },
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
                       padding: const EdgeInsets.symmetric(

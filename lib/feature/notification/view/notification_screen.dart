@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../route/routes_name.dart';
 import '../../../theme/pallet_color.dart';
 import '../../homeIndex/model/user_model.dart';
 
@@ -16,19 +17,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(75),
-        child: AppBar(
-          backgroundColor: C1,
-          centerTitle: true,
-          title: Text(
-            "Notification",
-            style: TextStyle(
-              fontSize: 18,
-              color: C3, 
-              fontWeight: FontWeight.bold
-            ),
-          )
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: C1,
+        centerTitle: true,
+        title: Text(
+          "Notification",
+          style: TextStyle(
+            fontSize: 19,
+            color: C3, 
+            fontWeight: FontWeight.bold
+          ),
         )
       ),
       body: SingleChildScrollView(
@@ -60,7 +59,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: List.generate(2, (index) {
                     return GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.pushNamed(context, DETAILNOTIFICATION);
+                      },
                       child: Container(
                         width: MediaQuery.sizeOf(context).width,
                         margin: const EdgeInsets.only(bottom: 3),
@@ -119,6 +120,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 )
               ],
             ),
+            //Last Week notification
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -143,7 +145,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: List.generate(2, (index) {
                     return GestureDetector(
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.pushNamed(context, DETAILNOTIFICATION);
+                      },
                       child: Container(
                         width: MediaQuery.sizeOf(context).width,
                         margin: const EdgeInsets.only(bottom: 3),

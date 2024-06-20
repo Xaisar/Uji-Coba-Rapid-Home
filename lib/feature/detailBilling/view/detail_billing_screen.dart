@@ -48,21 +48,18 @@ class _DetailBillingViewState extends State<DetailBillingView> {
 
     return Scaffold(
       backgroundColor: C20,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(75),
-        child: AppBar(
-          toolbarHeight: 75,
-          centerTitle: true,
-          title: Text(
-            "Detail Billing",
-            style: TextStyle(
-                fontSize: 18,
-                color: C3, 
-                fontWeight: FontWeight.bold
-              ),
+      appBar: AppBar(
+        toolbarHeight: 75,
+        centerTitle: true,
+        title: Text(
+          "Detail Billing",
+          style: TextStyle(
+              fontSize: 19,
+              color: C3, 
+              fontWeight: FontWeight.bold
             ),
-          backgroundColor: C1,
-        ),
+          ),
+        backgroundColor: C1,
       ),
       body: BlocConsumer<DetailBillingBloc, DetailBillingState>(
         listener: (context, state) {
