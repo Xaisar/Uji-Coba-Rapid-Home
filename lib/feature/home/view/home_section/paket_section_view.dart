@@ -147,8 +147,8 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                           children: [
                             //card slide view
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.425,
-                              height: 260,
+                              width: MediaQuery.of(context).size.width * 0.438,
+                              height: 270,
                               padding: const EdgeInsets.only(top: 20, bottom: 10),
                               alignment: Alignment.topCenter,
                               decoration: BoxDecoration(
@@ -184,7 +184,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                           "Kecepatan ${state.catalogs[index1].speed}",
                                           style: TextStyle(
                                             color: C6,
-                                            fontSize: 9,
+                                            fontSize: 9.5,
                                             fontWeight: FontWeight.w500
                                           ),
                                         ),
@@ -201,7 +201,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                             "Cocok untuk :",
                                             style: TextStyle(
                                               color: C6,
-                                              fontSize: 8,
+                                              fontSize: 9,
                                               fontWeight: FontWeight.w500
                                             ),
                                           ),
@@ -225,14 +225,14 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                             children: [
                                               Image.asset(
                                                 "assets/icons/discount_icon.png",
-                                                width: 12.5,
-                                                height: 13.5,
+                                                width: 13.8,
+                                                height: 14.8,
                                               ),
                                               Text(
                                                 " ${state.catalogs[index1].tags}",
                                                 style: TextStyle(
                                                   color: C6,
-                                                  fontSize: 10,
+                                                  fontSize: 11,
                                                   fontWeight:FontWeight.w400
                                                 ),
                                               ),
@@ -240,7 +240,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                           )
                                           : const SizedBox(),
                                           const SizedBox(
-                                            height: 2,
+                                            height: 1,
                                           ),
                                           Expanded(
                                             child: Container(
@@ -259,7 +259,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                                         overflow: TextOverflow.clip,
                                                         style: TextStyle(
                                                           color: C6,
-                                                          fontSize: 10,
+                                                          fontSize: 12,
                                                         ),
                                                       ),
                                                     );
@@ -270,14 +270,13 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                                   } else {
                                                     return Column(
                                                       children: [
-                                                        AutoSizeText(
+                                                        Text(
                                                           " \u2022 ${state.catalogs[index1].description[index2]}",
                                                           maxLines: 1,
-                                                          minFontSize: 9,
                                                           overflow: TextOverflow.clip,
                                                           style: TextStyle(
                                                             color: C6,
-                                                            fontSize: 9.5,
+                                                            fontSize: 10,
                                                           ),
                                                         ),
                                                         index2 != state.catalogs[index1].description.length - 1
@@ -429,7 +428,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                           //card slide view
                           Container(
                             width: MediaQuery.of(context).size.width * 0.425,
-                            height: 260,
+                            height: 270,
                             padding: const EdgeInsets.only(top: 20, bottom: 10),
                             alignment: Alignment.topCenter,
                             decoration: BoxDecoration(
@@ -462,10 +461,10 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                       ),
                                       const SizedBox(height: 3),
                                       Text(
-                                        "Kecepatan 99 mbps}",
+                                        "Kecepatan up to 99 mbps",
                                         style: TextStyle(
                                           color: C6,
-                                          fontSize: 9,
+                                          fontSize: 9.5,
                                           fontWeight: FontWeight.w500
                                         ),
                                       ),
@@ -482,7 +481,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                           "Cocok untuk :",
                                           style: TextStyle(
                                             color: C6,
-                                            fontSize: 8,
+                                            fontSize: 9,
                                             fontWeight: FontWeight.w500
                                           ),
                                         ),
@@ -505,11 +504,11 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                           children: [
                                             Image.asset(
                                               "assets/icons/discount_icon.png",
-                                              width: 12.5,
-                                              height: 13.5,
+                                              width: 13.8,
+                                              height: 14.8,
                                             ),
                                             Text(
-                                              " Paket Murah",
+                                              " Paket Murah Meriah",
                                               style: TextStyle(
                                                 color: C6,
                                                 fontSize: 10,
@@ -528,7 +527,7 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.max,
-                                              children: List.generate(4, (index2) {
+                                              children: List.generate(5, (index2) {
                                                 if (index2 > 5) {
                                                   return const SizedBox();
                                                 } else if (index2 > 4 && true) {
@@ -536,17 +535,16 @@ class _PaketHomeWidgetState extends State<PaketHomeWidget> {
                                                 } else {
                                                   return Column(
                                                     children: [
-                                                      AutoSizeText(
-                                                        " \u2022 Paket andalan untuk anda bisa",
+                                                      Text(
+                                                        " \u2022 Paket luar biasa untuk anda yang biasa",
                                                         maxLines: 1,
-                                                        minFontSize: 9,
                                                         overflow: TextOverflow.clip,
                                                         style: TextStyle(
                                                           color: C6,
-                                                          fontSize: 9.5,
+                                                          fontSize: 10,
                                                         ),
                                                       ),
-                                                      index2 !=  4 - 1
+                                                      index2 !=  5 - 1
                                                       ? const SizedBox(
                                                         height: 1.5,
                                                       )
