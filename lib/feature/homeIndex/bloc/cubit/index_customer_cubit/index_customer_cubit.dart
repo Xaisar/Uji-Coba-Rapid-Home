@@ -9,4 +9,14 @@ class IndexCustomerCubit extends Cubit<int> {
     await SharedPrefUtils().storedCurentCustomer(index);
     emit(index);
   }
+
+  initialCustomer(int jumlahCustomer) async {
+    await SharedPrefUtils().getCurrentCustomer().then((value) {
+      if(value != null && value + 1 == jumlahCustomer) {
+        emit(value);
+      } else {
+        emit(0);
+      }
+    });
+  }
 }

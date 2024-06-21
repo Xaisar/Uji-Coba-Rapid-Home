@@ -292,7 +292,7 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
                               showTopSnackBar(Overlay.of(context),
                                 const CustomSnackBar.success(message: "Customer berhasil ditambah")
                               );
-                              Navigator.pushReplacementNamed(context, HOME);
+                              Navigator.pushNamedAndRemoveUntil(context, HOME, (route) => false);
                             } else {
                               Navigator.pushReplacementNamed(context, HOME);                              
                             }

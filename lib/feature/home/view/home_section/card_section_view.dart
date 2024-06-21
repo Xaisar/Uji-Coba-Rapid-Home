@@ -26,7 +26,6 @@ class _CardHomeWidgetState extends State<CardHomeWidget> {
   @override
   void initState() {
     super.initState();
-
     if(context.read<CardHomeBloc>().state is! CardHomeInitialSuccesState ){
       context.read<CardHomeBloc>().add(CardHomeInitialEvent(widget.customer.id));
     }

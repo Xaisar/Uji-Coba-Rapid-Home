@@ -103,16 +103,11 @@ class _HomeIndexViewState extends State<HomeIndexView> {
               );
               authenticationBloc.add(UnAuthenticationEvent());
             }
+            if (state is InitialUserSuccesState) {
+              context.read<IndexCustomerCubit>().initialCustomer(state.user.customers.length);
+            }
           },
         ),
-        BlocListener<IndexCustomerCubit, int>(
-          listener: (context, state) {
-            cardHomeBloc.add(InitialCardHome());
-            catalogHomeBloc.add(InitialCatalogHome());
-            recommendationHomeBLoc.add(InitialRecommendationHome());
-            billingBloc.add(InitialBilling());
-          }, 
-        )
       ],
       child: Scaffold(
         backgroundColor: C20,
@@ -130,26 +125,23 @@ class _HomeIndexViewState extends State<HomeIndexView> {
             : const SizedBox(),
             BlocBuilder<UserBloc, UserState>(
               builder: (context, stateUser) {
-                if (stateUser is InitialUserSuccesState) {   
+                if (stateUser is InitialUserSuccesState) {
                   return BlocBuilder<IndexCustomerCubit, int>(
                     builder: (context, stateIndexUser) {
-                      List<Widget> bodyHome = <Widget>[
+                      List<Widget> bodyHome = [
                         HomeScreen(
-                          key: const Key("Home_Screen"),
                           user: stateUser.user,
                         ),
-                      BillingScreen(
-                        key: const Key("Billing_Screen"),
-                        customer: stateUser.user.customers[stateIndexUser],
-                      ),
-                      NotificationScreen(
-                        user: stateUser.user,
-                      ),
-                      SettingsScreen(
-                        key: const Key("Settings"),
-                        user: stateUser.user,
-                      ),
-                    ];
+                        BillingScreen(
+                          customer: stateUser.user.customers[stateIndexUser],
+                        ),
+                        NotificationScreen(
+                          user: stateUser.user,
+                        ),
+                        SettingsScreen(
+                          user: stateUser.user,
+                        ),
+                      ];   
                       return bodyHome[indexPage];
                     },
                   );

@@ -17,7 +17,6 @@ import 'home_section/recommendation_section_view.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.user});
   final User user;
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }

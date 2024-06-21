@@ -56,7 +56,7 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
               //header bottom sheet
               Container(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                  horizontal: 10,
                   vertical: 5
                 ),
                 width: MediaQuery.of(context).size.width,
@@ -271,6 +271,7 @@ class _BottomSheetCustomerSettingState extends State<BottomSheetCustomerSetting>
                               setState(() {
                                 widget.indexCustomerCubit.changeCustomer(index);
                                 widget.indexCustomer = index;
+                                Navigator.pushNamedAndRemoveUntil(context, HOME, (route) => false);
                               });
                             },
                             child: Container(
