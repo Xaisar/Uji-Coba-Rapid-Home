@@ -79,6 +79,8 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
           if(addCustomerResponse.statusResponse != null){
             if(addCustomerResponse.statusResponse!.code == 200){
               emit(AddCustomerSuccesState());
+            } else if(addCustomerResponse.statusResponse!.code == 403) {
+              emit(const AddCustomerFailureState("Id pelanggan tidak dapat ditemukan"));
             } else{
               if(addCustomerResponse.errors != null){
                 if(addCustomerResponse.errors!.merchantId != null){

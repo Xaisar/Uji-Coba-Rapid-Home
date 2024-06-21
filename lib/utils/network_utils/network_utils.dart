@@ -47,7 +47,8 @@ class NetworkUtils{
          statusResponse == 401 ||
          statusResponse == 403 ||
          statusResponse == 400 ||
-         statusResponse == 422
+         statusResponse == 422 ||
+         statusResponse == 409
       ) {
         return json.decode(bodyResponse);
       } else {
