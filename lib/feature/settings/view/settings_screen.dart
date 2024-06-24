@@ -302,7 +302,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   //pusat bantuan
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, PUSATBANTUAN);
+                    },
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
                       padding: const EdgeInsets.symmetric(
@@ -338,9 +340,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                   ),
-                  //kebijakan privasi
+                  //about us
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, ABOUTUS);
+                    },
                     child: Container(
                       width: MediaQuery.sizeOf(context).width,
                       padding: const EdgeInsets.symmetric(

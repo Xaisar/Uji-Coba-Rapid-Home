@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../feature/aboutUs/view/about_us_screen.dart';
 import '../feature/addCustomer/view/add_customer_screen.dart';
 import '../feature/billing/model/billing_model.dart';
 import '../feature/changePassword/view/change_password_screen.dart';
@@ -14,6 +15,7 @@ import '../feature/home/model/catalog_model.dart';
 import '../feature/homeIndex/model/user_model.dart';
 import '../feature/kebijakanPrivasi/view/kebijakan_privasi_screen.dart';
 import '../feature/ketentuanPengguna/view/ketentuan_pengguna_screen.dart';
+import '../feature/pusatBantuan/view/pusat_bantuan_screen.dart';
 import '../feature/register/view/register_screen.dart';
 import '../screen/onboarding/onboardingmenu_screen.dart';
 import '../feature/homeIndex/view/home_index.dart';
@@ -158,6 +160,18 @@ class MyRoute {
       case KETENTUANPENGGUNA :
       return MaterialPageRoute(
         builder: (context) => const KetentuanPenggunaScreen(),
+        settings: settings
+      );
+
+      case PUSATBANTUAN :
+      return MaterialPageRoute(
+        builder: (context) => PusatBantuanScreen(),
+        settings: settings
+      );
+
+      case ABOUTUS :
+      return MaterialPageRoute(
+        builder: (context) => const AboutUsScreen(),
         settings: settings
       );
 

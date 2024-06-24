@@ -19,5 +19,7 @@ const String DELETEACCOUNT = "/DeleteAccount";
 const String CONFIRMATIONDELETEACCOUNT = "/ConfirmationDeleteAccount";
 const String KEBIJAKANPRIVASI = "/KebijakanPrivasi";
 const String KETENTUANPENGGUNA = "/KetentuanPengguna";
+const String PUSATBANTUAN = "/PusatBantuan";
+const String ABOUTUS = "/AboutUs";
 
 const String ERROR = "/Error";
