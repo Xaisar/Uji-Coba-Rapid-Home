@@ -28,7 +28,7 @@ class BuildApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ISP Managament' ,
+      title: 'Rapid Home' ,
       debugShowCheckedModeBanner: false,
       theme: theme,
       // home: const AddCustomerScreen(),

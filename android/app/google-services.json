@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "507999197386",
+    "project_id": "uji-coba-rapid",
+    "storage_bucket": "uji-coba-rapid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:507999197386:android:6fa7fb2b7edceddbeb3c33",
+        "android_client_info": {
+          "package_name": "com.isoae.rapidhome"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2Ap3OHR31NyLazWF1CbMlWQ-EcaY_enM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
