@@ -83,6 +83,26 @@ class ApiUtils{
     return Uri.parse(_baseUrl + _apiVersion + urlGetDetailBilling + parameter);
   }
 
+  Uri urlPayment(){
+    const String urlPayment = PAYMENTURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlPayment);
+  }
+
+  Uri urlCancelPayment(){
+    const String urlCancelPayment = CANCELPAYMENTURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlCancelPayment);
+  }
+
+  Uri urlPaymentMethod(String parameter){
+    const String urlPaymentMethod = GETPAYMENTMETHODURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlPaymentMethod + parameter);
+  }
+
+  Uri urlGetPayment(String parameter){
+    const String urlGetPayment = GETPAYMENTURL;
+    return Uri.parse(_baseUrl + _apiVersion + urlGetPayment + parameter);
+  }
+
   Uri urlGeUser(String parameter){
     const String urlGetUser = GETUSERURL;
     return Uri.parse(_baseUrl + _apiVersion + urlGetUser + parameter);
