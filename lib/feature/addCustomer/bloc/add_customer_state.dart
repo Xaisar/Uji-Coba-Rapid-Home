@@ -42,3 +42,9 @@ final class ValidateTokenFailureState extends AddCustomerState {
 
   const ValidateTokenFailureState(this.error);
 }
+
+final class AddCustomerTokenExpired extends AddCustomerState {
+  final String message;
+
+  const AddCustomerTokenExpired(this.message);
+}
