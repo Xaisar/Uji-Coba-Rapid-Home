@@ -11,6 +11,5 @@ class DetailBillingApi{
     return await NetworkUtils().get(link, header).then((response) {
       return GetDetailBillingResponse.fromJson(response);
     });
-
   }
 }
