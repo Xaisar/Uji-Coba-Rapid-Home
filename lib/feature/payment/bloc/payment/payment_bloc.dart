@@ -37,6 +37,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
           if(getPaymentResponse.statusResponse != null) {
             if(getPaymentResponse.statusResponse!.code == 200) {
               emit(PaymentSuccesState());
+            } else if (getPaymentResponse.statusResponse!.code == 401) {
+              emit(const PaymentExpiredToken("Your session has expired, please login again"));
             } else {
               emit(PaymentFailureState(getPaymentResponse.statusResponse!.message));
             }
@@ -48,7 +50,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
           emit(PaymentFailureState(error.toString()));
         }
       } else {
-        emit(const PaymentFailureState("can't get data from memory"));
+        emit(const PaymentExpiredToken("Can't get token from memory, please login again"));
       }
     });
   }
@@ -67,6 +69,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
           if(cancelPaymentResponse.statusResponse != null) {
             if(cancelPaymentResponse.statusResponse!.code == 200) {
               emit(PaymentInitial());
+            } else if (cancelPaymentResponse.statusResponse!.code == 401) {
+              emit(const PaymentExpiredToken("Your session has expired, please login again"));
             } else {
               if(cancelPaymentResponse.errors != null) {
                 if(cancelPaymentResponse.errors!.billId != null) {
@@ -84,7 +88,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
           emit(CancelPaymentFailureState(error.toString()));
         }
       } else {
-        emit(const CancelPaymentFailureState("can't get data from memory"));
+        emit(const PaymentExpiredToken("Can't get token from memory, please login again"));
       }
     });
   }

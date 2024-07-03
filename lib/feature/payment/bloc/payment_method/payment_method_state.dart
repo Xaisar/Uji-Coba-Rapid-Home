@@ -9,6 +9,12 @@ sealed class PaymentMethodState extends Equatable {
 
 final class PaymentMethodInitial extends PaymentMethodState {}
 
+final class PaymentMethodExpiredTokenState extends PaymentMethodState {
+  final String message;
+
+  const PaymentMethodExpiredTokenState(this.message);
+}
+
 // ignore: must_be_immutable
 final class PaymentMethodSuccesState extends PaymentMethodState {
   List<PaymentMethod> paymentMethods = [];

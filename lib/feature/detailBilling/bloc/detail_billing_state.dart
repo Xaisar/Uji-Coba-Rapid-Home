@@ -10,7 +10,9 @@ sealed class DetailBillingState extends Equatable {
 final class DetailBillingInitial extends DetailBillingState {}
 
 final class DetailBillingExpiredTokenState extends DetailBillingState {
-  final String message = "Your session has expired, please login again";
+  final String message;
+
+  const DetailBillingExpiredTokenState(this.message);
 }
 
 final class DetailBillingInitialProccesState extends DetailBillingState {}

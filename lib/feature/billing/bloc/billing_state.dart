@@ -10,7 +10,9 @@ sealed class BillingState extends Equatable {
 final class BillingInitial extends BillingState {}
 
 final class BillingExpiredTokenState extends BillingState {
-  final String message = "Your session has expired, please login again";
+  final String message;
+
+  const BillingExpiredTokenState(this.message);
 }
 
 final class GetBillingProcessState extends BillingState {}

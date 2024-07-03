@@ -10,7 +10,9 @@ sealed class ChangePasswordState extends Equatable {
 final class ChangePasswordInitial extends ChangePasswordState {}
 
 final class ChangePasswordExpiredTokenState extends ChangePasswordState {
-  final String message = "Your session has expired, please login again";
+  final String message;
+
+  const ChangePasswordExpiredTokenState(this.message);
 }
 
 final class ChangePasswordProccesState extends ChangePasswordState {}

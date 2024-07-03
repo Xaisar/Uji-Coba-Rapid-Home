@@ -36,7 +36,7 @@ class DetailBillingBloc extends Bloc<DetailBillingEvent, DetailBillingState> {
             if(getDetailBillingResponse.statusResponse!.code == 200){
               emit(DetailBillingInitialSuccesState(getDetailBillingResponse.data!.detailBilling));
             } else if (getDetailBillingResponse.statusResponse!.code == 401) {
-              emit(DetailBillingExpiredTokenState());
+              emit(const DetailBillingExpiredTokenState("Your session has expired, please login again"));
             } else {
               emit(DetailBillingInitialFailureState(getDetailBillingResponse.statusResponse!.message));
             }
@@ -48,7 +48,7 @@ class DetailBillingBloc extends Bloc<DetailBillingEvent, DetailBillingState> {
           emit(DetailBillingInitialFailureState(error.toString()));
         }
       } else {
-        emit(const DetailBillingInitialFailureState("can't get data from memory"));
+        emit(const DetailBillingExpiredTokenState("Can't get token from memory, please login again"));
       }
     });
   }

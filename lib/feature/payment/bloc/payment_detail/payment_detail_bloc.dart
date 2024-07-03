@@ -34,6 +34,8 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
             if(getPaymentDetailResponse.statusResponse!.code == 200) {
               if(getPaymentDetailResponse.data!.paymentDetail.status == "ACTIVE") {
                 emit(PaymentDetailActiveState(getPaymentDetailResponse.data!.paymentDetail));
+              } else if (getPaymentDetailResponse.statusResponse!.code == 401) {
+                emit(const PaymentDetailExpiredTokenState("Your session has expired, please login again"));
               } else {
                 emit(PaymentDetailPostedState(getPaymentDetailResponse.data!.paymentDetail));
               }
@@ -50,7 +52,7 @@ class PaymentDetailBloc extends Bloc<PaymentDetailEvent, PaymentDetailState> {
           emit(PaymentDetailFailureState(error.toString()));
         }
       } else {
-        emit(const PaymentDetailFailureState("can't get data from memory"));
+        emit(const PaymentDetailExpiredTokenState("Can't get token from memory, please login again"));
       }
     });
   }

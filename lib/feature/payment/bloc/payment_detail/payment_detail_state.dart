@@ -9,6 +9,12 @@ sealed class PaymentDetailState extends Equatable {
 
 final class PaymentDetailInitial extends PaymentDetailState {}
 
+final class PaymentDetailExpiredTokenState extends PaymentDetailState {
+  final String message;
+
+  const PaymentDetailExpiredTokenState(this.message);
+}
+
 final class PaymentDetailProccesState extends PaymentDetailState {}
 
 final class PaymentDetailFailureState extends PaymentDetailState {

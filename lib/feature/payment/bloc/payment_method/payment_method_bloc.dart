@@ -33,6 +33,8 @@ class PaymentMethodBloc extends Bloc<PaymentMethodEvent, PaymentMethodState> {
           if(getPaymentMethodResponse.statusResponse != null){
             if(getPaymentMethodResponse.statusResponse!.code == 200){
               emit(PaymentMethodSuccesState(getPaymentMethodResponse.data!.paymentMethods));
+            } else if (getPaymentMethodResponse.statusResponse!.code == 401) {
+              emit(const PaymentMethodExpiredTokenState("Your session has expired, please login again"));
             } else {
               emit(PaymentMethodFailureState(getPaymentMethodResponse.statusResponse!.message));
             }
@@ -44,7 +46,7 @@ class PaymentMethodBloc extends Bloc<PaymentMethodEvent, PaymentMethodState> {
           emit(PaymentMethodFailureState(error.toString()));
         }
       } else {
-        emit(const PaymentMethodFailureState("can't get data from memory"));
+        emit(const PaymentMethodExpiredTokenState("Can't get token from memory, please login again"));
       }
     });
   }

@@ -10,7 +10,9 @@ sealed class EditProfileState extends Equatable {
 final class EditProfileInitial extends EditProfileState {}
 
 final class EditProfileExpiredTokenState extends EditProfileState {
-  final String message = "Your session has expired, please login again";
+  final String message;
+
+  const EditProfileExpiredTokenState(this.message);
 }
 
 final class EditProfielUserProccesState extends EditProfileState {}

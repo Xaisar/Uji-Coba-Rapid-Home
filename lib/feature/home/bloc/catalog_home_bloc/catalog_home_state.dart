@@ -10,7 +10,9 @@ sealed class CatalogHomeState extends Equatable {
 final class CatalogHomeInitial extends CatalogHomeState {}
 
 final class CatalogHomeExpiredTokenState extends CatalogHomeState {
-  final String message = "Your session has expired, please login again";
+  final String message;
+
+  const CatalogHomeExpiredTokenState(this.message);
 }
 
 final class CatalogHomeInitialProccesState extends CatalogHomeState {}
