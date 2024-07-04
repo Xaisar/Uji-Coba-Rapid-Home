@@ -25,6 +25,8 @@ final class PaymentFailureState extends PaymentState {
   const PaymentFailureState(this.error);
 }
 
+final class CancelPaymentSuccesState extends PaymentState {}
+
 final class CancelPaymentFailureState extends PaymentState {
   final String error;
 

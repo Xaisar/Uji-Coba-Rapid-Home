@@ -7,6 +7,8 @@ sealed class PaymentEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class InitialPaymentEvent extends PaymentEvent {}
+
 final class CancelPaymentEvent extends PaymentEvent {
   final String billId;
 

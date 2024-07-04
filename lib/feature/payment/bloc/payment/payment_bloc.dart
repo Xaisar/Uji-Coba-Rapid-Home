@@ -18,6 +18,8 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
   PaymentBloc() : super(PaymentInitial()) {
     on<PaymentEvent>((event, emit) {});
 
+    on<InitialPaymentEvent>((event, emit) => emit(PaymentInitial()),);
+
     on<SendPaymentEvent>(sendPayment);
 
     on<CancelPaymentEvent>(cancelPayment);
@@ -68,7 +70,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
 
           if(cancelPaymentResponse.statusResponse != null) {
             if(cancelPaymentResponse.statusResponse!.code == 200) {
-              emit(PaymentInitial());
+              emit(CancelPaymentSuccesState());
             } else if (cancelPaymentResponse.statusResponse!.code == 401) {
               emit(const PaymentExpiredToken("Your session has expired, please login again"));
             } else {
