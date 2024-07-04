@@ -43,7 +43,7 @@ class PaymentApi{
 
   Future<GetPaymentDetailResponse> paymentDetailService (String token, String billId) async {
     final Map<String, String> header = ApiUtils().headerWithToken(token);
-    final Uri link = ApiUtils().urlGetDetailBilling(billId);
+    final Uri link = ApiUtils().urlGetPayment(billId);
 
     return await NetworkUtils().get(link, header).then((response) {
       return GetPaymentDetailResponse.fromJson(response);
