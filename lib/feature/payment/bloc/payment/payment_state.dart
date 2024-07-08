@@ -17,6 +17,8 @@ final class PaymentExpiredToken extends PaymentState {
 
 final class PaymentProccesState extends PaymentState {}
 
+final class PaymentProccesDoneState extends PaymentState {}
+
 final class PaymentSuccesState extends PaymentState {}
 
 final class PaymentFailureState extends PaymentState {
@@ -24,6 +26,8 @@ final class PaymentFailureState extends PaymentState {
 
   const PaymentFailureState(this.error);
 }
+
+final class CancelPaymentProccesState extends PaymentState {}
 
 final class CancelPaymentSuccesState extends PaymentState {}
 

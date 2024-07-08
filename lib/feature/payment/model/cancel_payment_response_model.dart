@@ -41,7 +41,7 @@ CancelPaymentResponse _$CancelPaymentResponseFromJson(
           ? null
           : StatusResponse.fromJson(
               json['respon_status'] as Map<String, dynamic>),
-      errors: json['errors'] == null
+      errors: json['errors'] == null || json['errors'].length == 0
           ? null
           : Errors.fromJson(json['errors'] as Map<String, dynamic>),
     );
