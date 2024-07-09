@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'dart:io';
 
 import '../../../theme/pallet_color.dart';
 
@@ -11,25 +12,13 @@ class AboutUsScreen extends StatefulWidget {
 }
 
 class _AboutUsScreenState extends State<AboutUsScreen> {
-  late final WebViewController controller;
-  bool ready = false;
+  late final InAppWebViewController inAppWebViewController;
+
+  bool ready = true;
 
   @override
   void initState() {
     super.initState();
-    controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setBackgroundColor(C3)
-    ..setNavigationDelegate(
-      NavigationDelegate(
-        onPageFinished: (String url) {
-          setState(() {
-            ready = true;
-          });
-        },
-      ),
-    )
-    ..loadRequest(Uri.parse('https://rapid.net.id/'));
   }
 
   @override
@@ -48,12 +37,57 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           ),
         backgroundColor: C1,
       ),
-      body: ready
-      ? WebViewWidget(controller: controller)
-      : Center(
-        child: CircularProgressIndicator(
-          color: C1,
-        )
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          //loading
+          Visibility(
+            visible: ready,
+            child: Container(
+              color: C3,
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: C9,
+              ),
+            )
+          ),
+          // web view
+          InAppWebView(
+            initialUrlRequest: URLRequest(
+              url: Uri.parse('https://rapid.net.id/'),
+            ),
+            onWebViewCreated: (controller) {
+              inAppWebViewController = controller;
+              setState(() async {
+                ready = false;
+              });
+            },
+            initialOptions: InAppWebViewGroupOptions(
+              crossPlatform: InAppWebViewOptions(
+                javaScriptEnabled: true,
+                useShouldOverrideUrlLoading: true,
+              ),
+              android: AndroidInAppWebViewOptions(
+                useHybridComposition: true,
+              ),
+              ios: IOSInAppWebViewOptions(
+                allowsInlineMediaPlayback: true
+              )
+            ),
+            pullToRefreshController: PullToRefreshController(
+              onRefresh: () async {
+                if (Platform.isAndroid) {
+                  inAppWebViewController.reload();
+                } else if (Platform.isIOS) {
+                  inAppWebViewController.loadUrl(
+                    urlRequest: URLRequest(url: await inAppWebViewController.getUrl()));
+                }
+              },
+            ),
+          ),
+        ],
       )
     );
   }
