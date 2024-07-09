@@ -38,7 +38,7 @@ class CatalogHomeBloc extends Bloc<CatalogHomeEvent, CatalogHomeState> {
             if(getCatalogsResponse.statusResponse!.code == 200) {
               emit(CatalogHomeInitialSuccesstate(getCatalogsResponse.data!.catalogs));
             } else if (getCatalogsResponse.statusResponse!.code == 401) {
-              emit(CatalogHomeExpiredTokenState());
+              emit(const CatalogHomeExpiredTokenState("Your session has expired, please login again"));
             } else {
               emit(CatalogHomeInitialFailureState(getCatalogsResponse.statusResponse!.message));
             }
@@ -50,7 +50,7 @@ class CatalogHomeBloc extends Bloc<CatalogHomeEvent, CatalogHomeState> {
           emit(CatalogHomeInitialFailureState(error.toString()));
         }
       } else {
-        emit(const  CatalogHomeInitialFailureState("can't get data from memory"));
+        emit(const CatalogHomeExpiredTokenState("can't get data from memory, please login again"));
       }
     });
   }

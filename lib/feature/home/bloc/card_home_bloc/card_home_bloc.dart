@@ -49,25 +49,24 @@ class CardHomeBloc extends Bloc<CardHomeEvent, CardHomeState> {
                   speed
                 ));
               } else if (getBillingCardResponse.statusResponse!.code == 401) {
-                emit(CardHomeExpiredTokenState());
+                emit(const CardHomeExpiredTokenState("Your session has expired, please login again"));
               } else {
                 emit(CardHomeInitialFailureState(getBillingCardResponse.statusResponse!.message));
               }
             } else if (getCatalogCardResponse.statusResponse!.code == 401) {
-              emit(CardHomeExpiredTokenState());
+              emit(const CardHomeExpiredTokenState("Your session has expired, please login again"));
             } else{
               emit(CardHomeInitialFailureState(getCatalogCardResponse.statusResponse!.message));
             }
           } else {
             emit(const CardHomeInitialFailureState("can't get data from server"));
           }
-
         } catch (error){
           debugPrint(error.toString());
           emit(CardHomeInitialFailureState(error.toString()));
         }
       } else {
-        emit(const CardHomeInitialFailureState("can't get data from memory"));
+        emit(const CardHomeExpiredTokenState("Can't get token from memory, please login again"));
       }
     });
   }

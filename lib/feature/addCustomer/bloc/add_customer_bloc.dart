@@ -37,13 +37,15 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
 
     try {
       if(sessionToken == null) {
-        emit(const AddMerhantFailureState("Can't get Session Token"));
+        emit(const AddCustomerTokenExpired("Can't get token from memory, please login again"));
       } else {
         GetMerchantResponse getMerchantResponse = await AddCustomerApi().initialService(sessionToken!.accesToken);
 
         if(getMerchantResponse.statusResponse != null){
           if(getMerchantResponse.statusResponse!.code == 200){
             emit(AddMerhantSuccessState(getMerchantResponse.data!.merchants));
+          } else if (getMerchantResponse.statusResponse!.code == 401) {
+            emit(const AddCustomerTokenExpired("Your session has expired, please login again"));
           } else {
             emit(AddMerhantFailureState(getMerchantResponse.statusResponse!.message));
           }
@@ -72,7 +74,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
       });
       try{
         if (sessionToken == null){
-          emit( const AddCustomerFailureState("Can't get Session Token"));
+          emit(const AddCustomerTokenExpired("Can't get token from memory, please login again"));
         } else {
           AddCustomerResponse addCustomerResponse = await AddCustomerApi().addCustomerService(addCustomerModel, sessionToken!.accesToken);
 
@@ -81,7 +83,9 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
               emit(AddCustomerSuccesState());
             } else if(addCustomerResponse.statusResponse!.code == 403) {
               emit(const AddCustomerFailureState("Id pelanggan tidak dapat ditemukan"));
-            } else{
+            } else if (addCustomerResponse.statusResponse!.code == 401) {
+              emit(const AddCustomerTokenExpired("Your session has expired, please login again"));
+            } else {
               if(addCustomerResponse.errors != null){
                 if(addCustomerResponse.errors!.merchantId != null){
                   emit(AddCustomerFailureState(addCustomerResponse.errors!.merchantId!));
@@ -115,7 +119,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
           ValidateTokenResponse validateTokenResponse = await AddCustomerApi().validateTokenService(sessionToken.accesToken);
 
           if(validateTokenResponse.statusResponse != null){
-            if(validateTokenResponse.statusResponse!.code == 200){
+            if(validateTokenResponse.statusResponse!.code == 200) {
               final String session = json.encode(validateTokenResponse.data!.sessionToken!.toJson());
               final String user = json.encode(validateTokenResponse.data!.user!.toJson());
 
@@ -123,6 +127,8 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
               SharedPrefUtils().storedUser(user);
 
               emit(ValidateTokenSuccesState());
+            } else if (validateTokenResponse.statusResponse!.code == 401) {
+              emit(const AddCustomerTokenExpired("Your session has expired, please login again"));
             } else {
               emit(ValidateTokenFailureState(validateTokenResponse.statusResponse!.message));
             }
@@ -133,7 +139,7 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
           emit(ValidateTokenFailureState(error.toString()));
         }
       } else {
-        emit(const ValidateTokenFailureState("can't get session token"));
+        emit(const AddCustomerTokenExpired("Can't get token from memory, please login again"));
       }
     });
   }

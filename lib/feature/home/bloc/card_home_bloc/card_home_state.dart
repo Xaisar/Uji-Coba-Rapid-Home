@@ -10,7 +10,9 @@ sealed class CardHomeState extends Equatable {
 final class CardHomeInitial extends CardHomeState {}
 
 final class CardHomeExpiredTokenState extends CardHomeState {
-  final String message = "Your session has expired, please login again";
+  final String message;
+
+  const CardHomeExpiredTokenState(this.message);
 }
 
 final class CardHomeInitialProccesState extends CardHomeState {}

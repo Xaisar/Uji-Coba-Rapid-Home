@@ -39,7 +39,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
             if(editProfileResponse.statusResponse!.code == 200){
               emit(EditProfielUserSuccesState());
             } else if (editProfileResponse.statusResponse!.code == 401) {
-              emit(EditProfileExpiredTokenState());
+              emit(const EditProfileExpiredTokenState("Your session has expired, please login again"));
             } else {
               if(editProfileResponse.errors != null){
                 if (editProfileResponse.errors!.name != null) {
@@ -61,7 +61,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           emit(EditProfileUserFailureState(error.toString()));
         }
       } else{
-        emit(const EditProfileUserFailureState("can't get data from memory"));
+        emit(const EditProfileExpiredTokenState("Can't get token from memory, please login again"));
       }
     });
   }

@@ -43,7 +43,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
                 emit(InitialUserSuccesState(getUserResponse.data!.user));
               } else if (getUserResponse.statusResponse!.code == 401) {
-                emit(UserExpiredTokenState());               
+                emit(const UserExpiredTokenState("Your session has expired, please login again"));               
               } else {
                 emit(InitialUserFailureState(getUserResponse.statusResponse!.message));
               }
@@ -55,7 +55,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             emit(InitialUserFailureState(error.toString()));
           }
         } else {
-          emit(const InitialUserFailureState("Can'get data from memory"));
+          emit(const UserExpiredTokenState("Can't get token from memory, please login again"));  
         }
       });
     });

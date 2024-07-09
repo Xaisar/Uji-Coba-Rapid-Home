@@ -36,7 +36,7 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
             if(changePasswordResponse.statusResponse!.code == 200){
               emit(ChangePasswordSuccesState());
             } else if (changePasswordResponse.statusResponse!.code == 401) {
-              emit(ChangePasswordExpiredTokenState());
+              emit(const ChangePasswordExpiredTokenState("Your session has expired, please login again"));
             } else {
               if(changePasswordResponse.errors != null){
                 if(changePasswordResponse.errors!.password != null){
@@ -56,7 +56,7 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
           emit(ChangePasswordFailureState(error.toString()));
         }
       } else {
-        emit(const ChangePasswordFailureState("can't get data from memory"));
+        emit(const ChangePasswordExpiredTokenState("Can't get data from memory, please login again"));
       }
     });
   }

@@ -38,7 +38,7 @@ class DetailCatalogBloc extends Bloc<DetailCatalogEvent, DetailCatalogState> {
 
               emit(DetailCatalogInitialSuccesState(getDetailCatalogResponse.data!.detailCatalog, speed));
             } else if (getDetailCatalogResponse.statusResponse!.code == 401) {
-              emit(DetailCatalogExpiredTokenState());
+              emit(const DetailCatalogExpiredTokenState("Your session has expired, please login again"));
             } else {
               emit(DetailCatalogInitialFailureState(getDetailCatalogResponse.statusResponse!.message));
             }
@@ -50,7 +50,7 @@ class DetailCatalogBloc extends Bloc<DetailCatalogEvent, DetailCatalogState> {
           emit(DetailCatalogInitialFailureState(error.toString()));
         }
       } else {
-        emit(const DetailCatalogInitialFailureState("can't get data from memory"));
+        emit(const DetailCatalogExpiredTokenState("Can't get token from memory, please login again"));
       }
     });
   }

@@ -40,7 +40,7 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
               debugPrint(getBillingResponse.data!.billings.length.toString());
               emit(GetBillingSuccesState(getBillingResponse.data!.billings));
             } else if (getBillingResponse.statusResponse!.code == 401) {
-              emit(BillingExpiredTokenState());
+              emit(const BillingExpiredTokenState("Your session has expired, please login again"));
             } else {
               emit(GetBillingFailureState(getBillingResponse.statusResponse!.message));
             }
@@ -51,7 +51,7 @@ class BillingBloc extends Bloc<BillingEvent, BillingState> {
           emit(GetBillingFailureState(error.toString()));
         }
       } else {
-        emit(const GetBillingFailureState("can't get data from memory"));
+        emit(const BillingExpiredTokenState("Can't get data from memory, please login again"));
       }
     });
   }

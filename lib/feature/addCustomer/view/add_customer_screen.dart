@@ -85,6 +85,18 @@ class _AddCustomerFormState extends State<AddCustomerForm> {
         if (state is AddMerhantSuccessState) {
           merchants.addAll(state.merchants);
         }
+        if (state is AddCustomerTokenExpired) {
+          showTopSnackBar(
+            Overlay.of(context), 
+            CustomSnackBar.error(message: state.message)
+          );
+          if(widget.routeState) {
+            Navigator.pushNamedAndRemoveUntil(context, HOME, (route) => false);
+            Navigator.pushReplacementNamed(context, LOGIN);
+          } else {
+            Navigator.pushReplacementNamed(context, LOGIN);
+          }
+        }
       },
       builder: (context, state) {
         return Container(
