@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import '../../../theme/pallet_color.dart';
 
@@ -11,25 +13,13 @@ class KebijakanPrivasiScreen extends StatefulWidget {
 }
 
 class _KebijakanPrivasiScreenState extends State<KebijakanPrivasiScreen> {
-  late final WebViewController controller;
-  bool ready = false;
+  late final InAppWebViewController inAppWebViewController;
+
+  bool ready = true;
 
   @override
   void initState() {
     super.initState();
-    controller = WebViewController()
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setBackgroundColor(C3)
-    ..setNavigationDelegate(
-      NavigationDelegate(
-        onPageFinished: (String url) {
-          setState(() {
-            ready = true;
-          });
-        },
-      ),
-    )
-    ..loadRequest(Uri.parse('https://www.youtube.com'));
   }
 
   @override
@@ -48,12 +38,59 @@ class _KebijakanPrivasiScreenState extends State<KebijakanPrivasiScreen> {
           ),
         backgroundColor: C1,
       ),
-      body: ready
-      ? WebViewWidget(controller: controller)
-      : Center(
-        child: CircularProgressIndicator(
-          color: C1,
-        )
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          //loading
+          Visibility(
+            visible: ready,
+            child: Container(
+              color: C3,
+              width: MediaQuery.sizeOf(context).width,
+              height: MediaQuery.sizeOf(context).height,
+              alignment: Alignment.center,
+              child: CircularProgressIndicator(
+                color: C9,
+              ),
+            )
+          ),
+          // web view
+          InAppWebView(
+            initialUrlRequest: URLRequest(
+              url: Uri.parse('https://www.youtube.com'),
+            ),
+            onLoadStop: (controller, url) {
+              setState(() async {
+                ready = false;
+              });
+            },
+            onWebViewCreated: (controller) {
+              inAppWebViewController = controller;
+            },
+            initialOptions: InAppWebViewGroupOptions(
+              crossPlatform: InAppWebViewOptions(
+                javaScriptEnabled: true,
+                transparentBackground: true
+              ),
+              android: AndroidInAppWebViewOptions(
+                useHybridComposition: false,
+              ),
+              ios: IOSInAppWebViewOptions(
+                allowsInlineMediaPlayback: true
+              )
+            ),
+            pullToRefreshController: PullToRefreshController(
+              onRefresh: () async {
+                if (Platform.isAndroid) {
+                  inAppWebViewController.reload();
+                } else if (Platform.isIOS) {
+                  inAppWebViewController.loadUrl(
+                    urlRequest: URLRequest(url: await inAppWebViewController.getUrl()));
+                }
+              },
+            ),
+          ),
+        ],
       )
     );
   }
