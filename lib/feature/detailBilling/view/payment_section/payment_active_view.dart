@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../screen/image_viewer_screen.dart';
 import '../../../../theme/pallet_color.dart';
 import '../../../payment/model/payment_detail_model.dart';
 import '../../../payment/model/payment_method_model.dart';
+import 'qr_detail_view.dart';
 
-class PaymentActiveView extends StatelessWidget {
+class PaymentActiveView extends StatefulWidget {
   const PaymentActiveView({
     super.key,
     required this.paymentMethod,
-    required this.paymentDetail
+    required this.paymentDetail,
   });
   final PaymentMethod paymentMethod;
   final PaymentDetail paymentDetail;
+
+  @override
+  State<PaymentActiveView> createState() => _PaymentActiveViewState();
+}
+
+class _PaymentActiveViewState extends State<PaymentActiveView> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +63,7 @@ class PaymentActiveView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          paymentMethod.text,
+                          widget.paymentMethod.text,
                           style: TextStyle(
                             color: C10,
                             fontSize: 16,
@@ -61,7 +73,7 @@ class PaymentActiveView extends StatelessWidget {
                         SizedBox(
                           width: MediaQuery.sizeOf(context).width * 0.225,
                           child: Image.network(
-                          "${paymentMethod.logo}",
+                          "${widget.paymentMethod.logo}",
                             errorBuilder: (context, error, stackTrace) {
                               return Icon(
                                 Icons.warning_amber_rounded,
@@ -93,7 +105,7 @@ class PaymentActiveView extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      "Rp. ${paymentDetail.meta!.grossAmount}",
+                      "Rp. ${widget.paymentDetail.meta!.grossAmount}",
                       style: TextStyle(
                         color: C10,
                         fontSize: 16,
@@ -120,7 +132,34 @@ class PaymentActiveView extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                       DateFormat('HH:mm, d MMMM y' ,'id_ID').format(paymentDetail.meta!.expiryTime),
+                       DateFormat('HH:mm' ,'id_ID').format(widget.paymentDetail.meta!.expiryTime),
+                      style: TextStyle(
+                        color: C10,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600
+                      )
+                    ),
+                  ],
+                )
+              ),
+              //expired
+              Container(
+                width: MediaQuery.of(context).size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Tanggal Pembayaran",
+                      style: TextStyle(
+                        color: C10,
+                        fontSize: 12,
+                      )
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                       DateFormat('d MMMM y' ,'id_ID').format(widget.paymentDetail.meta!.expiryTime),
                       style: TextStyle(
                         color: C10,
                         fontSize: 16,
@@ -140,7 +179,10 @@ class PaymentActiveView extends StatelessWidget {
             onPressed: () {
               showDialog(
                 context: context, 
-                builder: (context) => ImageViewerScreen(imageLink: paymentDetail.meta!.qrCode),
+                builder: (context) => QRDetailView(
+                  paymentDetail: widget.paymentDetail,
+                  paymentMethod: widget.paymentMethod,
+                ),
               );
             },
             style: ElevatedButton.styleFrom(
