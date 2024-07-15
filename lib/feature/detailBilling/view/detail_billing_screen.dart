@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:isp_management_app/route/routes_name.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:intl/intl.dart';
@@ -87,8 +86,11 @@ class _DetailBillingViewState extends State<DetailBillingView> {
         centerTitle: true,
         title: Text(
           "Detail Billing",
-          style:
-              TextStyle(fontSize: 19, color: C3, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 19, 
+            color: C3, 
+            fontWeight: FontWeight.bold
+          ),
         ),
         backgroundColor: C1,
       ),
@@ -650,23 +652,18 @@ class _DetailBillingViewState extends State<DetailBillingView> {
                             ),
                             child: ElevatedButton(
                               onPressed: () {
-                                showDialog(
-                                  context: context, 
-                                  builder: (context) {
-                                    return Dialog(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12)
-                                      ),
-                                      insetPadding: const EdgeInsets.all(0),
-                                      elevation: 0,
-                                      backgroundColor: C3,
-                                      child: SelectPaymentMethodView(
-                                        paymentMethod: paymentMethods,
-                                        paymentBloc: paymentBloc,
-                                        billId: widget.billingModel.id,
-                                      ),
-                                    );
-                                  },
+                                showModalBottomSheet(
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20)
+                                    )
+                                  ),
+                                  context: context,
+                                  builder: (context) => SelectPaymentMethodView(
+                                    paymentMethod: paymentMethods,
+                                    paymentBloc: paymentBloc,
+                                    billId: widget.billingModel.id,
+                                  ),
                                 );
                               },
                               style: ElevatedButton.styleFrom(

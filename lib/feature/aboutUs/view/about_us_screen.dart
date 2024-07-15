@@ -20,6 +20,11 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   void initState() {
     super.initState();
   }
+  
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,19 +63,21 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             initialUrlRequest: URLRequest(
               url: Uri.parse('https://rapid.net.id/'),
             ),
-            onWebViewCreated: (controller) {
-              inAppWebViewController = controller;
+            onLoadStop: (controller, url) {
               setState(() async {
                 ready = false;
               });
             },
+            onWebViewCreated: (controller) {
+              inAppWebViewController = controller;
+            },
             initialOptions: InAppWebViewGroupOptions(
               crossPlatform: InAppWebViewOptions(
                 javaScriptEnabled: true,
-                useShouldOverrideUrlLoading: true,
+                transparentBackground: true
               ),
               android: AndroidInAppWebViewOptions(
-                useHybridComposition: true,
+                useHybridComposition: false,
               ),
               ios: IOSInAppWebViewOptions(
                 allowsInlineMediaPlayback: true

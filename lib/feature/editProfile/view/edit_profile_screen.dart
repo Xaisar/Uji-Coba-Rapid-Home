@@ -149,7 +149,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             width: MediaQuery.sizeOf(context).width,
                             errorBuilder: (context, error, stackTrace) {
                               return Icon(
-                                size: MediaQuery.sizeOf(context).height * 0.148,
+                                size: MediaQuery.sizeOf(context).height * 0.118,
                                 Icons.person,
                                 color: C6
                               );

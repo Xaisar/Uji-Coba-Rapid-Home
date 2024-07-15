@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../../../theme/pallet_color.dart';
 import '../../../payment/bloc/payment/payment_bloc.dart';
@@ -24,144 +22,172 @@ class SelectPaymentMethodView extends StatefulWidget{
 }
 
 class _SelectPaymentMethodViewState extends State<SelectPaymentMethodView> {
-  int? method;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(19),
-      width: MediaQuery.sizeOf(context).width * 0.88,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // tittle
-          Text(
-            'Metode Pembayaran',
-            style: TextStyle(
-              color: C7,
-              fontSize: 16,
-              fontWeight: FontWeight.w700
-            ),
+    return Wrap(
+      children: [
+        Container(
+          width: MediaQuery.sizeOf(context).width,
+          height: MediaQuery.sizeOf(context).height * 0.6,
+          padding: const EdgeInsets.symmetric(
+            vertical: 10
           ),
-          const SizedBox(
-            height: 15
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: C3,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20))
           ),
-          //metode
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
-            children: List.generate(widget.paymentMethod.length, (index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    method = index;                    
-                  });
-                },
-                child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.375,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 5,
-                    vertical: 25
-                  ),
-                  decoration: BoxDecoration(
-                    color: C3,
-                    borderRadius: BorderRadius.circular(12),
-                    border: method == index
-                    ? Border.all(
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                      color: Colors.green,
-                      width: 2
-                    ) 
-                    : 
-                    Border.all(
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                      color: const Color(0xFFB3B3B3),
-                      width: 1
+            children: [
+              //slider line
+              Container(
+                width: MediaQuery.of(context).size.width * 0.116,
+                height: 2,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFAFACAC),
+                  borderRadius: BorderRadius.circular(10)
+                ),
+              ),
+              //header
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5
+                ),
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: C6,
+                        size: 13 *2,
+                      )
+                    ),
+                    Text(
+                      "Pilih Metode Pembayaran",
+                      style: TextStyle(
+                        color: C6,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 13 * 2,
                     )
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.sizeOf(context).width * 0.25,
-                        child: Image.network(
-                        widget.paymentMethod[index].logo,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.warning_amber_rounded,
-                              size: MediaQuery.sizeOf(context).width * 0.25 / 2,
-                              color: Colors.red,
+                  ],
+                ),
+              ),
+              // body
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  width: MediaQuery.sizeOf(context).width,
+                  height: MediaQuery.sizeOf(context).height,
+                  color: C20,
+                  child: ListView.separated(
+                    itemCount: widget.paymentMethod.length,
+                    separatorBuilder: (context, index) {
+                      return const Divider(
+                        color: Colors.transparent,
+                        height: 10,
+                      );
+                    },
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        width: MediaQuery.sizeOf(context).width,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            widget.paymentBloc.add(
+                              SendPaymentEvent(
+                                Payment(
+                                  billId: widget.billId,
+                                  channelListId: widget.paymentMethod[index].value
+                                )
+                              )
                             );
                           },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Text(
-                        widget.paymentMethod[index].text,
-                        maxLines: 2,
-                        overflow: TextOverflow.clip,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: C19,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600
-                        ),
-                      )
-                    ],
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 20
+                            ),
+                            backgroundColor: C3,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)
+                            )
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              //logo
+                              SizedBox(
+                                width: MediaQuery.sizeOf(context).width * 0.20,
+                                height: MediaQuery.sizeOf(context).width * 0.20 / 3,
+                                child: Image.network(
+                                  widget.paymentMethod[index].logo,
+                                  frameBuilder:(context, child, frame, wasSynchronouslyLoaded) {
+                                    if (wasSynchronouslyLoaded) {
+                                      return child;
+                                    } else {
+                                      return AnimatedSwitcher(
+                                        duration: const Duration(milliseconds: 500),
+                                        child: frame != null ? child : SizedBox(
+                                          width: MediaQuery.sizeOf(context).width * 0.20,
+                                          height: MediaQuery.sizeOf(context).width * 0.20 / 3,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Center(
+                                      child: Icon(
+                                        Icons.warning_amber_rounded,
+                                        size: MediaQuery.sizeOf(context).width * 0.2 / 3,
+                                        color: Colors.red,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              //name
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  widget.paymentMethod[index].text,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.clip,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: C19,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                )
+                              )
+                            ],
+                          ),
+                        )
+                      );
+                    },
                   ),
-                ),
-              );
-            }),
-          ),
-          //button
-          const SizedBox(
-            height: 15
-          ),
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width,
-            child: ElevatedButton(
-              onPressed: () {
-                if(method != null) {
-                  widget.paymentBloc.add(
-                    SendPaymentEvent(
-                      Payment(
-                        billId: widget.billId,
-                        channelListId: widget.paymentMethod[method!].value
-                      )
-                    )
-                  );
-                } else {
-                  showTopSnackBar(
-                    displayDuration: const Duration(milliseconds: 1500),
-                    Overlay.of(context),
-                    const CustomSnackBar.error(message: "Pilih metode pembayaran terlebih dahulu")
-                  );
-                }
-              }, 
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF147638),
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)
                 )
-              ),
-              child: Text(
-                "Bayar",
-                style: TextStyle(
-                  color: C3,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }
