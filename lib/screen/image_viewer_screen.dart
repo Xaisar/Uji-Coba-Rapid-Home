@@ -14,7 +14,7 @@ class ImageViewerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.1),
+      backgroundColor: Colors.white.withOpacity(0.01),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -41,9 +41,9 @@ class ImageViewerScreen extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             errorBuilder: (context, error, stackTrace) {
               return Icon(
-                size: MediaQuery.sizeOf(context).height,
+                size: MediaQuery.sizeOf(context).width,
                 Icons.person,
-                color: C3
+                color: C6
               );
             },
           ),
